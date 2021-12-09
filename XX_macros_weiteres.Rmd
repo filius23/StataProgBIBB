@@ -1,0 +1,117 @@
+# Weitere macro Funktionen {#macro2}
+```{r setupm2, echo = F, message=F, warning = F}
+if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+library(Statamarkdown)
+# library(tidyverse)
+# library(ggthemes)
+```
+
+
+## Macro extended functions for parsing
+
+`pmacro` Seite 12:
+
+```{stata, eval= F}
+word count string
+```
+returns the number of tokens in string. A token is a word (characters separated by spaces) or set of words enclosed in quotes. Do not enclose string in double quotes because word count will return 1.
+
+
+```{stata, eval= F}
+word # of string
+```
+returns the #th token of string. Do not enclose string in double quotes.
+
+```{stata, eval= F}
+piece #1 #2 of "string" , nobreak
+```
+returns a piece of string. This macro extended function provides a smart method of breaking a string into pieces of roughly the specified length. #1 specifies which piece to obtain. #2 specifies the maximum length of each piece. Each piece is built trying to fill to the maximum length without
+breaking in the middle of a word. However, when a word is longer than #2, the word will be split unless nobreak is specified. nobreak specifies that words not be broken, even if that would result in a string longer than #2 characters. Compound double quotes may be used around string and must be used when string itself might
+contain double quotes.
+
+```{stata, eval = F}
+length {local|global} macname
+```
+
+returns the length of macname in characters. If macname is undefined, then 0 is returned. For instance,
+
+```{stata, eval = F}
+constraint 1 price = weight
+local myname : constraint 1
+macro list _myname
+_myname price = weight
+local lmyname : length local myname
+macro list _lmyname
+_lmyname: 14
+```
+
+
+```{stata, eval = F}
+subinstr local mname "from" "to"
+```
+returns the contents of mname, with the first occurrence of “from” changed to “to”.
+
+
+```{stata, eval = F}
+subinstr local mname "from" "to", all
+```
+does the same thing but changes all occurrences of “from” to “to”.
+
+```{stata, eval = F}
+subinstr local mname "from" "to", word
+```
+returns the contents of mname, with the first occurrence of the word “from” changed to “to”. A word is defined as a space-separated token or a token at the beginning or end of the string.
+
+
+```{stata, eval = F}
+subinstr local mname "from" "to", all word
+```
+does the same thing but changes all occurrences of the word “from” to “to”.
+
+```{stata, eval = F}
+subinstr global mname : : :
+```
+is the same as the above, but obtains the original string from the global macro $mname rather than from the local macro mname.
+
+
+```{stata, eval = F}
+subinstr : : : global mname : : : , : : : count(fglobal j localg mname2)
+```
+in addition to the usual, places a count of the number of substitutions in the specified global or in local macro mname2.
+
+
+##
+```{stata det1, eval= F}
+global a "myvar"
+gen $a = oldvar   gen myvar = oldvar
+gen a = oldvar    gen a = oldvar
+
+local a "myvar"
+gen ‘a’ = oldvar gen myvar = oldvar
+
+gen a = oldvar gen a = oldvar
+global a "newvar"
+global i = 2
+gen $a$i = oldvar gen newvar2 = oldvar
+local a "newvar"
+local i = 2
+gen ‘a’‘i’ = oldvar gen newvar2 = oldvar
+global b1 "newvar"
+global i=1
+gen ${b$i} = oldvar gen newvar = oldvar
+local b1 "newvar"
+local i=1
+gen ‘b‘i’’ = oldvar gen newvar = oldvar
+global b1 "newvar"
+global a "b"
+global i = 1
+gen ${$a$i} = oldvar gen newvar = oldvar
+local b1 "newvar"
+local a "b"
+local i = 1
+gen ‘‘a’‘i’’ = oldvar gen newvar = oldvar
+```
+

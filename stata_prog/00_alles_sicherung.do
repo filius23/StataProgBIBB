@@ -50,7 +50,6 @@ glo pfad "D:\Arbeit\Alex"    // wo liegt der Datensatz bei Micha?
 
 glo prog "${pfad}/prog"  
 glo data "${pfad}/data"
-glo log  "${pfad}/log"
 
 use "${pfad}/BIBBBAuA_2018_suf1.0.dta", clear // laden des Datensatzes 
 
@@ -58,175 +57,87 @@ use "${pfad}/BIBBBAuA_2018_suf1.0.dta", clear // laden des Datensatzes
 * voreingestellte Macros
 dis "$S_DATE $S_TIME"
 
-dis "Start: $S_DATE um $S_TIME"
-sleep 6000 // 6 sekunden warten 
-dis "Start: $S_DATE um $S_TIME"
-
-dis "`c(username)'"
-dis "`c(machine_type)'"
-dis "`c(os)'"
-
-* globals durchsuchen:
-* wildcards -> ? ersetzt ein Zeichen, * mehrere oder keines
-
-glo x1 = 2
-glo x2 "das ist x2"
-glo x 291
-global allglo:  all globals "x*"
-mac l allglo
 
 
 
-* if
-if ("`c(username)'" == "Filser") display "Du bist Filser"
-if ("`c(username)'" != "Fischer") display "Du bist nicht Fischer"
-
-* mehrere Nutzer:
-if ("`c(username)'" == "Alex")   glo pfad "C:\Projekte\Micha" // wo liegt der Datensatz bei Alex?
-if ("`c(username)'" == "Micha")  glo pfad "D:\Arbeit\Alex"    // wo liegt der Datensatz bei Micha?
-if ("`c(username)'" == "Filser") glo pfad "D:\Datenspeicher\BIBB_BAuA"   
-mac l pfad
-
-glo prog "${pfad}/prog"  
-glo data "${pfad}/data"
-glo log  "${pfad}/log"
-
-use "${pfad}/BIBBBAuA_2018_suf1.0.dta", clear // laden des Datensatzes 
-
-
-* ------------------------------- *
-* if & else 
-loc n = 3
-if `n'==1 {
-	local word "one"
-     }
-else if `n'==2 {
-	local word "two"
-}
-else if `n'==3 {
-	local word "three"
-}
-else {
-	local word "big"
-}
-display "`word'"
-
-
-* angepasste Pfade mit if & else:
-if "`c(username)'" == "Alex" {
-  glo pfad "C:\Projekte\Micha" // wo liegt der Datensatz bei Alex?
-	} 
-else if "`c(username)'" == "Micha" {
-  glo pfad "D:\Arbeit\Alex"    // wo liegt der Datensatz bei Micha?
-}
-else {
- display as error "Hier fehlt der passende Pfad"
- exit 
-}
-  
-tab S1
-
-* ------------------------------- *
-* Schleifen basics
-foreach n of numlist 1/3 6(1)9  {
-    dis "`n'"
-}
-
-foreach n of numlist 6 4: -4  {
-    dis "`n'"
-}
-
-loc i = 1
-while `i' <= 5 {
-  display "`i'"
-  loc i = `i' + 1
-}
-
-loc i = 1
-while `i' <= 5 {
-  display "`i'"
-  loc ++i
-}
-
-* ferest():
-foreach n of numlist 1(1)5 {
-    dis "`n'"
-    dis "Es kommen noch: `ferest()'"
-}
-
-* ----------------------------------- *
-* Anwendung
-
-foreach v of numlist 19(5)35 {
-	display "Alter bis `v'"
-	tab S1 if zpalter <= `v'
-}
-
-foreach v of numlist 19(5)35 {
-	display "Alter " `v' - 4 " bis " `v'
- 	tab S1 if inrange(zpalter,`v'-4, `v')
-	*su zpalter if inrange(zpalter,`v'-4, `v')
-}
-
-* ----------------------------------- *
-* Schleifen aufbauen:
-* Schleife 1-10 die anzeigt, ob `n' gerade oder ungerade ist
-
-** Welche Fälle gibt es?
-loc n = 4
-if `n' == 2 display "ja"
-if `n' != 2 display "nein"
-
-
-loc n = 8
-if trunc(`n'/2) == `n'/2 display "ja"
-if trunc(`n'/2) != `n'/2 display "nein"
-
-loc n = 5
-dis mod(`n',2) //2, "Rest 1"
-dis mod(`n',3) //1, "Rest 2"
 
 
 
-forvalues n = 1/20 {
-	if  mod(`n',2)  == 0 dis "`n' ist gerade"
-	if  mod(`n',2)  != 0 dis "`n' ist ungerade"
-}
-
-forvalues n = 1/10 {
-	if  mod(`n',2)  == 0 {
-		dis "`n' ist gerade"
-	}
-	else if mod(`n',2)  == 1 {
-		dis "`n' ist ungerade"
-	} 
-	else {
-		display as error "hier ging was schief"
-		exit 
-	}
-}
 
 
-help mod
 
-mod(x,y) = x - y*floor(x/y)
 
+loc t1 = "erster Text"
+loc t2 	 "zweiter Text"
+mac l _t1 _t2
+local i = 1
+local ++i
+dis `i'
+
+* macro kann auch ein Programm sein 
+loc t tab
+`t' S1
+
+// daher werden locals auch befehl verstanden -> wenn wir das um gehen wollen, dann müssen wir sie in Anführungszeichen setzen
+loc t tab
+dis `t'
+loc t tab
+dis "`t'"
+
+
+
+
+local n 200
+su F`n'
+
+
+loc a: all globals "x*"
+mac l _a
+
+
+global allglo:  all globals ["x"]
+mac l 
+
+allglo
+
+
+help unab
+unab rhsvars : "mean"
+mac l
+mac list mean_age
+mac list mean_*
+mac list
+macro list meanx
+unab myvars : *
+unab TX : *TX*
+unab twenty : *200
+help mac list
+
+
+
+* {local | global} macname :  all {globals|scalars|matrices} ["pattern"]
 
 * wild cards
 * inlist / inrange
 * capture
 
+
 * ------------------------------- *
-glo x1 = 2
-glo x2 "das ist x2"
-glo x 291
-global allglo:  all globals "_x*"
-mac l allglo
+* Schleifen basics
+* numlist
+foreach n of numlist 8/10 15 to 30 32 to 36 {
+    dis "`n'"
+}
+foreach n of numlist 8 6 : -8  {
+    dis "`n'"
+}
 
+* Die foreach-Schleife mit einer Nummernliste funktioniert nicht mit einer beliebig hohen Anzahl von Ziffern. 
+* In der forvalues-Schleife gibt es diese Einschränkung nicht. Zudem ist die forvalues-Schleife schneller im Abarbeiten von Nummernlisten.
 
-
-
-
+forvalues nm =  8 6 : -8  {
+    dis "`nm'"
+}
 
 
 * ------------------------------- *
@@ -395,19 +306,7 @@ cd "W:/ASR/data/temp"
 
 * erase
 
-/* pmacro hilfe
-local list : dir . files "*" makes a list of all regular files in the current directory.  Inlistmight be returned"subjects.dta" "step1.do" "step2.do" "reest.ado".
 
-local list : dir . files "s*", respectcasein  Windows  makes  a  list  of  all  regular  filesin  the  current  directory  that  begin  with  a  lowercase  “s”.  The  case  of  characters  in  the  filenamesis preserved.  In Windows, without therespectcaseoption, all filenames would be converted tolowercase before being compared withpatternand possibly returned
-
-.local list : dir . dirs "*"makes a list of all subdirectories of the current directory.  Inlistmight be returned"notes" "subpanel"
-
-.local list : dir . other "*"makes  a  list  of  all  things  that  are  neither  regular  files  nordirectories.  These files rarely occur and might be, for instance, Unix device drivers
-
-.local list : dir "\mydir\data" files "*"makes  a  list  of  all  regular  files  that  are  to  befound in\mydir\data.  Returned might be"example.dta" "make.do" "analyze.do".It is the names of the files that are returned, not their full path names
-
-.local list : dir "subdir" files "*"makes a list of all regular files that are to be found insubdirof the current directory
-*/
 
 * ------------------------------- *
 * Labels
