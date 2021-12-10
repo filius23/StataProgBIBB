@@ -1,4 +1,5 @@
-# Weitere macro Funktionen {#macro2}
+# Weitere `macro` Funktionen {#macro}
+
 ```{r setupm2, echo = F, message=F, warning = F}
 if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
 # stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
@@ -10,23 +11,6 @@ library(Statamarkdown)
 ```
 
 
-### `globals` durchsuchen {#allglo}
-
-Mit Hilfe sog. Wildcards können wir Zeichen "offen lassen":
-
-+ `?` ersetzt ein Zeichen
-+ `*` mehrere oder keines
-
-```{stata macall}
-glo x1 = 2
-glo x2 "das ist x2"
-glo x 291
-global allglo:  all globals "x*"
-global allglo2: all globals "x?"
-mac l allglo2 allglo
-```
-
-Hier haben wir auch schon die dritte Form der macro Definition kennengelernt, die sog. `extended macro function`, welche auf `:` folgt. Hier also `all globals`, im Laufe dieses Kurses werden wir noch zahlreiche dieser Funktionen kennenlernen. 
 
 ## `capture`
 
@@ -46,7 +30,6 @@ local wanted : di _dup(10) "oo "
 dis "`wanted'"
 
 local wanted : di "{dup 10:99 }"
-
 ```
 
 
@@ -121,86 +104,42 @@ subinstr : : : global mname : : : , : : : count(fglobal j localg mname2)
 ```
 in addition to the usual, places a count of the number of substitutions in the specified global or in local macro mname2.
 
-## Debugging: Wo ist der Wurm drin?
+### `word`
 
-```{stata, eval}
-// debugging of long loops can be tedious and annoing
-// in many cases you would like to go throuh the code step by step
-// then, however, the value of the loop index (which is a local macro)
-// is not available any more. Example:
-
-forvalues y = 1982/1985 {
-	use ../data/wages-year`y', clear
-	capture log close
-	log using ../log/log`y'.log, text replace
-	regress lwage exper expersq educ
-	avplots
-	graph export ../graphics/avplots`y'.eps, replace
-}
-
-// simple workaround: define a global macro
-forvalues y = 1982/1985 {
-	global Y = `y'
-	capture log close
-	log using ../log/log$Y.log, text replace
-	use ../data/wages-year$Y, clear
-	regress lwage exper expersq educ
-	avplots
-	graph export ../graphics/avplots-year$Y.eps, replace
-}
-// now everything works fine even if you stop after the definition of the 
-// global macro Y
-
+1. Dereferencing elements of a numlist with a secondary numlist
+```{stata, eval = F}
+local list 0 2 4 6 8 10 // store numlist in local `list'
+forvalues i = 1(1)6 { // for each value of `i' = [1,6]
+di `: word `i ' of `list ' ' // display the `i'th number in `list'
+ } // repeat/end loop
 ```
 
 
-
-Sowohl Macros als auch Skalare können numerische und nicht-numerische Informationen enthalten, aber es gibt Unterschiede - die aber in der Praxis ins Gewicht fallen, abgesehen von der Syntax:
-
-```{stata locx1}
-local root = sqrt(2.15)
-di `root'/4
-```
-```{stata scalar}
-scalar root = sqrt(2.15)
-di root/4
+Dereferencing elements of a string list with a secondary numlist
+```{stata, eval = F}
+local list "0" "2" "4" "6" "8" "10" // store string list in local `list'
+forvalues i = 1(1)6 { // for each value of `i' = [1,6]
+     di "`: word `i' of `list' '" // display the `i'th word in `list'
+ } // repeat/end loop
 ```
 
-> "Use scalars for intermediate calculations if precision is critical, use macros everywhere else"
 
-Sometimes it is useful to refer to elements by their position in the list (“token”). This can be done with tokenize: `tokenize string`
-
-
-
-##
-```{stata det1, eval= F}
-global a "myvar"
-gen $a = oldvar   gen myvar = oldvar
-gen a = oldvar    gen a = oldvar
-
-local a "myvar"
-gen ‘a’ = oldvar gen myvar = oldvar
-
-gen a = oldvar gen a = oldvar
-global a "newvar"
-global i = 2
-gen $a$i = oldvar gen newvar2 = oldvar
-local a "newvar"
-local i = 2
-gen ‘a’‘i’ = oldvar gen newvar2 = oldvar
-global b1 "newvar"
-global i=1
-gen ${b$i} = oldvar gen newvar = oldvar
-local b1 "newvar"
-local i=1
-gen ‘b‘i’’ = oldvar gen newvar = oldvar
-global b1 "newvar"
-global a "b"
-global i = 1
-gen ${$a$i} = oldvar gen newvar = oldvar
-local b1 "newvar"
-local a "b"
-local i = 1
-gen ‘‘a’‘i’’ = oldvar gen newvar = oldvar
+Indexing a numlist and looping over elements with a secondary numlist
+```{stata, eval = F}
+tokenize 0 2 4 6 8 10 // store elements of list in sequential locals
+forvalues i = 1(1)6 { // for each value of `i' = [1,6]
+di ``i ' ' // display the `i'th positional local
+} // repeat/end loop
 ```
+
+
+Indexing a string list and looping over elements with a secondary numlist
+```{stata, eval = F}
+tokenize `" "0" "2" "4" "6" "8" "10" " ' // store elements of list in sequential
+forvalues i = 1(1)6 { // for each value of `i' = [1,6]
+ di "``i' '" // display the `i'th positional local
+ } // repeat/end loop
+```
+
+
 

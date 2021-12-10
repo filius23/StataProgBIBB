@@ -36,7 +36,7 @@ dis  %20.2fc 1.9886e+11
 
 
 local longlabel: val label M1202
-dis `longlabe'
+dis `longlabel'
 
 
 

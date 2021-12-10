@@ -1,572 +1,611 @@
-# Macros {#macro}
+# Schleifen aus Macros {#loopmacro}
 ```{r setup2, echo = F, message=F, warning = F}
 if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
 # stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 library(Statamarkdown)
+library(kableExtra)
+library(magrittr)
 # library(tidyverse)
 # library(ggthemes)
 ```
 
 
-Macros ist die Sammelbezeichung für `global`s und `local`s in Stata.
-Beide dienen zur (vorläufigen) Speicherung von Text- oder Zahleninformationen.
-Definiert werden sie durch `global `*inhalt* oder `local `*inhalt* - oft mit `glo` und `loc` als Abkürzungen.
-`global`s können dann mit `$globalname`/`${globalname}` aufgerufen werden, `local`s mit ``localname'` - ganz einfach bspw. mit `dis[play]`:
-```{stata mac0}
-glo x = 1
-loc y = 2
+## local erstellen und für Schleifen verwenden
 
-dis ${x}
-dis `y'
+Schleifen aus globals / locals mit Hilfe von `levelsof`:
+```{stata mlo1, eval =F}
+tab m1202
+levelsof m1202
+
+levelsof m1202, loc(ausb)
+foreach lvl  of local ausb {
+	dis "m1202: " `lvl'
+}
+
+
+levelsof m1202, loc(ausb)
+glo ausb `ausb'
+mac l ausb
+
+foreach lvl  of global ausb {
+	dis "m1202: " `lvl'
+}
+
+
+foreach lvl  of global ausb {
+	dis "m1202: " `lvl'
+	tab S1 if m1202 == `lvl'
+}
 ```
 
-...oder mit `macro list`, hier sind die macros aber ohne "punctuation" (also `$` oder ``'`)
-```{stata mac1}
-glo x = 1
-loc y = 2
+
+
+## Informationen aus Schleifen behalten
+
+### Gespeichterte Ergebnisse
+
+Um auf Ergebnisse zuzugreifen, können wir etwas hinter die Kulissen der Stata-Befehle sehen: 
+
+```{r tib1, echo=F}
+tibble::tribble(~"Befehl",~"zeigt alle",
+"c-class", "system parameters & settings finden wir als `c()` - siehe [``c(username)'`](#cmac)",
+"r-class", "die meisten deskriptiven Befehle speichern die Ergebnisse in in `r()`",
+"e-class", "...außer estimation commands, wie bspw. `reg` - hier wird in `e()` gespeichert (Postestimates)",
+"s-class", "parsing commands store results in `s()` used by programmers",
+"n-class", "commands that do not store in `r()`, `e()`, oder `s()`") %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 12) %>% 
+  column_spec(1,monospace = TRUE) %>% 
+  row_spec(0, color = "white")
+```
+
+Jeweils alle Werte anzeigen mit:
+
+```{r tib2, echo=F}
+tibble::tribble(~"Befehl",~"zeigt alle",
+ "return list",   "r()",
+"ereturn list",   "e()",
+"sreturn list",   "s()",
+"creturn list",   "c()") %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 12) %>% 
+  column_spec(1:2,monospace = TRUE)
+```
+
+Es gibt dabei vier Typen an Ergebnissen:
+
++ `macro`:  strings mit mehreren Wörtern (Text)
++ `matrix`: bspw. `e(b)` sind die Koeffizienten nach einem `reg`-Befehl oder `e(V)` ist die Varianz–Kovarianz Matrix der estimates (VCE)
++ `scalar`: einzelne Zahlen/Strings (1x1 Matrizen)
++ `functions`: bspw. `e(sample)` $\Rightarrow$ 1 (true) wenn die Beobachtung im vorheringen "estimation command" verwendet wurde und 0 (false) wenn nicht
+
+```{stata retlist, eval= F}
+tab S1
+return list
+```
+```{stata retlist0,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tab S1
+return list
+```
+
+```{stata retlist2, eval= F}
+su S1
+return list
+```
+```{stata retlist02,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+su S1
+return list
+```
+
+```{stata retlist3, eval= F}
+reg F518_SUF zpalter 
+ereturn list
+```
+```{stata retlist03,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+quietly{
+  mvdecode zpalter, mv(9999)
+mvdecode F518_SUF, mv( 99998/ 99999)
+mvdecode F200, mv( 97/99)
+mvdecode m1202, mv(-1)
+}
+reg F518_SUF zpalter 
+ereturn list
+```
+
+Anstatt zu versuchen, den Überblick darüber zu behalten, was wo gespeichert wird, finden woe ganz unten in jeder Hilfedatei einen Hinweis wie
+"`summarize` stores the following in `r()`:" or "`mean` stores the following in `e()`" - entsprechend sehen wir die Ergebnisse in `return` bzw. `ereturn`.
+
+### `e()` und `r()` sind getrennte Welten
+
+Neben dem Prinzip "One Data" folgt Stata auch dem Prinzip "One _-class".
+Das bedeutet, dass wir nur den return oder ereturn für den letzten Befehl dieser Klasse sehen können.
+Wenn wir also `reg` ausführen und dann eine Reihe von r-Klassen-Aufrufen machen (z.B. `su`), wird uns der Aufruf von `ereturn` immer noch die Werte für `reg`` anzeigen. 
+Sobald wir jedoch einen weiteren r-class-Befehl ausführen, verlieren wir den Zugriff auf die Ergebnisse des ersten Befehls. 
+```{stata erl0, eval = F}
+reg az F200
+su az
+ereturn list
+```
+
+
+```{stata erl01,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+quietly{
+  mvdecode zpalter, mv(9999)
+mvdecode F518_SUF, mv( 99998/ 99999)
+mvdecode F200, mv( 97/99)
+mvdecode m1202, mv(-1)
+}
+reg az F200
+su az
+ereturn list
+```
+
+<!-- https://cscar.github.io/workshop-stata-intro/programming-advanced-features.html -->
+
+### Ergebnisse weiter verwenden
+
+Alle diese Informationen können wir mit einem Makro speichern bzw. weiter verarbeiten. 
+
+```{stata retlist4, eval= F}
+su S1
+dis "Mittelwert beträgt: " r(mean)
+```
+```{stata retlist04,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui su S1
+dis "Der Mittelwert beträgt: " r(mean)
+```
+
+```{stata retlist5, eval= F}
+su S1
+dis "Mittelwert beträgt: " round(r(mean),.01)
+```
+
+```{stata retlist05,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui su S1
+dis "Der Mittelwert beträgt: " round(r(mean),.01)
+```
+
+```{stata mloretn, eval = F}
+foreach lvl  of global ausb {
+	dis "m1202: " `lvl'
+	su S01 if m1202 == `lvl'
+	dis r(mean)
+}
+
+foreach lvl  of global ausb {
+	qui su S01 if m1202 == `lvl'
+	dis "Der Frauenanteil in m1202=" `lvl' " beträgt: " round(r(mean)*100,.1) "%"
+}
+
+
+foreach lvl  of global ausb {
+	qui su S01 if m1202 == `lvl'
+	glo gend`lvl': display "Der Frauenanteil in m1202=" `lvl' " beträgt: " round(r(mean)*100,.1) "%"
+}
+```
+
+
+Macros können auch "recursively" erstellt werden:
+```{stata mloretn2}
+global x ""
+forvalues i = 1/20 {
+	global x $x `i'
+}
 mac list x
-mac list _y
 ```
 
-Der Unterschied besteht vor allem darin, dass *local* macros 'lokal' für ein spezifisches Programm verfügbar sind, *globale* macros hingegen für alle Programme (innerhalb einer Stata-Session) verfügbar sind.
-Letztlich können wir jede Instanz, in der wir mehrere Zeilen eines DoFiles ausführen als 'Programm' ansehen. 
-
-`global`s können wir später nochmal aufrufen, `local`s nicht:
-```{stata macloc, eval =F}
-mac list xg
+...somit können wir einen `global` auch zusammenbauen:
+```{stata mloretn3, eval = F}
+glo gend ""
+foreach lvl  of global ausb {
+	qui su S01 if m1202 == `lvl'
+	glo gend: display "${gend}m1202=" `lvl' " " round(r(mean)*100,.1) "% "
+}
+mac l gend
 ```
 
-```{stata macloc2, echo =F,error=T}
-glo xg = 1
-mac list xg
+```{stata mloretn3b, echo = F}
+quietly{
+  use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+  drop if m1202 < 0
+  tab m1202
+  levelsof m1202
+  levelsof m1202, loc(ausb)
+  glo ausb `ausb' 
+  gen S01 = S1-1
+} 
+
+glo gend ""
+foreach lvl  of global ausb {
+	qui su S01 if m1202 == `lvl'
+	glo gend: display "${gend}m1202=" `lvl' " " round(r(mean)*100,.1) "% "
+}
+  
+mac l gend
 ```
 
-```{stata macloc1, eval =F}
-mac list _xl
+## `matrix`
+
+Matrizen helfen uns, die ergebnisse in handhabarer Form zu speichern (`help matrix`).
+
+- eine `matrix` ausgeben:
+`matrix list matname`
+
+- eine `matrix` umbenennen:
+`matrix umbenennen altername neuername`
+
+- eine `matrix` oder alle löschen:
+`matrix drop [matlist]`
+
+Mit `J(Zeilen,Spalten,Inhalt)` können wir eine Matrix mit gleichen Werten besetzen:
+```{stata matrix04}
+mat G0 = J(4,2,0)
+mat l G0
+```
+... mit `.` in allen Zellen:
+```{stata matrix04b}
+mat Gx = J(4,2,.)
+mat l Gx
 ```
 
-```{stata macloc12, echo =F,error=T}
-mac list _xl
-```
-
-
-## `=` macht einen Unterschied
-
-In der Regel können wir auch einfach `glo glname Wert` bzw. `loc locname Wert` statt `glo glname = Wert` bzw. `loc locname = Wert` angeben.
-Allerdings ist hier etwas Vorsicht geboten, denn das `=` ist entscheidend ob  die Rechnung abgelegt wird oder das Ergebnis (*Stichwort evaluation*):
-Im Ergebnis sehen wir hier beides Mal das gleiche:
-```{stata mac2, echo = T}
-local m1 2+2
-display `m1'
-```
-```{stata mac2b, echo = T}
-local m2 = 2+2
-display `m2'
-```
-Aber wenn wir uns mit `mac list` die abgelegten Infos ansehen, dann sehen wir den entscheidenden Unterschied:
-```{stata mac3, eval = F}
-mac list _m1 _m2
-```
-```{stata mac3b, echo = F}
-local m1 2+2
-local m2 = 2+2
-mac list _m1 _m2
-```
-
-
-Wenn wir nämlich mit `m1` und `m2` weiterrechnen, da kann folgendes passieren:
-```{stata mac4, echo = T}
-local m1 2+2
-display `m1'*4
-```
-```{stata mac4b, echo = T}
-local m2 = 2+2
-display `m2'*4
-```
-Denn $2+2*4\neq4*4$ 
-
-## `local` und `global` sind getrennte Welten
-
-Geht, aber ist nicht zu empfehlen:
-```{stata mac5a1}
-glo yx = 1
-loc yx = 2
-mac list yx
-mac list _yx
-```
-
-## Macros mit Text
-
-Wir können macros zu Texten zusammenbauen:
-```{stata macrobau0}
-glo t1 "Hallo"
-glo t2 " zusammen"
-glo t3 "! :-)"
-
-glo t4 = "${t1}${t2}${t3}"
-dis "${t4}"
-mac list t1 t2 t3 t4
-```
-
-## Dateipfade 
-
-Ein macro kann auch Text enthalten und wir können diesen bspw. für Dateipfade macros verwenden:
-
-```{stata mac8, eval=F}
-glo pfad "D:\Projekt\daten\BIBB_BAuA" // wo liegt der Datensatz?
-use "${pfad}/BIBBBAuA_2018_suf1.0.dta", clear // laden des Datensatzes 
-```
-
-Wir können das auch nutzen, um DoFiles in Kooperationsprojekten zu bauen, wenn verschiedenen Personen die DoFiles verwenden:
-```{r pfadillu, echo = F,out.width = "80%",fig.height= 3, fig.align="center"}
-knitr::include_graphics("./pics/01_pfade.png")
-```
-
-```{stata mac8dir1, eval=F}
-glo pfad "C:\Projekte\Micha" // wo liegt der Datensatz bei Alex?
-glo pfad "D:\Arbeit\Alex"    // wo liegt der Datensatz bei Micha?
-
-glo prog "${pfad}/prog"  
-glo data "${pfad}/data"
-glo log  "${pfad}/log"
-```
-Micha würde dann immer den Pfad von Alex überspringen/auskommentieren und umgekehrt. 
-Wir lernen [gleich](#if1) noch eine Möglichkeit kennen, das auch direkt mit zu lösen mit dem Usernamen der verwendeten PCs.
-
-```{stata mac8dir2, eval=F}
-use "${data}/BIBBBAuA_2018_suf1.0.dta", clear // laden des Datensatzes 
-```
-
-Bei Dateipfaden ist [jedoch `\` beim Zusammenbauen mit macros manchmal problematisch](#dir)). Ggf. hilft hier `/` statt `\` zu verwenden.
-
-## Bereits definierte Macros
-
-Mit `mac list` bekommen wir auch einige von Stata bereits vorgegebenen Macros angezeigt.
-```{stata mac5a, eval = F}
-mac list
-```
-
-Zwei sehr nützliche sind dabei `$S_DATE` `$S_TIME` - das aktuelle Datum und die aktuelle Zeit:
-```{stata mac5, eval = F}
-dis "$S_DATE"
-dis "$S_TIME"
-```
-```{stata mac5disp, eval = F}
-1 Dec 2021 
-12:44:22
+Mit `mat name[Spalte,Zeile]` können wir auf einen Teilbereich zugreifen:
+```{stata matrix04c}
+mat A = J(4,2,7)
+mat A[3,2] = 2
+mat list A
 ```
 
 
-Diese können wir beispielsweise am Anfang und Ende eines LogFiles einblenden, um Start- und Endzeit zu dokumentieren:
-```{stata mac5log, eval = F}
-log using "${log}/logfile.txt", t replace
-dis "Start: $S_DATE um $S_TIME"
-use ....
-.
-.
-.
-.
-.
-.
-dis "Ende: $S_DATE um $S_TIME"
-log close 
+Das nutzen wir jetzt um unsere Ergebnisse zu speichern:
+```{stata matrix05, eval = F}
+levelsof m1202, loc(ausb)
+glo ausb `ausb'
+
+mat G = J(4,2,.) // leere Matrix 
+mat l G
+mat colname G = m1202 share_w
+mat l G
+
+foreach lvl  of global ausb {
+	qui su S01 if m1202 == `lvl'
+	mat G[`lvl',1] = `lvl'  // 1. Spalte level von m1202
+	mat G[`lvl',2] = r(mean)*100 //2.Spalte: Frauenanteil
+}
 ```
 
-Außerdem gibt es einige `locals` mit nützlichen Infos:
-```{stata mac5locs, eval = F}
-dis "`c(username)'"
-dis "`c(machine_type)'"
-dis "`c(os)'"
+`help matrix operators` 
+
+```{r trib3,echo=F}
+tibble::tribble(~"Operator",~"Symbol",
+                "column join"            ,",",
+                "row join"               ,"\\\\ \ ", 
+                "transpose"              ,"'",
+                "negation"               ,"\\- "
+                ) %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 12) %>% 
+  column_spec(2,monospace = TRUE) 
+            
 ```
 
-```{stata mac5locsT, eval = F}
-Filser
-PC (64-bit x86-64)
-Windows
+```{stata mat01}
+matrix Y1 = 1, 3 
+mat l Y1
 ```
 
-
-Weitere "system parameters and settings" unter `help creturn` bspw.:
-`c(changed)` returns a numeric scalar equal to 0 if the dataset in memory has not changed since it was last saved and 1 otherwise. 
-`c(filename)` returns a string containing the filename last specified with a use or save, such as `"C:\Data\auto.dta"`. 
-`c(filedate)` returns a string containing the date and time the file in `c(filename)` was last saved, such as "7 Jul 2016 13:51". 
-
-
-### `if` {#if1}
-
-Mit `if (`local` == "...")` können wir macros abgleichen, um Befehle nur unter bestimmten Bedingungen auszuführen:
-```{stata macAM1, eval = F}
-if ("`c(username)'" == "Filser")  display "Du bist Filser"
-if ("`c(username)'" != "Fischer") display "Du bist nicht Fischer"
-```
-
-
-Das können wir für den Fall von eben mit mehreren Nutzern nutzen:
-```{stata macAM2, eval = F}
-if ("`c(username)'" == "Alex")   glo pfad "C:\Projekte\Micha" // wo liegt der Datensatz bei Alex?
-if ("`c(username)'" == "Micha")  glo pfad "D:\Arbeit\Alex"    // wo liegt der Datensatz bei Micha?
-
-glo prog "${pfad}/prog"  
-glo data "${pfad}/data"
-glo log  "${pfad}/log"
-
-use "${pfad}/BIBBBAuA_2018_suf1.0.dta", clear // laden des Datensatzes 
+```{stata mat02}
+matrix Y2 = 4\ 0
+mat l Y2
 ```
 
 
+```{stata mat03}
+matrix Y = (2, 1.5 \ 2.5, 3)
+mat l Y
+```
 
-### Macros als Variablennamen und Befehle
+Wir können auch Rechnungen einfügen:
+```{stata mat04}
+matrix X1 = (1+1, 2*3/4 \ 5/2, 3)
+mat l X1 
+```
 
-Auch so etwas ist möglich:
-```{stata macrobau1,eval = F}
-local n 200
-su F`n'
+Transponieren:
+
+```{stata mat05}
+matrix X2 = (1, 2, 3 \ 5 , 8 , 9)
+mat l X2 
+mat X3 = X2'
+mat l X3
+```
+## mehrere Kennzahlen ablegen
+
+Damit können wir zeilenweise eine `matrix` befüllen:
+```{stata tm12, eval = F}
+mat G2 = J(4,5,.) // leere Matrix 
+mat l G2
+mat colname G2 = m1202 p25 mean median p75 
+mat l G2
+
+foreach lvl  of global ausb {
+	qui su zpalter if m1202 == `lvl', det
+	mat GX = `lvl', r(p25), r(mean), r(p50), r(p75) 
+	mat G2[`lvl',1] = GX
+}
+mat l G2
 ```
 
 
-```{stata macrobaut,echo = F}
+```{stata tm12b, echo = F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-local n 200
-su F`n'
+quietly{
+  mvdecode F518_SUF, mv( 99998/ 99999)
+  mvdecode zpalter, mv(9999)
+  mvdecode F200, mv( 97/99)
+  mvdecode m1202, mv(-1)
+}
+mat G2 = J(4,5,.) // leere Matrix 
+mat colname G2 = m1202 p25 mean median p75 
+qui levelsof m1202, loc(ausb)
+foreach lvl  of local ausb {
+	qui su zpalter if m1202 == `lvl', det
+	mat GX = `lvl', r(p25), r(mean), r(p50), r(p75) 
+	mat G2[`lvl',1] = GX
+}
+mat l G2
 ```
-
-Ein macro kann auch ein Programm sein:
-```{stata mac8b, eval=F}
-loc t tab
-`t' zpalter
-```
-
-```{stata mac8b1, echo=F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-loc t tab
-`t' mobil
-```
-
-### `globals` durchsuchen {#allglo}
-
-
-Mit Hilfe sog. Wildcards können wir Zeichen "offen lassen":
-
-`?` ersetzt ein Zeichen
-`*` mehrere oder keines
-
-```{stata macall}
-glo x1 = 2
-glo x2 "das ist x2"
-glo x 291
-global allglo:  all globals "x*"
-mac l allglo
-```
-
-Hier haben wir auch schon die dritte Form der macro Definition kennengelernt, die sog. `extended macro function`, welche auf `:` folgt. Hier also `all globals`, im Laufe dieses Kurses werden wir noch zahlreiche dieser Funktionen kennenlernen. 
 
 ***
 
-**[Übung 1](#ue1)**
+**[Übung](#retue1)**
 
 ***
 
-## Wenn nicht `if`, dann `else`
+## Matrixoperationen
 
-Mit `if` haben wir die Möglichkeiten aber noch nicht ausgeschöpft - aus `help if`:
-```{stata ifelseif, eval = F}
-if `n'==1 {
-	local word "one"
-     }
-else if `n'==2 {
-	local word "two"
-}
-else if `n'==3 {
-	local word "three"
-}
-else {
-	local word "big"
-}
-display "`word'"
-```
+### Teilmatrizen
 
-Mit `exit` (`help exit_program`) können wir Stata zu einer Unterbrechung bringen:
-
->   More generally, exit causes Stata to terminate the current process and returns control to the calling process.
-
-```{stata ifelseif2}
-if "`c(username)'" == "Alex" {
-  glo pfad "C:\Projekte\Micha" // wo liegt der Datensatz bei Alex?
-	} 
-else if "`c(username)'" == "Micha" {
-  glo pfad "D:\Arbeit\Alex"    // wo liegt der Datensatz bei Micha?
-}
-else {
- display as error "Hier fehlt der passende Pfad"
- exit 
-}
+```{stata tm01}
+mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)
+mat l X1
 ```
 
 
+Wir können aus diesen Matrizen auch Teilbereiche auswählen:
+```{stata tm02, eval = F}
+matrix newmat = oldmat[Zeile(nbereich), Spalte(nbereich)]
+```
+Zeilenbereich und Spaltenbereich können einzelne Zahlen oder Bereiche mit durch zwei Punkte getrennten Start- und Endpositionen sein.
 
-## Schleifen:  `foreach` & `forvalues`
-
-Schleifen helfen uns das DRY ("Don't repeat yourself") Prinzip umzusetzen.
-
-Ein vereinfachtes Syntaxdiagramm der `foreach`-Schleife sieht so aus:
-```{stata foreach1, eval = F}
-foreach lname listtype list {
-  Befehle
-}
+Matrix B erstellen, welche die Zeile 2-4 und die Spalte 1-5 von X1 enthält:
+```{stata tm03, eval = F}
+matrix B = X1[2..4,1..5]
+mat l B
+mat l X1
+```
+```{stata tm04, echo = F}
+mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)
+matrix B = X1[2..4,1..5]
+mat l B
+mat l X1
 ```
 
-`lname` steht dabei für ein `local` macro.
-
-Wir können unterschiedliche Typen von `foreach`-Listen verwenden:
-– `of varlist`: Variablenlisten
-– `of newlist`: neue Variablen
-– `of numlist`: Nummernlisten - bspw. `(0(1)5)` $\Rightarrow$ "1 bis 5 in Schritten von 1" 
-– `in`: beliebige Listen von Buchstaben, Zahlen oder Wörtern (durch Leerzeichen getrennt)
-
-
-```{stata foreachn}
-foreach n of numlist 1/3 6(1)9  {
-    dis "`n'"
-}
+Um alle Zeilen nach der zweiten Zeile zu übernehmen, verwenden wir drei Punkte:
+```{stata tm05, eval = F}
+matrix C = X1[2...,1..5]
+mat l C
+mat l X1
 ```
 
-```{stata foreachn2}
-foreach n of numlist 6 4: -4  {
-    dis "`n'"
-}
+```{stata tm06, echo = F}
+qui mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)
+matrix C = X1[2...,1..5]
+mat l C
+mat l X1
 ```
 
-Mit  `ferest()` können wir uns die "noch übrigen Werte in der Liste anzeigen lassen:
-```{stata ferest}
-foreach n of numlist 1(1)5 {
-    dis "`n'"
-    dis "Es kommen noch: `ferest()'"
-}
-```
+<!-- * https://thedatamonkey.blogspot.com/2011/01/stata-matrices.html -->
 
-### Weitere Schleifentypen
-
-Es gibt außerdem `forvalues`:
-```{stata forvalues, eval = F}
-forvalues lname=range {
-  Befehle
-}
-```
-
-`forvalues`-Schleife ist eine `foreach`-Schleife mit `numlist`.
-Aber: Die `foreach`-Schleife mit einer `numlist` funktioniert nicht mit einer beliebig hohen Anzahl von Ziffern.
-In der `forvalues`-Schleife gibt es keine Beschränkung. Außerdem ist `forvalues`-Schleife schneller im Abarbeiten von Nummernlisten.
-
-Und dann gibt es noch die `while`-Schleife:
-
-```{stata while}
-loc i = 1
-while `i' <= 5 {
-  display "`i'"
-  loc i = `i' + 1
-}
-```
-
-Eine Besonderheit bei `local`s ist, dass wir mit `loc ++i` den Wert um 1 erhöhen können. Somit führt folgende Syntax zum gleichen Ergebnis:
-```{stata while2, eval = F}
-loc i = 1
-while `i' <= 5 {
-  display "`i'"
-  loc ++i
-}
+```{stata tm08}
+matrix A = J(3,4,.) 
+mat li A
 ```
 
 
-### Anwendung
-
-```{stata tabloop1, eval = F}
-foreach v of numlist 19(5)35 {
-	display "Alter bis `v'"
-	tab S1 if zpalter <= `v'
-}
+```{stata tm09}
+mat A1 = (1, 4, 2, 1) 
+mat li A1
 ```
 
+```{stata tm10, eval = F}
+mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile
+mat li A
+```
 
-```{stata tabloop2, echo = F}
+```{stata tm11, echo = F}
+matrix A = J(3,4,.) 
+mat A1 = (1, 4, 2, 1) 
+mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile
+mat li A
+```
+
+### `matrix` zu Datensatz
+
+`svmat coeff_, names(matcol)`
+
+
+
+## Regressionsergebnisse
+
+Die Koeffizienten und Standardfehler des letzten Modells werden in `e()` gespeichert:
+```{stata reg00,eval = F}
+reg F518_SUF F200
+```
+```{stata reg01,echo = F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-
-foreach v of numlist 19(5)35 {
-	display "Alter bis `v'"
-	tab S1 if zpalter <= `v'
+quietly{
+  mvdecode F518_SUF, mv( 99998/ 99999)
+  mvdecode zpalter, mv(9999)
+  mvdecode F200, mv( 97/99)
+  mvdecode m1202, mv(-1)
 }
-```
-
-...oder mit `inrange()`, um lediglich die 5-Jahresaltersgruppe anzuzeigen:
-```{stata tabloop3, eval = F}
-foreach v of numlist 19(5)35 {
-	display "Alter " `v' - 4 " bis " `v'
- 	tab S1 if inrange(zpalter,`v'-4, `v')
-	*su zpalter if inrange(zpalter,`v'-4, `v')
-}
+reg F518_SUF F200
 ```
 
 
-```{stata tabloop4, echo = F}
+```{stata reg01b,eval = F}
+mat l e(b)
+```
+```{stata reg01c,echo = F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-
-foreach v of numlist 19(5)35 {
-	display "Alter " `v' - 4 " bis " `v'
- 	tab S1 if inrange(zpalter,`v'-4, `v')
-	*su zpalter if inrange(zpalter,`v'-4, `v')
+quietly{
+  mvdecode F518_SUF, mv( 99998/ 99999)
+  mvdecode zpalter, mv(9999)
+  mvdecode F200, mv( 97/99)
+  mvdecode m1202, mv(-1)
+  reg F518_SUF F200
 }
+mat l e(b)
 ```
 
-### Schleifen aufbauen
+### Koeffizienten mit `_b` / `_se` aufrufen
 
-Einfache Schleife mit `if`/`else`: ist Zahl gerade oder ungerade?
+Allerdings gibt es noch eine Abkürzung mit `_b[varname]` bzw. `_se[varname]`:
 
-```{stata loopbuild, eval = F}
-loc n = 5
-if trunc(`n'/2) == `n'/2 display "ja"
-if trunc(`n'/2) != `n'/2 display "nein"
-
-loc n = 5
-dis mod(`n',2) 
-
-
-forvalues n = 1/10 {
-	if  mod(`n',2)  == 0 dis "`n' ist gerade"
-	if  mod(`n',2)  == 1 dis "`n' ist ungerade"
+```{stata reg02, eval = F}
+dis "Der Koeffizient für F200 ist " _b[F200]
+dis "Der Standardfehler des Koeffizienten für F200 ist " _se[F200]
+```
+```{stata reg02b,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+quietly{
+  mvdecode zpalter, mv(9999)
+mvdecode F518_SUF, mv( 99998/ 99999)
+mvdecode F200, mv( 97/99)
+mvdecode m1202, mv(-1)
+reg F518_SUF F200
 }
-
-forvalues n = 1/10 {
-	if  mod(`n',2)  == 0 {
-		dis "`n' ist gerade"
-	}
-	else if mod(`n',2)  == 1 {
-		dis "`n' ist ungerade"
-	} 
-	else {
-		display as error "hier ging was schief"
-		exit 
-	}
-}
+dis "Der Koeffizient für F200 ist " _b[F200]
+dis "Der Standardfehler des Koeffizienten für F200 ist " _se[F200]
 ```
 
-[mod() ist der Modulo-Operator ist Stata - es wird der "Rest" berechnet](https://de.wikipedia.org/wiki/Division_mit_Rest#Modulo)
+Wir können so auch vorhergesagte Werte berechnen - entweder für spezifische Werte:
+```{stata reg03, eval= F}
+dis _b[_cons] + 20 *_b[F200]
+margins, at(F200 = 20)
+```
+```{stata reg03b, echo= F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+quietly{
+  mvdecode zpalter, mv(9999)
+mvdecode F518_SUF, mv( 99998/ 99999)
+mvdecode F200, mv( 97/99)
+mvdecode m1202, mv(-1)
+reg F518_SUF F200
+}
+dis _b[_cons] + 20 *_b[F200]
+margins, at(F200 = 20) noatlegend
+```
+
+...oder für alle Beobachtungen:
+```{stata reg04, eval= F}
+gen pred_manual = _b[_cons] + F200 *_b[F200]
+predict pred_auto, xb
+gen diff=  pred_manual - pred_auto
+su diff
+```
+```{stata reg04b, echo= F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+quietly{
+  mvdecode zpalter, mv(9999)
+  mvdecode F518_SUF, mv( 99998/ 99999)
+  mvdecode F200, mv( 97/99)
+  mvdecode m1202, mv(-1)
+  reg F518_SUF F200
+  gen pred_manual = _b[_cons] + F200 *_b[F200]
+  predict pred_auto, xb
+  gen diff=  pred_manual - pred_auto
+}
+su diff
+```
+
+
+### Komplette Regressionstabelle
+
+
+```{stata regtab1, eval = F}
+reg F518_SUF F200
+matlist r(table) 
+```
+```{stata regtab2, echo= F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+quietly{
+  mvdecode zpalter, mv(9999)
+  mvdecode F518_SUF, mv( 99998/ 99999)
+  mvdecode F200, mv( 97/99)
+  mvdecode m1202, mv(-1)
+  reg F518_SUF F200
+}
+matlist r(table) 
+```
+
+
+## `frame`
+
+
+
+## `statsby`
+
+```{stata, eval = F}
+statsby _b _se, by(Bula) noisily: ///
+	regress F518_SUF c.F200##c.F200 i.m1202 i.S1
+```
+
+
+
 
 ***
 
-**[Übung 2](#ue2)**
+**[Übung 2](#retue2)**
 
 ***
-
-- Variablen & value labels anzeigen/bearbeiten 
-- Creating interaction variables
-- Fitting models with alternative measures of education
-- Recoding multiple variables the same way
-- Creating a macro that holds accumulated information
-- Retrieving information returned by Stata
-
 
 
 
 ## Übungen
 
-### Übung {#ue1}
+### Übung {#retue1}
 
-- Pfad zusammenbauen für `use`: Erstellen Sie den Pfad für den `use`-Befehl schrittweise und unter Berücksichtigung ihres Usernamens.
-  - ggf. Dateiverzeichnis einrichten mit Ordner *log*, *prog* und *data* (gerne auch mehr oder andere Namen)
-  - Legen Sie die Erwerbstätigenbefragung 2018 in den *data*-Ordner (oder dessen Äquivalent) 
-  - Wie ist der Username auf Ihrem Gerät?
-  - Verwenden Sie ein `if`-Statement, um den Dateipfad zu erstellen
+- Erstellen Sie eine Schleife, welche jeweils das Maximaleinkommen (basierend auf `F518_SUF`) für die Gemeindegrößenklassen (`gkpol`) anzeigt.
+  + Schließen Sie mit `mvdecode F518_SUF, mv( 99998/ 99999)` missings aus
+  + Wie kommen Sie an den Maximalwert für `F518_SUF`? Verwenden Sie bspw. `su` oder `tabstat` zusammen mit `return list`.
+  + Erstellen Sie mit `display` eine aussagekräftige Ausgabe
+  + Testen Sie Ihre Schleifenlogik mit einem `local`, um anschließend die Schleife "außen herumzubauen"
+  + Welche Ausprägungen hat `gkpol` - wie können Sie diese automatisch in eine Schleife überführen?
+
+
+- Sammeln Sie die Ergebnisse jetzt in einer `matrix` 
+  - Erstellen Sie eine leere `matrix` mit der passenden Anzahl an Zeilen und Spalten
+  - Kopieren Sie die oben erstellte Schleife und passen Sie diese so an, dass die Werte (zusätzlich zu Anzeige) in dieser `matrix` gesammelt werden. Stimmen die Werte?
+
+- Passen Sie Ihre Schleife an, sodass für jeden Durchlauf ein `global gkX` erstellt wird, wobei `X` für die Ausprägung von `gkpol` steht und den entsprechenden Maximalwert von `F518_SUF` für die entsprechende Größenklasse enthält.
 
   
-### Übung: FizzBuzz-Challenge {#ue2}
+### Übung
 
-Fizz Buzz wird/wurde ein Screening-Instrument für Programmierer\*innen verwendet. Fizz Buzz ist ein Kinderlernspiel, bei dem die Kinder üblicherweise im Kreis sitzen und reihum laut von eins aufwärts zählen. Allerdings gibt es zwei Regeln:
+nur bei N > 20
 
-+ Dabei müssen alle Zahlen, die durch drei teilbar sind, durch das Wort Fizz ersetzt werden und alle Zahlen, die durch fünf teilbar sind, durch das Wort Buzz.
-+ Wenn eine Zahl durch drei und fünf teilbar ist, dann wird Fizz Buzz gerufen.
+### Übung
 
++ save the coefficients in a separate data set
++ graph the educ and union coefficients against year
 
-- `if` & `else` für Schleife 
-  - 1-10: bei geraden Zahlen "gerade" und bei ungeraden Zahlen "ungerade" anzeigen
-Die 
-
-
-
-
-
-## Windows Dateipfade mit macros {#dir}
-
-[Aus der Stata-Doku zu macros](https://www.stata.com/manuals/u18.pdf#u18.3.11): 
-
-Stata uses the \ character to tell its parser not to expand macros.
-Windows uses the \ character as the directory path separator.
-Mostly, there is no problem using a \ in a filename. However, if you are writing a program that contains a Windows path in macro path and a filename in fname, do not assemble the final result as `‘path’\‘fname’` because Stata will interpret the \ as an instruction to not expand `‘fname’`. 
-Instead, assemble the final result as `‘path’/‘fname’`.
-Stata understands `/` as a directory separator on all platforms.
-
-$\Rightarrow$ 
-
-
-## Details
-
-### `local x` entspricht `global _x`
-
-Theoretisch kann man auch mit `global _x` einen `local x` erzeugen:
-```{stata det0a, eval= F}
-local   x = 2
-global _x = 3
-
-dis 
-```
-
-
-```{stata det0b, eval= F}
-local i=1 
-global _i=1
-```
-
-Damit könnte man auch so alle `locals` auflisten:
-
-```{stata alllocas, eval = F}
-glo x1 = 2
-glo x2 "das ist x2"
-glo x 291
-global allglo:  all globals "_x*"
-mac l allglo
-```
-
-
-
-
-```{stata det1, eval= F}
-global a "myvar"
-gen $a = oldvar   gen myvar = oldvar
-gen a = oldvar    gen a = oldvar
-
-local a "myvar"
-gen ‘a’ = oldvar gen myvar = oldvar
-
-gen a = oldvar gen a = oldvar
-global a "newvar"
-global i = 2
-gen $a$i = oldvar gen newvar2 = oldvar
-local a "newvar"
-local i = 2
-gen ‘a’‘i’ = oldvar gen newvar2 = oldvar
-global b1 "newvar"
-global i=1
-gen ${b$i} = oldvar gen newvar = oldvar
-local b1 "newvar"
-local i=1
-gen ‘b‘i’’ = oldvar gen newvar = oldvar
-global b1 "newvar"
-global a "b"
-global i = 1
-gen ${$a$i} = oldvar gen newvar = oldvar
-local b1 "newvar"
-local a "b"
-local i = 1
-gen ‘‘a’‘i’’ = oldvar gen newvar = oldvar
-```
 

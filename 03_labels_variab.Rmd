@@ -1,0 +1,125 @@
+# Label- und Variablenfunktionen {#labmacro}
+
+```{r setup3, echo = F, message=F, warning = F}
+if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+library(Statamarkdown)
+library(kableExtra)
+library(magrittr)
+# library(tidyverse)
+# library(ggthemes)
+```
+
+
+## Variableneigenschaften
+
+Um Informationen zu Variablen & Labels abzurufen, stehen eine ganze Reihe an extended macro functions zur Verfügung: 
+```{stata varprop, eval = F}
+loc v m1202
+
+local vartype:      type `v' 				// get variable storage type
+local varlab:      variable label `v' 		// get variable label
+local vallabname:  value label `v' 	// get value label name
+local vallab1 :    label (`v') 1		 	// get label for value of 1
+
+* 2. Display 'captured' attribute of pcode
+di "`vartype'" // display local "vartype"
+di "`varlab'" // display local "varlabel"
+di "`vallabname'" // display local "valuelabname"
+di "`vallab1'" // display local "valuelab1"
+```
+
+* 3. Access and display attributes of `v' in one step
+```{stata varprop2, eval = F}
+loc v m1202
+di "`: type `v''" 				// display variable storage type
+di "`: variable label `v''" 	// display variable label
+di "`: value label `v''" 		// display value label name
+di "`: label (`v') 1'" 		// display label for value of 1
+di "`: format `v''" 				// display variable format
+```
+
+Existiert eine Variable?
+```{stata, eval = F }
+capture confirm  variable lm02
+if !_rc dis "ja"
+if _rc 	dis	"nein"
+```
+
+Ist variable numerisch?
+
+```{stata confnum, eval = F }
+capture confirm numeric variable az
+if !_rc dis "ja"
+if _rc 	dis	"nein"
+```
+
+```{stata confnum,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+capture confirm numeric variable az
+if !_rc dis "ja"
+if _rc 	dis	"nein"
+```
+
+`help data_types`
+
+## wo kommt überall -4 vor?
+
+
+```{stata, eval = F}
+ds
+local varlist1 `r(varlist)'
+display "`varlist1'"
+foreach v of varlist1 {
+  qui count if `v' == -4
+  if r(N) > 0 glo var4: display "${var4} "`v'
+}
+```
+
+
+
+## Formatierung
+
+`real()`
+`help f_strofreal` Zahlen zu Text mit Formatierung
+
+
+
+// some further things you should know:
+// special macro functions (there are many), for example
+```{stata, eval = F}
+global sentence "here is a sentence 7"
+global w2: word 2 of $sentence
+mac list w2
+
+global len: word count $sentence
+mac list len
+```
+
+Variablen identifizieren and mark variables with certain properties and write them in ein `macro`
+```{stata, eval = F}
+ds, has(type byte)
+global bytevars `r(varlist)'
+
+foreach v of global bytevars {
+	rename `v' B`v'
+}
+```
+
+
+***
+
+**[Übung 1](#labue1)**
+
+***
+
+
+
+## Übungen
+
+### Übung {#labue1}
+
+
+

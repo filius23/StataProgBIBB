@@ -1,12 +1,3 @@
-clear all
-glo pfad "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
-use "${pfad}/BIBBBAuA_2018_suf1.0.dta", clear
-mvdecode zpalter, mv(9999)
-mvdecode F518_SUF, mv( 99998/ 99999)
-mvdecode F200, mv( 97/99)
-mvdecode m1202, mv(-1)
-
-
 * ------------------------------- *
 * local / global
 
@@ -66,16 +57,6 @@ dis "`c(username)'"
 dis "`c(machine_type)'"
 dis "`c(os)'"
 
-* globals durchsuchen:
-* wildcards -> ? ersetzt ein Zeichen, * mehrere oder keines
-
-glo x1 = 2
-glo x2 "das ist x2"
-glo x 291
-global allglo:  all globals "x*"
-mac l allglo
-
-
 
 * if
 if ("`c(username)'" == "Filser") display "Du bist Filser"
@@ -94,9 +75,49 @@ glo log  "${pfad}/log"
 use "${pfad}/BIBBBAuA_2018_suf1.0.dta", clear // laden des Datensatzes 
 
 
+* log file 
+* help datetime_display_formats
+* help d()
+global date = string( d($S_DATE), "%tdCY-N-D" )
+mac list date
+
+cap log close
+log using "${log}/01_macro_loops_${date}.log", replace text
+
+
+
+
+* ----------------------------------- *
+* if-Operatoren 
+
+loc x = 20
+if `x' >= 20 & `x' <= 30 display "yes"  
+if inrange(`x',20,30) display "yes"
+
+loc x = 20
+if `x' == 18 | `x' == 20 | `x' == 22 | `x' == 28 display "| yes"  
+if inlist(`x',18,20,22,28) display "inlist yes"  
+
+
+
+* macros können auch Befehle / Variablen sein:
+loc t tab
+`t' mobil
+
+local n 200
+su F`n'
+
+* if Operatoren und locals als Text -> "" nötig
+
+loc opt ja
+if inlist(`opt',"ja","JA","Ja","ok") tab mobil
+if inlist("`opt'","ja","JA","Ja","ok") tab mobil
+
+
 * ------------------------------- *
 * if & else 
 loc n = 3
+
 if `n'==1 {
 	local word "one"
      }
@@ -126,8 +147,10 @@ else {
   
 tab S1
 
+
+
 * ------------------------------- *
-* Schleifen basics
+* Schleifen basieren auf locals
 foreach n of numlist 1/3 6(1)9  {
     dis "`n'"
 }
@@ -187,7 +210,6 @@ dis mod(`n',2) //2, "Rest 1"
 dis mod(`n',3) //1, "Rest 2"
 
 
-
 forvalues n = 1/20 {
 	if  mod(`n',2)  == 0 dis "`n' ist gerade"
 	if  mod(`n',2)  != 0 dis "`n' ist ungerade"
@@ -208,23 +230,81 @@ forvalues n = 1/10 {
 
 
 help mod
-
 mod(x,y) = x - y*floor(x/y)
+
+
+
+
+* ------------------------------- *
+* nested loops 
+
+
+loc m = 1
+loc g = 2
+tab S1 if m1202 == `m' & gkpol == `g'
+
+
+forvalues g = 1/7 { 
+	forvalues m = 0/4 {
+			tab S1 if m1202 == `m' & gkpol == `g'
+	}
+	}
+
+loc appendfile `: word `i' of ${fileslist}'		
+	
+	
+	
+	
+// mapply pendant
+local nlist 2002 2002 2004 2012 
+local ilist 26 27 28 29 
+local jlist 23 22 21 20 
+
+forval m = 1/4 { 
+    gettoken n nlist : nlist 
+    gettoken i ilist : ilist 
+    gettoken j jlist : jlist 
+	di "n = " `n' " i = " `i' " j = " `j'
+}
+
+// tokenize
+
+local listname "age educ inc"
+tokenize `listname'
+mac li
+
+tokenize some words
+display "1=|`1'|, 2=|`2'| " _c " 3=|`3'|" // 3 ist leer ->
+
+
+global labormarket LABOUR
+
+display "$labormarket"
+display "$labourmarket"
+
+mac list labormarket
+mac list labourmarket
+
+
+
+
+
 
 
 * wild cards
 * inlist / inrange
 * capture
 
+
+
+
 * ------------------------------- *
 * local sind _globals 
-local   x = 2
-global _x=1
-dis "`x'"
-
-glo x1 = 2
-glo x2 "das ist x2"
-glo x 291
+loc x1 = 2
+loc x2 "das ist x2"
+loc x 291
 global allglo:  all globals "_x*"
 mac l allglo
 
+global allglo2:  all globals "x*"
+mac l allglo2

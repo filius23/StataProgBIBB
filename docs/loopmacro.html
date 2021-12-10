@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Schleifen aus Macros | Stata für Fortgeschrittene: Programmieren mit Postestimates, Macros und Schleifen in Stata</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Schleifen aus Macros | Stata für Fortgeschrittene: Programmieren mit Postestimates, Macros und Schleifen in Stata" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Schleifen aus Macros | Stata für Fortgeschrittene: Programmieren mit Postestimates, Macros und Schleifen in Stata" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Andreas Filser" />
+
+
+<meta name="date" content="2021-12-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="macro.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Stata @ BIBB</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Herzlich Willkommen</a></li>
+<li class="chapter" data-level="1" data-path="macro.html"><a href="macro.html"><i class="fa fa-check"></i><b>1</b> Macros</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="macro.html"><a href="macro.html#macht-einen-unterschied"><i class="fa fa-check"></i><b>1.1</b> <code>=</code> macht einen Unterschied</a></li>
+<li class="chapter" data-level="1.2" data-path="macro.html"><a href="macro.html#local-und-global-sind-getrennte-welten"><i class="fa fa-check"></i><b>1.2</b> <code>local</code> und <code>global</code> sind getrennte Welten</a></li>
+<li class="chapter" data-level="1.3" data-path="macro.html"><a href="macro.html#macros-mit-text"><i class="fa fa-check"></i><b>1.3</b> Macros mit Text</a></li>
+<li class="chapter" data-level="1.4" data-path="macro.html"><a href="macro.html#dateipfade"><i class="fa fa-check"></i><b>1.4</b> Dateipfade</a></li>
+<li class="chapter" data-level="1.5" data-path="macro.html"><a href="macro.html#cmac"><i class="fa fa-check"></i><b>1.5</b> Bereits definierte Macros</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="macro.html"><a href="macro.html#if1"><i class="fa fa-check"></i><b>1.5.1</b> <code>if</code></a></li>
+<li class="chapter" data-level="1.5.2" data-path="macro.html"><a href="macro.html#macros-als-variablennamen-und-befehle"><i class="fa fa-check"></i><b>1.5.2</b> Macros als Variablennamen und Befehle</a></li>
+<li class="chapter" data-level="1.5.3" data-path="macro.html"><a href="macro.html#allglo"><i class="fa fa-check"></i><b>1.5.3</b> <code>globals</code> durchsuchen</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="macro.html"><a href="macro.html#wenn-nicht-if-dann-else"><i class="fa fa-check"></i><b>1.6</b> Wenn nicht <code>if</code>, dann <code>else</code></a></li>
+<li class="chapter" data-level="1.7" data-path="macro.html"><a href="macro.html#schleifen-foreach-forvalues"><i class="fa fa-check"></i><b>1.7</b> Schleifen: <code>foreach</code> &amp; <code>forvalues</code></a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="macro.html"><a href="macro.html#ferest"><i class="fa fa-check"></i><b>1.7.1</b> <code>ferest()</code></a></li>
+<li class="chapter" data-level="1.7.2" data-path="macro.html"><a href="macro.html#weitere-schleifentypen"><i class="fa fa-check"></i><b>1.7.2</b> Weitere Schleifentypen</a></li>
+<li class="chapter" data-level="1.7.3" data-path="macro.html"><a href="macro.html#anwendung"><i class="fa fa-check"></i><b>1.7.3</b> Anwendung</a></li>
+<li class="chapter" data-level="1.7.4" data-path="macro.html"><a href="macro.html#schleifen-aufbauen"><i class="fa fa-check"></i><b>1.7.4</b> Schleifen aufbauen</a></li>
+<li class="chapter" data-level="1.7.5" data-path="macro.html"><a href="macro.html#nested-loop"><i class="fa fa-check"></i><b>1.7.5</b> nested loop</a></li>
+<li class="chapter" data-level="1.7.6" data-path="macro.html"><a href="macro.html#display-vs.-macro-list"><i class="fa fa-check"></i><b>1.7.6</b> <code>display</code> vs. <code>macro list</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="macro.html"><a href="macro.html#übungen"><i class="fa fa-check"></i><b>1.8</b> Übungen</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="macro.html"><a href="macro.html#ue1"><i class="fa fa-check"></i><b>1.8.1</b> Übung</a></li>
+<li class="chapter" data-level="1.8.2" data-path="macro.html"><a href="macro.html#ue2"><i class="fa fa-check"></i><b>1.8.2</b> FizzBuzz-Challenge</a></li>
+<li class="chapter" data-level="1.8.3" data-path="macro.html"><a href="macro.html#ue3"><i class="fa fa-check"></i><b>1.8.3</b> Übung</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="macro.html"><a href="macro.html#anhang"><i class="fa fa-check"></i><b>1.9</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="macro.html"><a href="macro.html#dir"><i class="fa fa-check"></i><b>1.9.1</b> Windows Dateipfade mit macros</a></li>
+<li class="chapter" data-level="1.9.2" data-path="macro.html"><a href="macro.html#debugging-wo-ist-der-wurm-drin"><i class="fa fa-check"></i><b>1.9.2</b> Debugging: Wo ist der Wurm drin?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="loopmacro.html"><a href="loopmacro.html"><i class="fa fa-check"></i><b>2</b> Schleifen aus Macros</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="loopmacro.html"><a href="loopmacro.html#local-erstellen-und-für-schleifen-verwenden"><i class="fa fa-check"></i><b>2.1</b> local erstellen und für Schleifen verwenden</a></li>
+<li class="chapter" data-level="2.2" data-path="loopmacro.html"><a href="loopmacro.html#informationen-aus-schleifen-behalten"><i class="fa fa-check"></i><b>2.2</b> Informationen aus Schleifen behalten</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="loopmacro.html"><a href="loopmacro.html#gespeichterte-ergebnisse"><i class="fa fa-check"></i><b>2.2.1</b> Gespeichterte Ergebnisse</a></li>
+<li class="chapter" data-level="2.2.2" data-path="loopmacro.html"><a href="loopmacro.html#e-und-r-sind-getrennte-welten"><i class="fa fa-check"></i><b>2.2.2</b> <code>e()</code> und <code>r()</code> sind getrennte Welten</a></li>
+<li class="chapter" data-level="2.2.3" data-path="loopmacro.html"><a href="loopmacro.html#ergebnisse-weiter-verwenden"><i class="fa fa-check"></i><b>2.2.3</b> Ergebnisse weiter verwenden</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="loopmacro.html"><a href="loopmacro.html#matrix"><i class="fa fa-check"></i><b>2.3</b> <code>matrix</code></a></li>
+<li class="chapter" data-level="2.4" data-path="loopmacro.html"><a href="loopmacro.html#mehrere-kennzahlen-ablegen"><i class="fa fa-check"></i><b>2.4</b> mehrere Kennzahlen ablegen</a></li>
+<li class="chapter" data-level="2.5" data-path="loopmacro.html"><a href="loopmacro.html#matrixoperationen"><i class="fa fa-check"></i><b>2.5</b> Matrixoperationen</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="loopmacro.html"><a href="loopmacro.html#teilmatrizen"><i class="fa fa-check"></i><b>2.5.1</b> Teilmatrizen</a></li>
+<li class="chapter" data-level="2.5.2" data-path="loopmacro.html"><a href="loopmacro.html#matrix-zu-datensatz"><i class="fa fa-check"></i><b>2.5.2</b> <code>matrix</code> zu Datensatz</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="loopmacro.html"><a href="loopmacro.html#regressionsergebnisse"><i class="fa fa-check"></i><b>2.6</b> Regressionsergebnisse</a></li>
+<li class="chapter" data-level="2.7" data-path="loopmacro.html"><a href="loopmacro.html#frame"><i class="fa fa-check"></i><b>2.7</b> <code>frame</code></a></li>
+<li class="chapter" data-level="2.8" data-path="loopmacro.html"><a href="loopmacro.html#statsby"><i class="fa fa-check"></i><b>2.8</b> <code>statsby</code></a></li>
+<li class="chapter" data-level="2.9" data-path="loopmacro.html"><a href="loopmacro.html#übungen-1"><i class="fa fa-check"></i><b>2.9</b> Übungen</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="loopmacro.html"><a href="loopmacro.html#retue1"><i class="fa fa-check"></i><b>2.9.1</b> Übung</a></li>
+<li class="chapter" data-level="2.9.2" data-path="loopmacro.html"><a href="loopmacro.html#übung"><i class="fa fa-check"></i><b>2.9.2</b> Übung</a></li>
+<li class="chapter" data-level="2.9.3" data-path="loopmacro.html"><a href="loopmacro.html#übung-1"><i class="fa fa-check"></i><b>2.9.3</b> Übung</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Stata für Fortgeschrittene: Programmieren mit Postestimates, Macros und Schleifen in Stata</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="loopmacro" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Schleifen aus Macros</h1>
+<div id="local-erstellen-und-für-schleifen-verwenden" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> local erstellen und für Schleifen verwenden</h2>
+<p>Schleifen aus globals / locals mit Hilfe von <code>levelsof</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="loopmacro.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> m1202</span>
+<span id="cb1-2"><a href="loopmacro.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">levelsof</span> m1202</span>
+<span id="cb1-3"><a href="loopmacro.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="loopmacro.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">levelsof</span> m1202, loc(ausb)</span>
+<span id="cb1-5"><a href="loopmacro.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">local</span> ausb {</span>
+<span id="cb1-6"><a href="loopmacro.html#cb1-6" aria-hidden="true" tabindex="-1"></a>    dis <span class="st">&quot;m1202: &quot;</span> <span class="ot">`lvl&#39;</span></span>
+<span id="cb1-7"><a href="loopmacro.html#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="loopmacro.html#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="loopmacro.html#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="loopmacro.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">levelsof</span> m1202, loc(ausb)</span>
+<span id="cb1-11"><a href="loopmacro.html#cb1-11" aria-hidden="true" tabindex="-1"></a>glo ausb <span class="ot">`ausb&#39;</span></span>
+<span id="cb1-12"><a href="loopmacro.html#cb1-12" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> ausb</span>
+<span id="cb1-13"><a href="loopmacro.html#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="loopmacro.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
+<span id="cb1-15"><a href="loopmacro.html#cb1-15" aria-hidden="true" tabindex="-1"></a>    dis <span class="st">&quot;m1202: &quot;</span> <span class="ot">`lvl&#39;</span></span>
+<span id="cb1-16"><a href="loopmacro.html#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-17"><a href="loopmacro.html#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="loopmacro.html#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="loopmacro.html#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
+<span id="cb1-20"><a href="loopmacro.html#cb1-20" aria-hidden="true" tabindex="-1"></a>    dis <span class="st">&quot;m1202: &quot;</span> <span class="ot">`lvl&#39;</span></span>
+<span id="cb1-21"><a href="loopmacro.html#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">tab</span> S1 <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span></span>
+<span id="cb1-22"><a href="loopmacro.html#cb1-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="informationen-aus-schleifen-behalten" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Informationen aus Schleifen behalten</h2>
+<div id="gespeichterte-ergebnisse" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Gespeichterte Ergebnisse</h3>
+<p>Um auf Ergebnisse zuzugreifen, können wir etwas hinter die Kulissen der Stata-Befehle sehen:</p>
+<table class="table table-condensed" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;color: white !important;">
+Befehl
+</th>
+<th style="text-align:left;color: white !important;">
+zeigt alle
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+c-class
+</td>
+<td style="text-align:left;">
+system parameters &amp; settings finden wir als <code>c()</code> - siehe <a href="macro.html#cmac">`<code>c(username)'</code></a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+r-class
+</td>
+<td style="text-align:left;">
+die meisten deskriptiven Befehle speichern die Ergebnisse in in <code>r()</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+e-class
+</td>
+<td style="text-align:left;">
+…außer estimation commands, wie bspw. <code>reg</code> - hier wird in <code>e()</code> gespeichert (Postestimates)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+s-class
+</td>
+<td style="text-align:left;">
+parsing commands store results in <code>s()</code> used by programmers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+n-class
+</td>
+<td style="text-align:left;">
+commands that do not store in <code>r()</code>, <code>e()</code>, oder <code>s()</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Jeweils alle Werte anzeigen mit:</p>
+<table class="table table-condensed" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Befehl
+</th>
+<th style="text-align:left;">
+zeigt alle
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+return list
+</td>
+<td style="text-align:left;font-family: monospace;">
+r()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+ereturn list
+</td>
+<td style="text-align:left;font-family: monospace;">
+e()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+sreturn list
+</td>
+<td style="text-align:left;font-family: monospace;">
+s()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+creturn list
+</td>
+<td style="text-align:left;font-family: monospace;">
+c()
+</td>
+</tr>
+</tbody>
+</table>
+<p>Es gibt dabei vier Typen an Ergebnissen:</p>
+<ul>
+<li><code>macro</code>: strings mit mehreren Wörtern (Text)</li>
+<li><code>matrix</code>: bspw. <code>e(b)</code> sind die Koeffizienten nach einem <code>reg</code>-Befehl oder <code>e(V)</code> ist die Varianz–Kovarianz Matrix der estimates (VCE)</li>
+<li><code>scalar</code>: einzelne Zahlen/Strings (1x1 Matrizen)</li>
+<li><code>functions</code>: bspw. <code>e(sample)</code> <span class="math inline">\(\Rightarrow\)</span> 1 (true) wenn die Beobachtung im vorheringen “estimation command” verwendet wurde und 0 (false) wenn nicht</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="loopmacro.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> S1</span>
+<span id="cb2-2"><a href="loopmacro.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span> <span class="ot">list</span></span></code></pre></div>
+<pre><code> Geschlecht |      Freq.     Percent        Cum.
+------------+-----------------------------------
+   mÃ¤nnlich |     10,074       50.34       50.34
+   weiblich |      9,938       49.66      100.00
+------------+-----------------------------------
+      Total |     20,012      100.00
+
+
+scalars:
+                  r(N) =  20012
+                  r(r) =  2</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="loopmacro.html#cb4-1" aria-hidden="true" tabindex="-1"></a>su S1</span>
+<span id="cb4-2"><a href="loopmacro.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span> <span class="ot">list</span></span></code></pre></div>
+<pre><code>    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          S1 |     20,012    1.496602    .5000009          1          2
+
+
+scalars:
+                  r(N) =  20012
+              r(sum_w) =  20012
+               r(mean) =  1.496602038776734
+                r(Var) =  .2500009464113147
+                 r(sd) =  .500000946410419
+                r(min) =  1
+                r(max) =  2
+                r(sum) =  29950</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="loopmacro.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF zpalter </span>
+<span id="cb6-2"><a href="loopmacro.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ereturn</span> <span class="ot">list</span></span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    16,543
+-------------+----------------------------------   F(1, 16541)     =    105.36
+       Model |  1.3092e+09         1  1.3092e+09   Prob &gt; F        =    0.0000
+    Residual |  2.0555e+11    16,541    12426773   R-squared       =    0.0063
+-------------+----------------------------------   Adj R-squared   =    0.0063
+       Total |  2.0686e+11    16,542    12505168   Root MSE        =    3525.2
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     zpalter |   24.62253   2.398848    10.26   0.000     19.92053    29.32453
+       _cons |    2381.28    115.577    20.60   0.000     2154.736    2607.823
+------------------------------------------------------------------------------
+
+
+scalars:
+                  e(N) =  16543
+               e(df_m) =  1
+               e(df_r) =  16541
+                  e(F) =  105.3561454498825
+                 e(r2) =  .0063290815436915
+               e(rmse) =  3525.162828161657
+                e(mss) =  1309236899.97876
+                e(rss) =  205551251614.9366
+               e(r2_a) =  .0062690083366028
+                 e(ll) =  -158590.4618746699
+               e(ll_0) =  -158642.9792418738
+               e(rank) =  2
+
+macros:
+            e(cmdline) : &quot;regress F518_SUF zpalter&quot;
+              e(title) : &quot;Linear regression&quot;
+          e(marginsok) : &quot;XB default&quot;
+                e(vce) : &quot;ols&quot;
+             e(depvar) : &quot;F518_SUF&quot;
+                e(cmd) : &quot;regress&quot;
+         e(properties) : &quot;b V&quot;
+            e(predict) : &quot;regres_p&quot;
+              e(model) : &quot;ols&quot;
+          e(estat_cmd) : &quot;regress_estat&quot;
+
+matrices:
+                  e(b) :  1 x 2
+                  e(V) :  2 x 2
+
+functions:
+             e(sample)   </code></pre>
+<p>Anstatt zu versuchen, den Überblick darüber zu behalten, was wo gespeichert wird, finden woe ganz unten in jeder Hilfedatei einen Hinweis wie
+“<code>summarize</code> stores the following in <code>r()</code>:” or “<code>mean</code> stores the following in <code>e()</code>” - entsprechend sehen wir die Ergebnisse in <code>return</code> bzw. <code>ereturn</code>.</p>
+</div>
+<div id="e-und-r-sind-getrennte-welten" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> <code>e()</code> und <code>r()</code> sind getrennte Welten</h3>
+<p>Neben dem Prinzip “One Data” folgt Stata auch dem Prinzip “One _-class”.
+Das bedeutet, dass wir nur den return oder ereturn für den letzten Befehl dieser Klasse sehen können.
+Wenn wir also <code>reg</code> ausführen und dann eine Reihe von r-Klassen-Aufrufen machen (z.B. <code>su</code>), wird uns der Aufruf von <code>ereturn</code> immer noch die Werte für `reg`` anzeigen.
+Sobald wir jedoch einen weiteren r-class-Befehl ausführen, verlieren wir den Zugriff auf die Ergebnisse des ersten Befehls.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="loopmacro.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> az F200</span>
+<span id="cb8-2"><a href="loopmacro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>su az</span>
+<span id="cb8-3"><a href="loopmacro.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ereturn</span> <span class="ot">list</span></span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    17,376
+-------------+----------------------------------   F(1, 17374)     =  33637.44
+       Model |  1269310.92         1  1269310.92   Prob &gt; F        =    0.0000
+    Residual |  655608.985    17,374   37.735063   R-squared       =    0.6594
+-------------+----------------------------------   Adj R-squared   =    0.6594
+       Total |   1924919.9    17,375  110.786757   Root MSE        =    6.1429
+
+------------------------------------------------------------------------------
+          az |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        F200 |   .9897533   .0053965   183.41   0.000     .9791755    1.000331
+       _cons |   3.937849   .1903973    20.68   0.000     3.564651    4.311047
+------------------------------------------------------------------------------
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+          az |     20,012    38.30557    11.75297         10        120
+
+
+scalars:
+                  e(N) =  17376
+               e(df_m) =  1
+               e(df_r) =  17374
+                  e(F) =  33637.43995203968
+                 e(r2) =  .6594097320849045
+               e(rmse) =  6.142887188019294
+                e(mss) =  1269310.915908093
+                e(rss) =  655608.9846442067
+               e(r2_a) =  .6593901286390708
+                 e(ll) =  -56197.03934279057
+               e(ll_0) =  -65554.6676770772
+               e(rank) =  2
+
+macros:
+            e(cmdline) : &quot;regress az F200&quot;
+              e(title) : &quot;Linear regression&quot;
+          e(marginsok) : &quot;XB default&quot;
+                e(vce) : &quot;ols&quot;
+             e(depvar) : &quot;az&quot;
+                e(cmd) : &quot;regress&quot;
+         e(properties) : &quot;b V&quot;
+            e(predict) : &quot;regres_p&quot;
+              e(model) : &quot;ols&quot;
+          e(estat_cmd) : &quot;regress_estat&quot;
+
+matrices:
+                  e(b) :  1 x 2
+                  e(V) :  2 x 2
+
+functions:
+             e(sample)   </code></pre>
+<!-- https://cscar.github.io/workshop-stata-intro/programming-advanced-features.html -->
+</div>
+<div id="ergebnisse-weiter-verwenden" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Ergebnisse weiter verwenden</h3>
+<p>Alle diese Informationen können wir mit einem Makro speichern bzw. weiter verarbeiten.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="loopmacro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>su S1</span>
+<span id="cb10-2"><a href="loopmacro.html#cb10-2" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Mittelwert beträgt: &quot;</span> <span class="fu">r</span>(<span class="kw">mean</span>)</span></code></pre></div>
+<pre><code>Der Mittelwert beträgt: 1.496602</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="loopmacro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>su S1</span>
+<span id="cb12-2"><a href="loopmacro.html#cb12-2" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Mittelwert beträgt: &quot;</span> <span class="fu">round</span>(<span class="fu">r</span>(<span class="kw">mean</span>),.01)</span></code></pre></div>
+<pre><code>Der Mittelwert beträgt: 1.5</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="loopmacro.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
+<span id="cb14-2"><a href="loopmacro.html#cb14-2" aria-hidden="true" tabindex="-1"></a>    dis <span class="st">&quot;m1202: &quot;</span> <span class="ot">`lvl&#39;</span></span>
+<span id="cb14-3"><a href="loopmacro.html#cb14-3" aria-hidden="true" tabindex="-1"></a>    su S01 <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span></span>
+<span id="cb14-4"><a href="loopmacro.html#cb14-4" aria-hidden="true" tabindex="-1"></a>    dis <span class="fu">r</span>(<span class="kw">mean</span>)</span>
+<span id="cb14-5"><a href="loopmacro.html#cb14-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-6"><a href="loopmacro.html#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="loopmacro.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
+<span id="cb14-8"><a href="loopmacro.html#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> su S01 <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span></span>
+<span id="cb14-9"><a href="loopmacro.html#cb14-9" aria-hidden="true" tabindex="-1"></a>    dis <span class="st">&quot;Der Frauenanteil in m1202=&quot;</span> <span class="ot">`lvl&#39;</span> <span class="st">&quot; beträgt: &quot;</span> <span class="fu">round</span>(<span class="fu">r</span>(<span class="kw">mean</span>)*100,.1) <span class="st">&quot;%&quot;</span></span>
+<span id="cb14-10"><a href="loopmacro.html#cb14-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-11"><a href="loopmacro.html#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="loopmacro.html#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="loopmacro.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
+<span id="cb14-14"><a href="loopmacro.html#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> su S01 <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span></span>
+<span id="cb14-15"><a href="loopmacro.html#cb14-15" aria-hidden="true" tabindex="-1"></a>    glo gend<span class="ot">`lvl&#39;</span>: <span class="kw">display</span> <span class="st">&quot;Der Frauenanteil in m1202=&quot;</span> <span class="ot">`lvl&#39;</span> <span class="st">&quot; beträgt: &quot;</span> <span class="fu">round</span>(<span class="fu">r</span>(<span class="kw">mean</span>)*100,.1) <span class="st">&quot;%&quot;</span></span>
+<span id="cb14-16"><a href="loopmacro.html#cb14-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Macros können auch “recursively” erstellt werden:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="loopmacro.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> x <span class="st">&quot;&quot;</span></span>
+<span id="cb15-2"><a href="loopmacro.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 1/20 {</span>
+<span id="cb15-3"><a href="loopmacro.html#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> x <span class="ot">$x</span> <span class="ot">`i&#39;</span></span>
+<span id="cb15-4"><a href="loopmacro.html#cb15-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-5"><a href="loopmacro.html#cb15-5" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">list</span> x</span></code></pre></div>
+<pre><code>x:              1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20</code></pre>
+<p>…somit können wir einen <code>global</code> auch zusammenbauen:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="loopmacro.html#cb17-1" aria-hidden="true" tabindex="-1"></a>glo gend <span class="st">&quot;&quot;</span></span>
+<span id="cb17-2"><a href="loopmacro.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
+<span id="cb17-3"><a href="loopmacro.html#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> su S01 <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span></span>
+<span id="cb17-4"><a href="loopmacro.html#cb17-4" aria-hidden="true" tabindex="-1"></a>    glo gend: <span class="kw">display</span> <span class="st">&quot;${gend}m1202=&quot;</span> <span class="ot">`lvl&#39;</span> <span class="st">&quot; &quot;</span> <span class="fu">round</span>(<span class="fu">r</span>(<span class="kw">mean</span>)*100,.1) <span class="st">&quot;% &quot;</span></span>
+<span id="cb17-5"><a href="loopmacro.html#cb17-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-6"><a href="loopmacro.html#cb17-6" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> gend</span></code></pre></div>
+<pre><code>  4. }
+
+gend:           m1202=1 45.6% m1202=2 53% m1202=3 37.8% m1202=4 48.9%</code></pre>
+</div>
+</div>
+<div id="matrix" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> <code>matrix</code></h2>
+<p>Matrizen helfen uns, die ergebnisse in handhabarer Form zu speichern (<code>help matrix</code>).</p>
+<ul>
+<li><p>eine <code>matrix</code> ausgeben:
+<code>matrix list matname</code></p></li>
+<li><p>eine <code>matrix</code> umbenennen:
+<code>matrix umbenennen altername neuername</code></p></li>
+<li><p>eine <code>matrix</code> oder alle löschen:
+<code>matrix drop [matlist]</code></p></li>
+</ul>
+<p>Mit <code>J(Zeilen,Spalten,Inhalt)</code> können wir eine Matrix mit gleichen Werten besetzen:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="loopmacro.html#cb19-1" aria-hidden="true" tabindex="-1"></a>mat G0 = <span class="fu">J</span>(4,2,0)</span>
+<span id="cb19-2"><a href="loopmacro.html#cb19-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> G0</span></code></pre></div>
+<pre><code>G0[4,2]
+    c1  c2
+r1   0   0
+r2   0   0
+r3   0   0
+r4   0   0</code></pre>
+<p>… mit <code>.</code> in allen Zellen:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="loopmacro.html#cb21-1" aria-hidden="true" tabindex="-1"></a>mat Gx = <span class="fu">J</span>(4,2,.)</span>
+<span id="cb21-2"><a href="loopmacro.html#cb21-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> Gx</span></code></pre></div>
+<pre><code>Gx[4,2]
+    c1  c2
+r1   .   .
+r2   .   .
+r3   .   .
+r4   .   .</code></pre>
+<p>Mit <code>mat name[Spalte,Zeile]</code> können wir auf einen Teilbereich zugreifen:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="loopmacro.html#cb23-1" aria-hidden="true" tabindex="-1"></a>mat A = <span class="fu">J</span>(4,2,7)</span>
+<span id="cb23-2"><a href="loopmacro.html#cb23-2" aria-hidden="true" tabindex="-1"></a>mat A[3,2] = 2</span>
+<span id="cb23-3"><a href="loopmacro.html#cb23-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">list</span> A</span></code></pre></div>
+<pre><code>A[4,2]
+    c1  c2
+r1   7   7
+r2   7   7
+r3   7   2
+r4   7   7</code></pre>
+<p>Das nutzen wir jetzt um unsere Ergebnisse zu speichern:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="loopmacro.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">levelsof</span> m1202, loc(ausb)</span>
+<span id="cb25-2"><a href="loopmacro.html#cb25-2" aria-hidden="true" tabindex="-1"></a>glo ausb <span class="ot">`ausb&#39;</span></span>
+<span id="cb25-3"><a href="loopmacro.html#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="loopmacro.html#cb25-4" aria-hidden="true" tabindex="-1"></a>mat G = <span class="fu">J</span>(4,2,.) <span class="co">// leere Matrix </span></span>
+<span id="cb25-5"><a href="loopmacro.html#cb25-5" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> G</span>
+<span id="cb25-6"><a href="loopmacro.html#cb25-6" aria-hidden="true" tabindex="-1"></a>mat colname G = m1202 share_w</span>
+<span id="cb25-7"><a href="loopmacro.html#cb25-7" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> G</span>
+<span id="cb25-8"><a href="loopmacro.html#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="loopmacro.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
+<span id="cb25-10"><a href="loopmacro.html#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> su S01 <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span></span>
+<span id="cb25-11"><a href="loopmacro.html#cb25-11" aria-hidden="true" tabindex="-1"></a>    mat G[<span class="ot">`lvl&#39;</span>,1] = <span class="ot">`lvl&#39;</span>  <span class="co">// 1. Spalte level von m1202</span></span>
+<span id="cb25-12"><a href="loopmacro.html#cb25-12" aria-hidden="true" tabindex="-1"></a>    mat G[<span class="ot">`lvl&#39;</span>,2] = <span class="fu">r</span>(<span class="kw">mean</span>)*100 <span class="co">//2.Spalte: Frauenanteil</span></span>
+<span id="cb25-13"><a href="loopmacro.html#cb25-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><code>help matrix operators</code></p>
+<table class="table table-condensed" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Operator
+</th>
+<th style="text-align:left;">
+Symbol
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+column join
+</td>
+<td style="text-align:left;font-family: monospace;">
+,
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+row join
+</td>
+<td style="text-align:left;font-family: monospace;">
+\
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+transpose
+</td>
+<td style="text-align:left;font-family: monospace;">
+’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+negation
+</td>
+<td style="text-align:left;font-family: monospace;">
+-
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="loopmacro.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> Y1 = 1, 3 </span>
+<span id="cb26-2"><a href="loopmacro.html#cb26-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> Y1</span></code></pre></div>
+<pre><code>Y1[1,2]
+    c1  c2
+r1   1   3</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="loopmacro.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> Y2 = 4\ 0</span>
+<span id="cb28-2"><a href="loopmacro.html#cb28-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> Y2</span></code></pre></div>
+<pre><code>Y2[2,1]
+    c1
+r1   4
+r2   0</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="loopmacro.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> Y = (2, 1.5 \ 2.5, 3)</span>
+<span id="cb30-2"><a href="loopmacro.html#cb30-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> Y</span></code></pre></div>
+<pre><code>Y[2,2]
+     c1   c2
+r1    2  1.5
+r2  2.5    3</code></pre>
+<p>Wir können auch Rechnungen einfügen:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="loopmacro.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> X1 = (1+1, 2*3/4 \ 5/2, 3)</span>
+<span id="cb32-2"><a href="loopmacro.html#cb32-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1 </span></code></pre></div>
+<pre><code>X1[2,2]
+     c1   c2
+r1    2  1.5
+r2  2.5    3</code></pre>
+<p>Transponieren:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="loopmacro.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> X2 = (1, 2, 3 \ 5 , 8 , 9)</span>
+<span id="cb34-2"><a href="loopmacro.html#cb34-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X2 </span>
+<span id="cb34-3"><a href="loopmacro.html#cb34-3" aria-hidden="true" tabindex="-1"></a>mat X3 = X2&#39;</span>
+<span id="cb34-4"><a href="loopmacro.html#cb34-4" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X3</span></code></pre></div>
+<pre><code>X2[2,3]
+    c1  c2  c3
+r1   1   2   3
+r2   5   8   9
+
+
+
+X3[3,2]
+    r1  r2
+c1   1   5
+c2   2   8
+c3   3   9</code></pre>
+</div>
+<div id="mehrere-kennzahlen-ablegen" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> mehrere Kennzahlen ablegen</h2>
+<p>Damit können wir zeilenweise eine <code>matrix</code> befüllen:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="loopmacro.html#cb36-1" aria-hidden="true" tabindex="-1"></a>mat G2 = <span class="fu">J</span>(4,5,.) <span class="co">// leere Matrix </span></span>
+<span id="cb36-2"><a href="loopmacro.html#cb36-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> G2</span>
+<span id="cb36-3"><a href="loopmacro.html#cb36-3" aria-hidden="true" tabindex="-1"></a>mat colname G2 = m1202 p25 <span class="kw">mean</span> <span class="kw">median</span> p75 </span>
+<span id="cb36-4"><a href="loopmacro.html#cb36-4" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> G2</span>
+<span id="cb36-5"><a href="loopmacro.html#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="loopmacro.html#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
+<span id="cb36-7"><a href="loopmacro.html#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> su zpalter <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span>, <span class="fu">det</span></span>
+<span id="cb36-8"><a href="loopmacro.html#cb36-8" aria-hidden="true" tabindex="-1"></a>    mat GX = <span class="ot">`lvl&#39;</span>, <span class="fu">r</span>(p25), <span class="fu">r</span>(<span class="kw">mean</span>), <span class="fu">r</span>(p50), <span class="fu">r</span>(p75) </span>
+<span id="cb36-9"><a href="loopmacro.html#cb36-9" aria-hidden="true" tabindex="-1"></a>    mat G2[<span class="ot">`lvl&#39;</span>,1] = GX</span>
+<span id="cb36-10"><a href="loopmacro.html#cb36-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-11"><a href="loopmacro.html#cb36-11" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> G2</span></code></pre></div>
+<pre><code>G2[4,5]
+        m1202        p25       mean     median        p75
+r1          1         29  42.627213         46         55
+r2          2         39  47.076531         49         56
+r3          3         41  48.092344         50         56
+r4          4         39  47.760744         49         57</code></pre>
+<hr />
+<p><strong><a href="loopmacro.html#retue1">Übung</a></strong></p>
+<hr />
+</div>
+<div id="matrixoperationen" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Matrixoperationen</h2>
+<div id="teilmatrizen" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Teilmatrizen</h3>
+<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="loopmacro.html#cb38-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)</span>
+<span id="cb38-2"><a href="loopmacro.html#cb38-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<pre><code>X1[4,5]
+     c1   c2   c3   c4   c5
+r1    1    2    3    4    5
+r2    6    7    8    9   10
+r3    0   -1   -2   -3   -5
+r4   -6   -7   -8   -9  -10</code></pre>
+<p>Wir können aus diesen Matrizen auch Teilbereiche auswählen:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="loopmacro.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> newmat = oldmat[Zeile(nbereich), Spalte(nbereich)]</span></code></pre></div>
+<p>Zeilenbereich und Spaltenbereich können einzelne Zahlen oder Bereiche mit durch zwei Punkte getrennten Start- und Endpositionen sein.</p>
+<p>Matrix B erstellen, welche die Zeile 2-4 und die Spalte 1-5 von X1 enthält:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="loopmacro.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> B = X1[2..4,1..5]</span>
+<span id="cb41-2"><a href="loopmacro.html#cb41-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B</span>
+<span id="cb41-3"><a href="loopmacro.html#cb41-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<pre><code>B[3,5]
+     c1   c2   c3   c4   c5
+r2    6    7    8    9   10
+r3    0   -1   -2   -3   -5
+r4   -6   -7   -8   -9  -10
+
+
+X1[4,5]
+     c1   c2   c3   c4   c5
+r1    1    2    3    4    5
+r2    6    7    8    9   10
+r3    0   -1   -2   -3   -5
+r4   -6   -7   -8   -9  -10</code></pre>
+<p>Um alle Zeilen nach der zweiten Zeile zu übernehmen, verwenden wir drei Punkte:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb43-1"><a href="loopmacro.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> C = X1[2...,1..5]</span>
+<span id="cb43-2"><a href="loopmacro.html#cb43-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C</span>
+<span id="cb43-3"><a href="loopmacro.html#cb43-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<pre><code>C[3,5]
+     c1   c2   c3   c4   c5
+r2    6    7    8    9   10
+r3    0   -1   -2   -3   -5
+r4   -6   -7   -8   -9  -10
+
+
+X1[4,5]
+     c1   c2   c3   c4   c5
+r1    1    2    3    4    5
+r2    6    7    8    9   10
+r3    0   -1   -2   -3   -5
+r4   -6   -7   -8   -9  -10</code></pre>
+<!-- * https://thedatamonkey.blogspot.com/2011/01/stata-matrices.html -->
+<div class="sourceCode" id="cb45"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb45-1"><a href="loopmacro.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> A = <span class="fu">J</span>(3,4,.) </span>
+<span id="cb45-2"><a href="loopmacro.html#cb45-2" aria-hidden="true" tabindex="-1"></a>mat li A</span></code></pre></div>
+<pre><code>A[3,4]
+    c1  c2  c3  c4
+r1   .   .   .   .
+r2   .   .   .   .
+r3   .   .   .   .</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb47-1"><a href="loopmacro.html#cb47-1" aria-hidden="true" tabindex="-1"></a>mat A1 = (1, 4, 2, 1) </span>
+<span id="cb47-2"><a href="loopmacro.html#cb47-2" aria-hidden="true" tabindex="-1"></a>mat li A1</span></code></pre></div>
+<pre><code>A1[1,4]
+    c1  c2  c3  c4
+r1   1   4   2   1</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb49-1"><a href="loopmacro.html#cb49-1" aria-hidden="true" tabindex="-1"></a>mat A[1,1]  =A1 <span class="co">// !! überschreibt die ganze 1. Zeile</span></span>
+<span id="cb49-2"><a href="loopmacro.html#cb49-2" aria-hidden="true" tabindex="-1"></a>mat li A</span></code></pre></div>
+<pre><code>A[3,4]
+    c1  c2  c3  c4
+r1   1   4   2   1
+r2   .   .   .   .
+r3   .   .   .   .</code></pre>
+</div>
+<div id="matrix-zu-datensatz" class="section level3" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> <code>matrix</code> zu Datensatz</h3>
+<p><code>svmat coeff_, names(matcol)</code></p>
+</div>
+</div>
+<div id="regressionsergebnisse" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Regressionsergebnisse</h2>
+<p>Die Koeffizienten und Standardfehler des letzten Modells werden in <code>e()</code> gespeichert:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb51-1"><a href="loopmacro.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF F200</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    14,659
+-------------+----------------------------------   F(1, 14657)     =   1370.76
+       Model |  1.3122e+10         1  1.3122e+10   Prob &gt; F        =    0.0000
+    Residual |  1.4031e+11    14,657  9572601.57   R-squared       =    0.0855
+-------------+----------------------------------   Adj R-squared   =    0.0855
+       Total |  1.5343e+11    14,658  10467142.3   Root MSE        =      3094
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        F200 |   109.4473   2.956134    37.02   0.000     103.6529    115.2417
+       _cons |  -344.1221   104.2802    -3.30   0.001    -548.5245   -139.7197
+------------------------------------------------------------------------------</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb53-1"><a href="loopmacro.html#cb53-1" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> <span class="fu">e</span>(b)</span></code></pre></div>
+<pre><code>e(b)[1,2]
+          F200       _cons
+y1   109.44727  -344.12212</code></pre>
+<p>Allerdings gibt es noch eine Abkürzung mit <code>_b[varname]</code> bzw. <code>_se[varname]</code>:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb55-1"><a href="loopmacro.html#cb55-1" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Der Koeffizient für F200 ist &quot;</span> _b[F200]</span>
+<span id="cb55-2"><a href="loopmacro.html#cb55-2" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Der Standardfehler des Koeffizienten für F200 ist &quot;</span> _se[F200]</span></code></pre></div>
+<pre><code>Der Koeffizient für F200 ist 109.44727
+
+Der Standardfehler des Koeffizienten für F200 ist 2.9561335</code></pre>
+<p>Wir können so auch vorhergesagte Werte berechnen - entweder für spezifische Werte:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb57-1"><a href="loopmacro.html#cb57-1" aria-hidden="true" tabindex="-1"></a>dis _b[<span class="dt">_cons</span>] + 20 *_b[F200]</span>
+<span id="cb57-2"><a href="loopmacro.html#cb57-2" aria-hidden="true" tabindex="-1"></a>margins, <span class="fu">at</span>(F200 = 20)</span></code></pre></div>
+<pre><code>1844.8234
+
+
+Adjusted predictions                            Number of obs     =     14,659
+Model VCE    : OLS
+
+Expression   : Linear prediction, predict()
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       _cons |   1844.823   49.14441    37.54   0.000     1748.494    1941.153
+------------------------------------------------------------------------------</code></pre>
+<p>…oder für alle Beobachtungen:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb59-1"><a href="loopmacro.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> pred_manual = _b[<span class="dt">_cons</span>] + F200 *_b[F200]</span>
+<span id="cb59-2"><a href="loopmacro.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> pred_auto, <span class="kw">xb</span></span>
+<span id="cb59-3"><a href="loopmacro.html#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="fu">diff</span>=  pred_manual - pred_auto</span>
+<span id="cb59-4"><a href="loopmacro.html#cb59-4" aria-hidden="true" tabindex="-1"></a>su <span class="fu">diff</span></span></code></pre></div>
+<pre><code>    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        diff |     17,376           0           0          0          0</code></pre>
+</div>
+<div id="frame" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> <code>frame</code></h2>
+</div>
+<div id="statsby" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> <code>statsby</code></h2>
+<div class="sourceCode" id="cb61"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb61-1"><a href="loopmacro.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="kw">statsby</span> _b _se, <span class="kw">by</span>(Bula) <span class="kw">noisily</span>: <span class="co">///</span></span>
+<span id="cb61-2"><a href="loopmacro.html#cb61-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">regress</span> F518_SUF c.F200##c.F200 i.m1202 i.S1</span></code></pre></div>
+<hr />
+<p><strong><a href="#retue2">Übung 2</a></strong></p>
+<hr />
+</div>
+<div id="übungen-1" class="section level2" number="2.9">
+<h2><span class="header-section-number">2.9</span> Übungen</h2>
+<div id="retue1" class="section level3" number="2.9.1">
+<h3><span class="header-section-number">2.9.1</span> Übung</h3>
+<ul>
+<li>Erstellen Sie eine Schleife, welche jeweils das Maximaleinkommen (basierend auf <code>F518_SUF</code>) für die Gemeindegrößenklassen (<code>gkpol</code>) anzeigt.
+<ul>
+<li>Schließen Sie mit <code>mvdecode F518_SUF, mv( 99998/ 99999)</code> missings aus</li>
+<li>Wie kommen Sie an den Maximalwert für <code>F518_SUF</code>? Verwenden Sie bspw. <code>su</code> oder <code>tabstat</code> zusammen mit <code>return list</code>.</li>
+<li>Erstellen Sie mit <code>display</code> eine aussagekräftige Ausgabe</li>
+<li>Testen Sie Ihre Schleifenlogik mit einem <code>local</code>, um anschließend die Schleife “außen herumzubauen”</li>
+<li>Welche Ausprägungen hat <code>gkpol</code> - wie können Sie diese automatisch in eine Schleife überführen?</li>
+</ul></li>
+<li>Sammeln Sie die Ergebnisse jetzt in einer <code>matrix</code>
+<ul>
+<li>Erstellen Sie eine leere <code>matrix</code> mit der passenden Anzahl an Zeilen und Spalten</li>
+<li>Kopieren Sie die oben erstellte Schleife und passen Sie diese so an, dass die Werte (zusätzlich zu Anzeige) in dieser <code>matrix</code> gesammelt werden. Stimmen die Werte?</li>
+</ul></li>
+<li>Passen Sie Ihre Schleife an, sodass für jeden Durchlauf ein <code>global gkX</code> erstellt wird, wobei <code>X</code> für die Ausprägung von <code>gkpol</code> steht und den entsprechenden Maximalwert von <code>F518_SUF</code> für die entsprechende Größenklasse enthält.</li>
+</ul>
+</div>
+<div id="übung" class="section level3" number="2.9.2">
+<h3><span class="header-section-number">2.9.2</span> Übung</h3>
+<p>nur bei N &gt; 20</p>
+</div>
+<div id="übung-1" class="section level3" number="2.9.3">
+<h3><span class="header-section-number">2.9.3</span> Übung</h3>
+<ul>
+<li>save the coefficients in a separate data set</li>
+<li>graph the educ and union coefficients against year</li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="macro.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Stata Tables BIBB.pdf", "Stata Tables BIBB.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
