@@ -52,13 +52,18 @@ di "`vallab1'" // display local "valuelab1"
 
 loc v m1202
 * 3. Access and display attributes of `v' in one step
- di "`: type `v''" 				// display variable storage type
- di "`: variable label `v''" 	// display variable label
- di "`: value label `v''" 		// display value label name
- di "`: label (`v') 1'" 		// display label for value of 1
+di "`: type `v''" 				// display variable storage type
+di "`: variable label `v''" 	// display variable label
+di "`: value label `v''" 		// display value label name
+di "`: label (`v') 1'" 		// display label for value of 1
+di "`: format `v''" 				// display variable format
 
-
-
+loc v m1202
+ 	
+	
+	
+	
+	
        type 			varname
        format 			varname
        value label 		varname
