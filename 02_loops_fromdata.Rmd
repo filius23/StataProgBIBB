@@ -108,16 +108,16 @@ ereturn list
 ```{stata retlist03,echo = F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 quietly{
-  mvdecode zpalter, mv(9999)
-mvdecode F518_SUF, mv( 99998/ 99999)
-mvdecode F200, mv( 97/99)
-mvdecode m1202, mv(-1)
+    mvdecode zpalter, mv(9999)
+    mvdecode F518_SUF, mv( 99998/ 99999)
+    mvdecode F200, mv( 97/99)
+    mvdecode m1202, mv(-1)
 }
 reg F518_SUF zpalter 
 ereturn list
 ```
 
-Anstatt zu versuchen, den Überblick darüber zu behalten, was wo gespeichert wird, finden woe ganz unten in jeder Hilfedatei einen Hinweis wie
+Anstatt zu versuchen, den Überblick darüber zu behalten, was wo gespeichert wird, finden wir ganz unten in jeder Hilfedatei einen Hinweis wie
 "`summarize` stores the following in `r()`:" or "`mean` stores the following in `e()`" - entsprechend sehen wir die Ergebnisse in `return` bzw. `ereturn`.
 
 ### `e()` und `r()` sind getrennte Welten
@@ -148,13 +148,13 @@ ereturn list
 
 <!-- https://cscar.github.io/workshop-stata-intro/programming-advanced-features.html -->
 
-### Ergebnisse weiter verwenden
+## Ergebnisse weiter verwenden
 
 Alle diese Informationen können wir mit einem Makro speichern bzw. weiter verarbeiten. 
 
 ```{stata retlist4, eval= F}
 su S1
-dis "Mittelwert beträgt: " r(mean)
+dis "Der Mittelwert beträgt: " r(mean)
 ```
 ```{stata retlist04,echo = F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
@@ -164,7 +164,7 @@ dis "Der Mittelwert beträgt: " r(mean)
 
 ```{stata retlist5, eval= F}
 su S1
-dis "Mittelwert beträgt: " round(r(mean),.01)
+dis "Der Mittelwert beträgt: " round(r(mean),.01)
 ```
 
 ```{stata retlist05,echo = F}
@@ -232,7 +232,7 @@ foreach lvl  of global ausb {
 mac l gend
 ```
 
-## `matrix`
+## Kennzahlen in `matrix` ablegen
 
 Matrizen helfen uns, die ergebnisse in handhabarer Form zu speichern (`help matrix`).
 
@@ -263,6 +263,70 @@ mat A[3,2] = 2
 mat list A
 ```
 
+### Namen für Spalten und Zeilen einer `matrix` 
+
+Aber wir können die Zeilennamen einer `matrix` verändern:
+
+```{stata matname1}
+mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 )
+mat l X1
+```
+
+
+```{stata matname1b, eval = F}
+mat rowname X1 = year result
+mat list X1
+```
+
+```{stata matname1c, echo = F}
+mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 )
+mat rowname X1 = year result
+mat list X1
+```
+
+```{stata matname2}
+mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 )
+mat l X1
+```
+
+Wenn zu wenige Namen angegeben werden, wird der letzte Wert einfach wiederholt:
+```{stata matname2b, eval = F}
+mat colname X1 = var1 var2
+mat list X1
+```
+
+```{stata matname2c, echo = F}
+mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 )
+mat colname X1 = var1 var2
+mat list X1
+```
+
+
+### Zeile einfügen
+```{stata tm08}
+matrix A = J(3,4,.) 
+mat li A
+```
+
+
+```{stata tm09}
+mat A1 = (1, 4, 2, 1) 
+mat li A1
+```
+
+```{stata tm10, eval = F}
+mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile
+mat li A
+```
+
+```{stata tm11, echo = F}
+matrix A = J(3,4,.) 
+mat A1 = (1, 4, 2, 1) 
+mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile
+mat li A
+```
+
+### `matrix` befüllen
 
 Das nutzen wir jetzt um unsere Ergebnisse zu speichern:
 ```{stata matrix05, eval = F}
@@ -281,52 +345,6 @@ foreach lvl  of global ausb {
 }
 ```
 
-`help matrix operators` 
-
-```{r trib3,echo=F}
-tibble::tribble(~"Operator",~"Symbol",
-                "column join"            ,",",
-                "row join"               ,"\\\\ \ ", 
-                "transpose"              ,"'",
-                "negation"               ,"\\- "
-                ) %>% 
-  kable() %>% 
-  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 12) %>% 
-  column_spec(2,monospace = TRUE) 
-            
-```
-
-```{stata mat01}
-matrix Y1 = 1, 3 
-mat l Y1
-```
-
-```{stata mat02}
-matrix Y2 = 4\ 0
-mat l Y2
-```
-
-
-```{stata mat03}
-matrix Y = (2, 1.5 \ 2.5, 3)
-mat l Y
-```
-
-Wir können auch Rechnungen einfügen:
-```{stata mat04}
-matrix X1 = (1+1, 2*3/4 \ 5/2, 3)
-mat l X1 
-```
-
-Transponieren:
-
-```{stata mat05}
-matrix X2 = (1, 2, 3 \ 5 , 8 , 9)
-mat l X2 
-mat X3 = X2'
-mat l X3
-```
-## mehrere Kennzahlen ablegen
 
 Damit können wir zeilenweise eine `matrix` befüllen:
 ```{stata tm12, eval = F}
@@ -369,204 +387,198 @@ mat l G2
 
 ***
 
-## Matrixoperationen
+## Labels behalten 
 
-### Teilmatrizen
+### `extended macro functions` für Labels & Variableneigenschaften
 
-```{stata tm01}
-mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)
-mat l X1
+Idealerweise würden wir aber gerne nicht nur 1-4 in `m1202` behalten, sondern die Labels (`Ohne Berufsabschluss`) usw. 
+Um Informationen zu Variablen & Labels abzurufen, lernen wir [später](#labmacro) eine ganze Reihe an extended macro functions kennen, für den Moment reicht uns `label (varname) varvalue`: 
+```{stata varlab0, eval = F}
+loc v m1202
+local vallab1 :    label (`v') 1		 	// Value label für Wert = 1
+dis "`vallab1'"     // display local "valuelab1"
 ```
 
-
-Wir können aus diesen Matrizen auch Teilbereiche auswählen:
-```{stata tm02, eval = F}
-matrix newmat = oldmat[Zeile(nbereich), Spalte(nbereich)]
-```
-Zeilenbereich und Spaltenbereich können einzelne Zahlen oder Bereiche mit durch zwei Punkte getrennten Start- und Endpositionen sein.
-
-Matrix B erstellen, welche die Zeile 2-4 und die Spalte 1-5 von X1 enthält:
-```{stata tm03, eval = F}
-matrix B = X1[2..4,1..5]
-mat l B
-mat l X1
-```
-```{stata tm04, echo = F}
-mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)
-matrix B = X1[2..4,1..5]
-mat l B
-mat l X1
-```
-
-Um alle Zeilen nach der zweiten Zeile zu übernehmen, verwenden wir drei Punkte:
-```{stata tm05, eval = F}
-matrix C = X1[2...,1..5]
-mat l C
-mat l X1
-```
-
-```{stata tm06, echo = F}
-qui mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)
-matrix C = X1[2...,1..5]
-mat l C
-mat l X1
-```
-
-<!-- * https://thedatamonkey.blogspot.com/2011/01/stata-matrices.html -->
-
-```{stata tm08}
-matrix A = J(3,4,.) 
-mat li A
-```
-
-
-```{stata tm09}
-mat A1 = (1, 4, 2, 1) 
-mat li A1
-```
-
-```{stata tm10, eval = F}
-mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile
-mat li A
-```
-
-```{stata tm11, echo = F}
-matrix A = J(3,4,.) 
-mat A1 = (1, 4, 2, 1) 
-mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile
-mat li A
-```
-
-### `matrix` zu Datensatz
-
-`svmat coeff_, names(matcol)`
-
-
-
-## Regressionsergebnisse
-
-Die Koeffizienten und Standardfehler des letzten Modells werden in `e()` gespeichert:
-```{stata reg00,eval = F}
-reg F518_SUF F200
-```
-```{stata reg01,echo = F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+```{stata varlab, echo = F}
+qui use  "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 quietly{
-  mvdecode F518_SUF, mv( 99998/ 99999)
-  mvdecode zpalter, mv(9999)
-  mvdecode F200, mv( 97/99)
-  mvdecode m1202, mv(-1)
+		mvdecode m1202, mv(-1)
 }
-reg F518_SUF F200
+loc v m1202
+local vallab1 :    label (`v') 1		 	// Value label für Wert = 1
+dis "`vallab1'"     // display local "valuelab1"
+```
+
+Leider können wir nicht einfach die Labels der Variable in die `matrix` schreiben.
+In einer Matrix sind nur Zahlenwerte erlaubt:
+```{stata matstr, error = T}
+mat M = c(2\"label")
 ```
 
 
-```{stata reg01b,eval = F}
-mat l e(b)
+### Labels als `rowname`
+
+
+```{stata matrname01, eval = F}
+loc lvl = 1
+qui su zpalter if m1202 == `lvl', det
+mat GX = `lvl', r(p25), r(mean), r(p50), r(p75) 
+local vallab1 :    label (m1202) `lvl' // label aufrufen
+mat rowname GX =  "`vallab1'" // in Zeilenname ablegen
+mat l GX
 ```
-```{stata reg01c,echo = F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+
+...damit erweitern wir die Schleife von oben:
+```{stata matrname02, eval = F}
+mat G2 = J(4,5,.) // leere Matrix 
+mat colname G2 = m1202 p25 mean median p75 
+foreach lvl  of local ausb {
+	qui su zpalter if m1202 == `lvl', det
+	mat GX = `lvl', r(p25), r(mean), r(p50), r(p75) 
+	mat G2[`lvl',1] = GX
+}
+mat l G2
+```
+
+... beim letzten Schritt (`mat G2['lvl',1] = GX`) ginge aber rowname von `GX` wieder verloren, daher bauen wir die Schleife etwas um:
+```{stata matrname03, eval=F}
+levelsof m1202, loc(ausb)
+foreach lvl  of local ausb {
+	qui su zpalter if m1202 == `lvl', det
+	mat GX`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75) 
+	mat colname GX`lvl' = m1202 p25 mean median p75 
+	
+	local vallab1 :    label (m1202) `lvl'
+	mat rowname GX`lvl' =  "`vallab1'"
+}
+mat G = GX1\GX2\GX3\GX4
+mat l G
+```
+
+
+```{stata matrname04, echo=F}
+set linesize 200
+qui use  "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 quietly{
-  mvdecode F518_SUF, mv( 99998/ 99999)
-  mvdecode zpalter, mv(9999)
-  mvdecode F200, mv( 97/99)
-  mvdecode m1202, mv(-1)
-  reg F518_SUF F200
+		mvdecode zpalter, mv(9999)
+		mvdecode F518_SUF, mv( 99998/ 99999)
+		mvdecode F200, mv( 97/99)
+		mvdecode m1202, mv(-1)
+		levelsof m1202, loc(ausb)
+    glo ausb `ausb'
 }
-mat l e(b)
+
+mat G2 = J(4,5,.) // leere Matrix 
+mat colname G2 = m1202 p25 mean median p75 
+
+foreach lvl  of global ausb {
+	qui su zpalter if m1202 == `lvl', det
+	mat GX`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75) 
+	mat colname GX`lvl' = m1202 p25 mean median p75 
+	
+	local vallab1 :    label (m1202) `lvl'
+	mat rowname GX`lvl' =  "`vallab1'"
+}
+mat G = GX1\GX2\GX3\GX4
+mat l G
 ```
 
-### Koeffizienten mit `_b` / `_se` aufrufen
 
-Allerdings gibt es noch eine Abkürzung mit `_b[varname]` bzw. `_se[varname]`:
 
-```{stata reg02, eval = F}
-dis "Der Koeffizient für F200 ist " _b[F200]
-dis "Der Standardfehler des Koeffizienten für F200 ist " _se[F200]
-```
-```{stata reg02b,echo = F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+```{stata matrname07, echo = F, eval = F}
 quietly{
-  mvdecode zpalter, mv(9999)
-mvdecode F518_SUF, mv( 99998/ 99999)
-mvdecode F200, mv( 97/99)
-mvdecode m1202, mv(-1)
-reg F518_SUF F200
+    use  "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+		mvdecode zpalter, mv(9999)
+		mvdecode F518_SUF, mv( 99998/ 99999)
+		mvdecode F200, mv( 97/99)
+		mvdecode m1202, mv(-1)
+		levelsof m1202, loc(ausb)
+    glo ausb `ausb'
 }
-dis "Der Koeffizient für F200 ist " _b[F200]
-dis "Der Standardfehler des Koeffizienten für F200 ist " _se[F200]
+
+mat G2 = J(4,5,.) // leere Matrix 
+mat colname G2 = m1202 p25 mean median p75 
+
+foreach lvl  of global ausb {
+	qui su zpalter if m1202 == `lvl', det
+	mat GX`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75) 
+	mat colname GX`lvl' = m1202 p25 mean median p75 
+	
+	local vallab1 :    label (m1202) `lvl'
+	mat rowname GX`lvl' =  "`vallab1'"
+}
+mat G = GX1\GX2\GX3\GX4
+xsvmat G, collabels(coef) names(col) fast rownames(lab)
+list, noobs clean
 ```
 
-Wir können so auch vorhergesagte Werte berechnen - entweder für spezifische Werte:
-```{stata reg03, eval= F}
-dis _b[_cons] + 20 *_b[F200]
-margins, at(F200 = 20)
+
+
+## Von der `matrix` zum Datensatz
+
+Mit `svmat` bzw. dem ado `xsvmat` können wir eine `matrix` in einen Datensatz umwandeln. 
+Mit `svmat` gehen allerdings mühsam erstellen Zeilennamen verloren.
+In `xsvmat` können wir diese mit `rownames(lab)` in die Variable `lab` ablegen.
+Außerdem nutzt `xsvmat` die neue [`frame`](#frame)- Funktion, um einen neuen Datensatz zu erstellen.
+
+```{stata xsvmat0, eval = F}
+ssc install  xsvmat
 ```
-```{stata reg03b, echo= F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+
+```{stata xsvmat2, eval = F}
+xsvmat G, names(col) frame(res1) rownames(lab)
+frame change res1
+list, noobs clean
+```
+
+```{stata matrname06, eval = F}
+                                                         lab   m1202   p25       mean   median   p75  
+                                        Ohne Berufsabschluss       1    29   42.62721       46    55  
+    duale o. schulische Berufsausbildung/einf.,mittl. Beamte       2    39   47.07653       49    56  
+    Aufstiegsfortbildung (Meister, Techniker, kfm. AFB u.ä.)       3    41   48.09234       50    56  
+            Fachhochschule, Universität/ geh., höhere Beamte       4    39   47.76074       49    57  
+```
+
+
+
+## `frame`: direkt als Datensatz {#frame}
+
+Das hat allerdings den Nachteil, dass wir die Originaldaten verändern oder löschen. 
+Seit Version 16 bietet Stata  mit den [`frame`](https://www.stata.com/features/overview/multiple-datasets-in-memory/)-Befehlen auch die Möglichkeit, mehrere Datensätze parallel zu bearbeiten.
+
++ mit `frame create nameX` können wir einen neuen Datensatz mit dem Namen `nameX` erstellen (der bisherige wird als `default` bezeichnet)
++ mit `frame dir` bekommen wir eine Übersicht zu den verschiedenen `frame`s der aktuellen Stata-Session
++ mit `frame change` *name* können wir zwischen den verschiedenen `frame`s hin- und herspringen 
++ mit `frame drop` *name*  können wir einen `frame` wieder löschen
+
+
+
+```{stata framexsvmat0, echo = F, eval = F}
 quietly{
-  mvdecode zpalter, mv(9999)
-mvdecode F518_SUF, mv( 99998/ 99999)
-mvdecode F200, mv( 97/99)
-mvdecode m1202, mv(-1)
-reg F518_SUF F200
+    use  "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+		mvdecode zpalter, mv(9999)
+		mvdecode F518_SUF, mv( 99998/ 99999)
+		mvdecode F200, mv( 97/99)
+		mvdecode m1202, mv(-1)
+		levelsof m1202, loc(ausb)
+    glo ausb `ausb'
 }
-dis _b[_cons] + 20 *_b[F200]
-margins, at(F200 = 20) noatlegend
-```
 
-...oder für alle Beobachtungen:
-```{stata reg04, eval= F}
-gen pred_manual = _b[_cons] + F200 *_b[F200]
-predict pred_auto, xb
-gen diff=  pred_manual - pred_auto
-su diff
-```
-```{stata reg04b, echo= F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-quietly{
-  mvdecode zpalter, mv(9999)
-  mvdecode F518_SUF, mv( 99998/ 99999)
-  mvdecode F200, mv( 97/99)
-  mvdecode m1202, mv(-1)
-  reg F518_SUF F200
-  gen pred_manual = _b[_cons] + F200 *_b[F200]
-  predict pred_auto, xb
-  gen diff=  pred_manual - pred_auto
+mat G2 = J(4,5,.) // leere Matrix 
+mat colname G2 = m1202 p25 mean median p75 
+
+foreach lvl  of global ausb {
+	qui su zpalter if m1202 == `lvl', det
+	mat GX`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75) 
+	mat colname GX`lvl' = m1202 p25 mean median p75 
+	
+	local vallab1 :    label (m1202) `lvl'
+	mat rowname GX`lvl' =  "`vallab1'"
 }
-su diff
-```
-
-
-### Komplette Regressionstabelle
-
-
-```{stata regtab1, eval = F}
-reg F518_SUF F200
-matlist r(table) 
-```
-```{stata regtab2, echo= F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-quietly{
-  mvdecode zpalter, mv(9999)
-  mvdecode F518_SUF, mv( 99998/ 99999)
-  mvdecode F200, mv( 97/99)
-  mvdecode m1202, mv(-1)
-  reg F518_SUF F200
-}
-matlist r(table) 
-```
-
-
-## `frame`
-
-
-
-## `statsby`
-
-```{stata, eval = F}
-statsby _b _se, by(Bula) noisily: ///
-	regress F518_SUF c.F200##c.F200 i.m1202 i.S1
+mat G = GX1\GX2\GX3\GX4
+frame 
+xsvmat G, collabels(coef) names(col) fast rownames(lab)
+list, noobs clean
 ```
 
 
@@ -601,7 +613,7 @@ statsby _b _se, by(Bula) noisily: ///
   
 ### Übung
 
-nur bei N > 20
+nur bei N > 100 bei `F233_nuts2`
 
 ### Übung
 
