@@ -1,5 +1,12 @@
 * ------------------------------- *
 * Labels
+
+
+
+
+
+
+
 * --> val label loop.do
 
 
@@ -30,7 +37,7 @@ loc v m1202
 
 local vartype: type `v' 				// get variable storage type
 local varlab: variable label `v' 		// get variable label
-local vallabname : value label `v' 	// get value label name
+local vallabname : value label `v' 		// get value label name
 local vallab1 : label (`v') 1		 	// get label for value of 1
 
 * 2. Display 'captured' attribute of pcode

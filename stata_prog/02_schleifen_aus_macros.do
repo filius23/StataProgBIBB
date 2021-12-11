@@ -144,6 +144,20 @@ mat Z2[1,2] = 9
 mat l Z2
 
 
+mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)
+mat B1 = X1[1,1...] \ X1[4,1...]
+mat l B1
+mat l X1
+
+
+matrix A = J(3,4,.) 
+mat li A
+mat A1 = (1, 4, 2, 1) 
+mat li A1
+
+mat A[1,1]  =A1
+mat li A
+
 * ---------------------- *
 * mehrere Kennzahlen
 
@@ -171,41 +185,26 @@ foreach lvl  of global ausb {
 }
 mat l G2
 
-matrix A = J(3,4,.) 
-mat li A
-mat A1 = (1, 4, 2, 1) 
-mat li A1
-
-mat A[1,1]  =A1
-mat li A
-
-* ---------------------- *
-* regressionsergebnisse
-
-qui use "${data}/BIBBBAuA_2018_suf1.0.dta", clear
-quietly{
-  mvdecode zpalter, mv(9999)
-mvdecode F518_SUF, mv( 99998/ 99999)
-mvdecode F200, mv( 97/99)
-mvdecode m1202, mv(-1)
-}
-reg F518_SUF F200
-dis "Der Koeffizient für F200 ist " _b[F200]
-dis "Der Standardfehler des Koeffizienten für F200 ist " _se[F200]
-
-* vorhergesagte Werte
-dis _b[_cons] + 20 *_b[F200]
-margins, at(F200 = 20)
-
-*
-gen pred_manual = _b[_cons] + F200 *_b[F200]
-predict pred_auto, xb
-gen diff=  pred_manual - pred_auto
-su diff
+ssc install  xsvmat 
+xsvmat G2, collabels(coef) names(col) fast
 
 
 
-reg F518_SUF i.S1 c.F200##c.F200 i.m1202 c.zpalter##c.zpalter
+
+loc v m1202
+di "`: type `v''" 				// display variable storage type
+di "`: variable label `v''" 	// display variable label
+di "`: value label `v''" 		// display value label name
+di "`: label (`v') 1'" 
+
+
+
+
+
+
+
+reg F518_SUF i.S1 F200 c.F200##c.F200 i.m1202 zpalter c.zpalter##c.zpalter
+
 
 
 

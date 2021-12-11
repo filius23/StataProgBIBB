@@ -16,30 +16,35 @@ library(magrittr)
 ## Variableneigenschaften
 
 Um Informationen zu Variablen & Labels abzurufen, stehen eine ganze Reihe an extended macro functions zur Verfügung: 
-```{stata varprop, eval = F}
+```{stata varprop0, eval = F}
 loc v m1202
 
-local vartype:      type `v' 				// get variable storage type
-local varlab:      variable label `v' 		// get variable label
-local vallabname:  value label `v' 	// get value label name
-local vallab1 :    label (`v') 1		 	// get label for value of 1
-
-* 2. Display 'captured' attribute of pcode
-di "`vartype'" // display local "vartype"
-di "`varlab'" // display local "varlabel"
-di "`vallabname'" // display local "valuelabname"
-di "`vallab1'" // display local "valuelab1"
+local vartype:     type `v' 				  // Variablen "storage type" (byte etc)
+local varlab:      variable label `v' // variable label
+local vallabname:  value label `v' 	  // Name des value label
+local vallab1 :    label (`v') 1		 	// Value label für Wert = 1
 ```
 
-* 3. Access and display attributes of `v' in one step
+Die so erstellten `local`s können wir dann in der bekannten Methode wieder darstellen:
+```{stata varprop, eval = F}
+di "`vartype'"     // display local "vartype"
+di "`varlab'"      // display local "varlabel"
+di "`vallabname'"  // display local "valuelabname"
+di "`vallab1'"     // display local "valuelab1"
+```
+
+Wir können die Labels und Eigenschaften von `v' auch in einem Schritt anzeigen lassen, die Syntax sieht aber etwas eigenwillig aus:
 ```{stata varprop2, eval = F}
 loc v m1202
-di "`: type `v''" 				// display variable storage type
-di "`: variable label `v''" 	// display variable label
-di "`: value label `v''" 		// display value label name
-di "`: label (`v') 1'" 		// display label for value of 1
-di "`: format `v''" 				// display variable format
+di "`: type `v''" 				   // "storage type" (byte etc) der Variable
+di "`: variable label `v''"  // variable label
+di "`: value label `v''" 		 // Name des value label
+di "`: label (`v') 1'" 		   // Value label für Wert = 1
 ```
+
+
+
+
 
 Existiert eine Variable?
 ```{stata, eval = F }
@@ -108,10 +113,34 @@ foreach v of global bytevars {
 }
 ```
 
+## Textverarbeitung
+
+1. Mixed list with no quotes
+```{stata}
+local phrase 2 guys 1 girl 1 pizza place
+di "`:word 2 of `phrase' '"
+```
+
+
+
+1. Mixed list with inner quotes
+```{stata}
+local phrase "2 guys" "1 girl" "1 pizza place"
+di "`:word 2 of `phrase' '"
+```
+>>> Answer: guys
+
+
+1. Mixed list with inner and outer quotes
+```{stata}
+local phrase `" "2 guys" "1 girl" "1 pizza place" " '
+di "`:word 2 of `phrase' '"
+```
+
 
 ***
 
-**[Übung 1](#labue1)**
+**[Übung 1](#varue1)**
 
 ***
 
