@@ -360,7 +360,39 @@ lab val mod mod_lab
 list, noobs clean
 ```
 
+```{stata regloop04, eval = F}
+    coef           b         se           t     pvalue          ll          ul      df       crit   eform                                                                              mod  
+    2.S1   -1431.809      53.63   -26.69792          0    -1536.93   -1326.689   16633   1.960107       0                                                            regress F518_SUF i.S1  
+    2.S1   -628.9128   55.39264   -11.35373   9.46e-30   -737.4893   -520.3362   14656   1.960126       0                                                     regress F518_SUF i.S1 c.F200  
+    2.S1   -661.6656   55.67975   -11.88342   2.03e-32   -770.8049   -552.5263   14655   1.960126       0                                       regress F518_SUF i.S1 c.F200 c.F200#c.F200  
+    2.S1   -664.9422   53.79301   -12.36113   6.34e-35   -770.3833   -559.5011   14633   1.960126       0                               regress F518_SUF i.S1 c.F200 c.F200#c.F200 i.m1202  
+    2.S1    -700.713   54.02844   -12.96934   2.97e-38   -806.6156   -594.8104   14552   1.960127       0                       regress F518_SUF i.S1 c.F200 c.F200#c.F200 i.m1202 zpalter  
+    2.S1   -717.3357   54.06105   -13.26899          0   -823.3022   -611.3691   14551   1.960127       0   regress F518_SUF i.S1 c.F200 c.F200#c.F200 i.m1202 zpalter c.zpalter#c.zpalter  
 
+```
+
+Daraus können wir beispielsweise einen Koeffizientenplot erstellen:
+```{stata reggraph, eval = F}
+graph twoway ///
+	(rcap ll ul mod,horizontal lcolor("57 65 101") ) /// Konfidenzintervalle
+	(scatter mod b,  mcolor("177 147 74") )  , /// Punktschätzer
+	graphregion(fcolor(white)) /// Hintergundfarbe (außerhalb des eigentlichen Plots)
+	ylabel(, valuelabel angle(0) labsize(tiny)) ///
+	legend(off) ///
+	xtitle("Einkommen (W) vs. Einkommen (M)") /// Achsentitel
+	ytitle("") /// 
+	title("Titel")  ///
+	subtitle("Untertitel") ///
+	caption("{it:Quelle: Erwerbstätigenbefragung 2018}", size(8pt) position(5) ring(5) )
+```
+
+
+
+```{r,echo = F, out.height="80%",out.width="80%", fig.align="center"}
+knitr::include_graphics("./graph/Regplot.png")
+```
+
+Diese labels sind natürlich alles andere als ideal. Im nächsten Kapitel werden wir einige Möglichkeiten kennenlernen, da etwas zu ändern.
 
 ## Übungen
 

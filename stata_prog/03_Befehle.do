@@ -140,6 +140,12 @@ lab val mod mod_lab
 
 list, noobs clean
 
+/*
+glo export_dir 	"D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\docs"
+compress
+save "${export_dir}/reg_results.dta", replace
+*/
+
 * beispielgrafik
 graph twoway ///
 	(rcap ll ul mod,horizontal lcolor("57 65 101") ) /// Konfidenzintervalle

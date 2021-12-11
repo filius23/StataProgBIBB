@@ -53,8 +53,6 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -183,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.2" data-path="loopmacro.html"><a href="loopmacro.html#e-und-r-sind-getrennte-welten"><i class="fa fa-check"></i><b>2.2.2</b> <code>e()</code> und <code>r()</code> sind getrennte Welten</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="loopmacro.html"><a href="loopmacro.html#ergebnisse-weiter-verwenden"><i class="fa fa-check"></i><b>2.3</b> Ergebnisse weiter verwenden</a></li>
-<li class="chapter" data-level="2.4" data-path="loopmacro.html"><a href="loopmacro.html#kennzahlen-in-matrix-ablegen"><i class="fa fa-check"></i><b>2.4</b> Kennzahlen in <code>matrix</code> ablegen</a>
+<li class="chapter" data-level="2.4" data-path="loopmacro.html"><a href="loopmacro.html#mat1"><i class="fa fa-check"></i><b>2.4</b> Kennzahlen in einer <code>matrix</code> ablegen</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="loopmacro.html"><a href="loopmacro.html#namen-für-spalten-und-zeilen-einer-matrix"><i class="fa fa-check"></i><b>2.4.1</b> Namen für Spalten und Zeilen einer <code>matrix</code></a></li>
 <li class="chapter" data-level="2.4.2" data-path="loopmacro.html"><a href="loopmacro.html#zeile-einfügen"><i class="fa fa-check"></i><b>2.4.2</b> Zeile einfügen</a></li>
@@ -191,33 +189,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="loopmacro.html"><a href="loopmacro.html#labels-behalten"><i class="fa fa-check"></i><b>2.5</b> Labels behalten</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="loopmacro.html"><a href="loopmacro.html#extended-macro-functions-für-labels-variableneigenschaften"><i class="fa fa-check"></i><b>2.5.1</b> <code>extended macro functions</code> für Labels &amp; Variableneigenschaften</a></li>
+<li class="chapter" data-level="2.5.1" data-path="loopmacro.html"><a href="loopmacro.html#labfun"><i class="fa fa-check"></i><b>2.5.1</b> <code>extended macro function</code> für Labels</a></li>
 <li class="chapter" data-level="2.5.2" data-path="loopmacro.html"><a href="loopmacro.html#labels-als-rowname"><i class="fa fa-check"></i><b>2.5.2</b> Labels als <code>rowname</code></a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="loopmacro.html"><a href="loopmacro.html#von-der-matrix-zum-datensatz"><i class="fa fa-check"></i><b>2.6</b> Von der <code>matrix</code> zum Datensatz</a></li>
-<li class="chapter" data-level="2.7" data-path="loopmacro.html"><a href="loopmacro.html#frame-direkt-als-datensatz"><i class="fa fa-check"></i><b>2.7</b> <code>frame</code>: direkt als Datensatz</a></li>
-<li class="chapter" data-level="2.8" data-path="loopmacro.html"><a href="loopmacro.html#statsby"><i class="fa fa-check"></i><b>2.8</b> <code>statsby</code></a></li>
-<li class="chapter" data-level="2.9" data-path="loopmacro.html"><a href="loopmacro.html#übungen-1"><i class="fa fa-check"></i><b>2.9</b> Übungen</a>
+<li class="chapter" data-level="2.7" data-path="loopmacro.html"><a href="loopmacro.html#frame"><i class="fa fa-check"></i><b>2.7</b> <code>frame</code>: mehrere Datensätze in Stata</a></li>
+<li class="chapter" data-level="2.8" data-path="loopmacro.html"><a href="loopmacro.html#übungen-1"><i class="fa fa-check"></i><b>2.8</b> Übungen</a>
 <ul>
-<li class="chapter" data-level="2.9.1" data-path="loopmacro.html"><a href="loopmacro.html#retue1"><i class="fa fa-check"></i><b>2.9.1</b> Übung</a></li>
-<li class="chapter" data-level="2.9.2" data-path="loopmacro.html"><a href="loopmacro.html#übung"><i class="fa fa-check"></i><b>2.9.2</b> Übung</a></li>
-<li class="chapter" data-level="2.9.3" data-path="loopmacro.html"><a href="loopmacro.html#übung-1"><i class="fa fa-check"></i><b>2.9.3</b> Übung</a></li>
+<li class="chapter" data-level="2.8.1" data-path="loopmacro.html"><a href="loopmacro.html#retue1"><i class="fa fa-check"></i><b>2.8.1</b> Übung</a></li>
+<li class="chapter" data-level="2.8.2" data-path="loopmacro.html"><a href="loopmacro.html#retue2"><i class="fa fa-check"></i><b>2.8.2</b> Übung</a></li>
+<li class="chapter" data-level="2.8.3" data-path="loopmacro.html"><a href="loopmacro.html#retue3"><i class="fa fa-check"></i><b>2.8.3</b> Übung</a></li>
+<li class="chapter" data-level="2.8.4" data-path="loopmacro.html"><a href="loopmacro.html#retue4"><i class="fa fa-check"></i><b>2.8.4</b> Übung</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="regres.html"><a href="regres.html"><i class="fa fa-check"></i><b>3</b> Regressionsergebnisse weiterverarbeiten</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="regres.html"><a href="regres.html#ereturn-und-return-der-regressionsergebnisse"><i class="fa fa-check"></i><b>3.1</b> <code>ereturn</code> und <code>return</code> der Regressionsergebnisse</a>
+<li class="chapter" data-level="3.1" data-path="regres.html"><a href="regres.html#e-und-r-der-regressionsergebnisse"><i class="fa fa-check"></i><b>3.1</b> <code>e()</code> und <code>r()</code> der Regressionsergebnisse</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="regres.html"><a href="regres.html#koeffizienten-mit-_b-_se-aufrufen"><i class="fa fa-check"></i><b>3.1.1</b> Koeffizienten mit <code>_b</code> / <code>_se</code> aufrufen</a></li>
 <li class="chapter" data-level="3.1.2" data-path="regres.html"><a href="regres.html#komplette-regressionstabelle"><i class="fa fa-check"></i><b>3.1.2</b> Komplette Regressionstabelle</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="regres.html"><a href="regres.html#matrix---befehle"><i class="fa fa-check"></i><b>3.2</b> <code>matrix</code> - Befehle</a></li>
-<li class="chapter" data-level="3.3" data-path="regres.html"><a href="regres.html#regressionstabellen-als-matrix-speichern-und-anpassen"><i class="fa fa-check"></i><b>3.3</b> Regressionstabellen als <code>matrix</code> speichern und anpassen</a></li>
+<li class="chapter" data-level="3.2" data-path="regres.html"><a href="regres.html#regressionstabellen-als-matrix-speichern-und-anpassen"><i class="fa fa-check"></i><b>3.2</b> Regressionstabellen als <code>matrix</code> speichern und anpassen</a></li>
+<li class="chapter" data-level="3.3" data-path="regres.html"><a href="regres.html#kategoriale-uv"><i class="fa fa-check"></i><b>3.3</b> kategoriale UV</a></li>
 <li class="chapter" data-level="3.4" data-path="regres.html"><a href="regres.html#als-datensatz-ablegen"><i class="fa fa-check"></i><b>3.4</b> Als Datensatz ablegen:</a></li>
-<li class="chapter" data-level="3.5" data-path="regres.html"><a href="regres.html#anhang-1"><i class="fa fa-check"></i><b>3.5</b> Anhang</a>
+<li class="chapter" data-level="3.5" data-path="regres.html"><a href="regres.html#weitere-infos-aus-e"><i class="fa fa-check"></i><b>3.5</b> weitere Infos aus <code>e()</code></a></li>
+<li class="chapter" data-level="3.6" data-path="regres.html"><a href="regres.html#reg-loop"><i class="fa fa-check"></i><b>3.6</b> <code>reg</code>-Loop</a></li>
+<li class="chapter" data-level="3.7" data-path="regres.html"><a href="regres.html#übungen-2"><i class="fa fa-check"></i><b>3.7</b> Übungen</a></li>
+<li class="chapter" data-level="3.8" data-path="regres.html"><a href="regres.html#anhang-1"><i class="fa fa-check"></i><b>3.8</b> Anhang</a>
 <ul>
-<li class="chapter" data-level="3.5.1" data-path="regres.html"><a href="regres.html#statsby-1"><i class="fa fa-check"></i><b>3.5.1</b> <code>statsby</code></a></li>
-<li class="chapter" data-level="3.5.2" data-path="regres.html"><a href="regres.html#weitere-matrix-befehle"><i class="fa fa-check"></i><b>3.5.2</b> weitere <code>matrix</code>-Befehle</a></li>
+<li class="chapter" data-level="3.8.1" data-path="regres.html"><a href="regres.html#statsby"><i class="fa fa-check"></i><b>3.8.1</b> <code>statsby</code></a></li>
+<li class="chapter" data-level="3.8.2" data-path="regres.html"><a href="regres.html#weitere-matrix-befehle"><i class="fa fa-check"></i><b>3.8.2</b> weitere <code>matrix</code>-Befehle</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -242,8 +243,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="regres" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Regressionsergebnisse weiterverarbeiten</h1>
-<div id="ereturn-und-return-der-regressionsergebnisse" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> <code>ereturn</code> und <code>return</code> der Regressionsergebnisse</h2>
+<div id="e-und-r-der-regressionsergebnisse" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> <code>e()</code> und <code>r()</code> der Regressionsergebnisse</h2>
 <p>Die Koeffizienten und Standardfehler des letzten Modells werden in <code>e()</code> gespeichert:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="regres.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF F200</span></code></pre></div>
 <pre><code>      Source |       SS           df       MS      Number of obs   =    14,659
@@ -302,109 +303,25 @@ Expression   : Linear prediction, predict()
 <p>Die vollständige Regressionstabelle ist aber eine r-Class matrix:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="regres.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF F200</span>
 <span id="cb11-2"><a href="regres.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">matlist</span> <span class="fu">r</span>(<span class="kw">table</span>) </span></code></pre></div>
-<pre><code>             |      F200      _cons 
--------------+----------------------
-           b |  109.4473  -344.1221 
-          se |  2.956134   104.2802 
-           t |  37.02379  -3.299974 
-      pvalue |  6.4e-287   .0009692 
-          ll |  103.6529  -548.5245 
-          ul |  115.2417  -139.7197 
-          df |     14657      14657 
-        crit |  1.960126   1.960126 
-       eform |         0          0 </code></pre>
+<pre><code>r(table)[9,2]
+              F200       _cons
+     b   109.44727  -344.12212
+    se   2.9561335   104.28024
+     t   37.023793  -3.2999743
+pvalue   6.36e-287   .00096924
+    ll   103.65288  -548.52452
+    ul   115.24167  -139.71973
+    df       14657       14657
+  crit   1.9601259   1.9601259
+ eform           0           0</code></pre>
 </div>
 </div>
-<div id="matrix---befehle" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> <code>matrix</code> - Befehle</h2>
-<p>Um daraus jetzt ein Tabelle zu bauen brauchen wir ein paar Matrix-Befehle</p>
-<p><code>help matrix operators</code></p>
-<table class="table table-condensed" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Operator
-</th>
-<th style="text-align:left;">
-Symbol
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-column join
-</td>
-<td style="text-align:left;font-family: monospace;">
-,
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-row join
-</td>
-<td style="text-align:left;font-family: monospace;">
-\
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-transpose
-</td>
-<td style="text-align:left;font-family: monospace;">
-’
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-negation
-</td>
-<td style="text-align:left;font-family: monospace;">
--
-</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="regres.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> Y1 = 1, 3 </span>
-<span id="cb13-2"><a href="regres.html#cb13-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> Y1</span></code></pre></div>
-<pre><code>Y1[1,2]
-    c1  c2
-r1   1   3</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="regres.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> Y2 = 4\ 0</span>
-<span id="cb15-2"><a href="regres.html#cb15-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> Y2</span></code></pre></div>
-<pre><code>Y2[2,1]
-    c1
-r1   4
-r2   0</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="regres.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> Y = (2, 1.5 \ 2.5, 3)</span>
-<span id="cb17-2"><a href="regres.html#cb17-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> Y</span></code></pre></div>
-<pre><code>Y[2,2]
-     c1   c2
-r1    2  1.5
-r2  2.5    3</code></pre>
-<p>Transponieren:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="regres.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> X2 = (1, 2, 3 \ 5 , 8 , 9)</span>
-<span id="cb19-2"><a href="regres.html#cb19-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X2 </span>
-<span id="cb19-3"><a href="regres.html#cb19-3" aria-hidden="true" tabindex="-1"></a>mat X3 = X2&#39;</span>
-<span id="cb19-4"><a href="regres.html#cb19-4" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X3</span></code></pre></div>
-<pre><code>X2[2,3]
-    c1  c2  c3
-r1   1   2   3
-r2   5   8   9
-
-
-
-X3[3,2]
-    r1  r2
-c1   1   5
-c2   2   8
-c3   3   9</code></pre>
-</div>
-<div id="regressionstabellen-als-matrix-speichern-und-anpassen" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Regressionstabellen als <code>matrix</code> speichern und anpassen</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="regres.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF F200</span>
-<span id="cb21-2"><a href="regres.html#cb21-2" aria-hidden="true" tabindex="-1"></a>mat C = <span class="fu">r</span>(<span class="kw">table</span>)&#39;</span>
-<span id="cb21-3"><a href="regres.html#cb21-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C</span></code></pre></div>
+<div id="regressionstabellen-als-matrix-speichern-und-anpassen" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Regressionstabellen als <code>matrix</code> speichern und anpassen</h2>
+<p>Mit <code>'</code> können wir die Regressionstabelle transponieren:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="regres.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF F200</span>
+<span id="cb13-2"><a href="regres.html#cb13-2" aria-hidden="true" tabindex="-1"></a>mat C = <span class="fu">r</span>(<span class="kw">table</span>)&#39;</span>
+<span id="cb13-3"><a href="regres.html#cb13-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C</span></code></pre></div>
 <pre><code>C[2,9]
                 b          se           t      pvalue          ll          ul
  F200   109.44727   2.9561335   37.023793   6.36e-287   103.65288   115.24167
@@ -413,8 +330,9 @@ _cons  -344.12212   104.28024  -3.2999743   .00096924  -548.52452  -139.71973
                df        crit       eform
  F200       14657   1.9601259           0
 _cons       14657   1.9601259           0</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="regres.html#cb23-1" aria-hidden="true" tabindex="-1"></a>mat C1 = C[<span class="fu">rownumb</span>(C,<span class="st">&quot;F200&quot;</span>),1...]</span>
-<span id="cb23-2"><a href="regres.html#cb23-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C1</span></code></pre></div>
+<p><a href="regres.html#crnumb">rownumb</a> hilft, einen Koeffizienten zu suchen:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="regres.html#cb15-1" aria-hidden="true" tabindex="-1"></a>mat C1 = C[<span class="fu">rownumb</span>(C,<span class="st">&quot;F200&quot;</span>),1...]</span>
+<span id="cb15-2"><a href="regres.html#cb15-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C1</span></code></pre></div>
 <pre><code>C1[1,9]
               b         se          t     pvalue         ll         ul
 F200  109.44727  2.9561335  37.023793  6.36e-287  103.65288  115.24167
@@ -422,34 +340,190 @@ F200  109.44727  2.9561335  37.023793  6.36e-287  103.65288  115.24167
              df       crit      eform
 F200      14657  1.9601259          0</code></pre>
 </div>
+<div id="kategoriale-uv" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> kategoriale UV</h2>
+<p>Der Koeffizientenname ist etwas komplizierterer Name bei kat. UVs:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="regres.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.S1 F200</span>
+<span id="cb17-2"><a href="regres.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ereturn</span> <span class="ot">list</span></span>
+<span id="cb17-3"><a href="regres.html#cb17-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> <span class="fu">r</span>(<span class="kw">table</span>) </span>
+<span id="cb17-4"><a href="regres.html#cb17-4" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Der Koeffizient für S1 = weiblich ist &quot;</span> _b[2.S1]</span></code></pre></div>
+<pre><code>r(table)[9,4]
+                1b.          2.                        
+                S1          S1        F200       _cons
+     b           0  -628.91281    95.08006   464.42184
+    se           .   55.392637   3.2038116   125.90363
+     t           .  -11.353726    29.67717    3.688709
+pvalue           .   9.461e-30   5.23e-188   .00022621
+    ll           .  -737.48935   88.800186   217.63489
+    ul           .  -520.33627   101.35993    711.2088
+    df       14656       14656       14656       14656
+  crit   1.9601259   1.9601259   1.9601259   1.9601259
+ eform           0           0           0           0
+
+Der Koeffizient für S1 = weiblich ist -628.91281</code></pre>
+<p>Dies müssen wir auch bei der Suche nach einem Koeffizienten berücksichtigen:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="regres.html#cb19-1" aria-hidden="true" tabindex="-1"></a>mat D = <span class="fu">r</span>(<span class="kw">table</span>)&#39; <span class="co">// transponieren:</span></span>
+<span id="cb19-2"><a href="regres.html#cb19-2" aria-hidden="true" tabindex="-1"></a>mat D2 = D[<span class="fu">rownumb</span>(D,<span class="st">&quot;2.S1&quot;</span>),1...] <span class="co">// nur Koeffizient für S1 = 2</span></span>
+<span id="cb19-3"><a href="regres.html#cb19-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> D2</span></code></pre></div>
+</div>
 <div id="als-datensatz-ablegen" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Als Datensatz ablegen:</h2>
-<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="regres.html#cb25-1" aria-hidden="true" tabindex="-1"></a>cap frame <span class="kw">drop</span> results</span>
-<span id="cb25-2"><a href="regres.html#cb25-2" aria-hidden="true" tabindex="-1"></a>frame create results</span>
-<span id="cb25-3"><a href="regres.html#cb25-3" aria-hidden="true" tabindex="-1"></a>frame results: xsvmat C, collabels(coef) names(col) fast</span>
-<span id="cb25-4"><a href="regres.html#cb25-4" aria-hidden="true" tabindex="-1"></a>frame change results</span>
-<span id="cb25-5"><a href="regres.html#cb25-5" aria-hidden="true" tabindex="-1"></a>browse</span></code></pre></div>
+<p>Auch hier können wir dann mit <code>xsvmat</code> die Matrix in einen Datensatz umformatieren:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="regres.html#cb20-1" aria-hidden="true" tabindex="-1"></a>cap frame <span class="kw">drop</span> regres1</span>
+<span id="cb20-2"><a href="regres.html#cb20-2" aria-hidden="true" tabindex="-1"></a>xsvmat D2,  names(col) <span class="ot">rownames</span>(coef) frame(regres1)</span>
+<span id="cb20-3"><a href="regres.html#cb20-3" aria-hidden="true" tabindex="-1"></a>frame change regres1</span>
+<span id="cb20-4"><a href="regres.html#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="regres.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span>, <span class="kw">noobs</span> <span class="kw">clean</span> <span class="co">// keine Info zum Modell...</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="regres.html#cb21-1" aria-hidden="true" tabindex="-1"></a> coef           b         se           t     pvalue          ll          ul      df       crit   <span class="kw">eform</span>  </span>
+<span id="cb21-2"><a href="regres.html#cb21-2" aria-hidden="true" tabindex="-1"></a>1b.S1           0          .           .          .           .           .   14656   1.960126       0  </span>
+<span id="cb21-3"><a href="regres.html#cb21-3" aria-hidden="true" tabindex="-1"></a> 2.S1   -628.9128   55.39264   -11.35373   9.46e-30   -737.4893   -520.3362   14656   1.960126       0  </span>
+<span id="cb21-4"><a href="regres.html#cb21-4" aria-hidden="true" tabindex="-1"></a> F200    95.08006   3.203812    29.67717          0    88.80019    101.3599   14656   1.960126       0  </span>
+<span id="cb21-5"><a href="regres.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="dt">_cons</span>    464.4218   125.9036    3.688709   .0002262    217.6349    711.2088   14656   1.960126       0  </span></code></pre></div>
 </div>
-<div id="anhang-1" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Anhang</h2>
-<div id="statsby-1" class="section level3" number="3.5.1">
-<h3><span class="header-section-number">3.5.1</span> <code>statsby</code></h3>
-<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="regres.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">statsby</span> _b _se, <span class="kw">by</span>(Bula) <span class="kw">noisily</span>: <span class="co">///</span></span>
-<span id="cb26-2"><a href="regres.html#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">regress</span> F518_SUF c.F200##c.F200 i.m1202 i.S1</span></code></pre></div>
+<div id="weitere-infos-aus-e" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> weitere Infos aus <code>e()</code></h2>
+<p>In <a href="#"><code>ereturn list</code></a> oben sehen wir, dass <code>e(cmdline)</code> den <code>reg</code>-Befehl enthält:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="regres.html#cb22-1" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;`e(cmdline)&#39;&quot;</span></span></code></pre></div>
+<pre><code>regress F518_SUF i.S1 F200</code></pre>
+<p>Diese Information können wir als <code>global</code> mit in den Ergebnis-<code>frame</code> nehmen. <code>global</code>s bleiben nehmen in der Session erhalten, auch wenn wir zwischen <code>frame</code>s wechseln.</p>
 </div>
-<div id="weitere-matrix-befehle" class="section level3" number="3.5.2">
-<h3><span class="header-section-number">3.5.2</span> weitere <code>matrix</code>-Befehle</h3>
+<div id="reg-loop" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> <code>reg</code>-Loop</h2>
+<p>Um den Nutzen zu demonstrieren, erstellen wir eine Schleife, welche eine Reihe an Regressionsmodellen schätzt und bei jedem Durchlauf einen zusätzlichen Term hinzunimmt.
+Wir interessieren uns aber nur, dafür wie sich der Koeffizient für das Geschlecht (S1 == 2) entwickelt mit jedem neuen Modell:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="regres.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> predictors i.S1 c.F200 c.F200#c.F200 i.m1202 zpalter c.zpalter#c.zpalter <span class="co">// UV-Liste</span></span>
+<span id="cb24-2"><a href="regres.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="fu">r</span> = 1 <span class="co">// Zähler </span></span>
+<span id="cb24-3"><a href="regres.html#cb24-3" aria-hidden="true" tabindex="-1"></a>loc uv      <span class="co">// uv rücksetzen (zur sicherheit)</span></span>
+<span id="cb24-4"><a href="regres.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> v <span class="kw">of</span> <span class="kw">local</span> predictors {</span>
+<span id="cb24-5"><a href="regres.html#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">local</span> uv <span class="ot">`uv&#39;</span> <span class="ot">`v&#39;</span></span>
+<span id="cb24-6"><a href="regres.html#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> <span class="kw">regress</span> F518_SUF <span class="ot">`uv&#39;</span></span>
+<span id="cb24-7"><a href="regres.html#cb24-7" aria-hidden="true" tabindex="-1"></a>    mat D = <span class="fu">r</span>(<span class="kw">table</span>)&#39;                       <span class="co">// reg-tabelle transponieren &amp; speichern </span></span>
+<span id="cb24-8"><a href="regres.html#cb24-8" aria-hidden="true" tabindex="-1"></a>    mat D2 = D[<span class="fu">rownumb</span>(D,<span class="st">&quot;2.S1&quot;</span>),1...]      <span class="co">// Koeffizient für S1=2 behalten</span></span>
+<span id="cb24-9"><a href="regres.html#cb24-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-10"><a href="regres.html#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> (<span class="ot">`r&#39;</span> == 1) mat R = D2                <span class="co">// im ersten Durchlauf R erstellen</span></span>
+<span id="cb24-11"><a href="regres.html#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> (<span class="ot">`r&#39;</span> != 1) mat R = R\D2              <span class="co">// danach: D2 an R anfügen</span></span>
+<span id="cb24-12"><a href="regres.html#cb24-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb24-13"><a href="regres.html#cb24-13" aria-hidden="true" tabindex="-1"></a>    loc ++<span class="fu">r</span> <span class="co">// Zähler + 1</span></span>
+<span id="cb24-14"><a href="regres.html#cb24-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-15"><a href="regres.html#cb24-15" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> R</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="regres.html#cb25-1" aria-hidden="true" tabindex="-1"></a>R[6,9]</span>
+<span id="cb25-2"><a href="regres.html#cb25-2" aria-hidden="true" tabindex="-1"></a>               b          se           t      pvalue          ll          ul          df        crit       <span class="kw">eform</span></span>
+<span id="cb25-3"><a href="regres.html#cb25-3" aria-hidden="true" tabindex="-1"></a>2.S1  -1431.8093   53.630001  -26.697917   8.52e-154  -1536.9298  -1326.6888       16633   1.9601066           0</span>
+<span id="cb25-4"><a href="regres.html#cb25-4" aria-hidden="true" tabindex="-1"></a>2.S1  -628.91281   55.392637  -11.353726   9.461e-30  -737.48935  -520.33627       14656   1.9601259           0</span>
+<span id="cb25-5"><a href="regres.html#cb25-5" aria-hidden="true" tabindex="-1"></a>2.S1   -661.6656   55.679749  -11.883416   2.034e-32  -770.80492  -552.52628       14655   1.9601259           0</span>
+<span id="cb25-6"><a href="regres.html#cb25-6" aria-hidden="true" tabindex="-1"></a>2.S1  -664.94219   53.793012  -12.361126   6.336e-35  -770.38328  -559.50111       14633   1.9601261           0</span>
+<span id="cb25-7"><a href="regres.html#cb25-7" aria-hidden="true" tabindex="-1"></a>2.S1  -700.71303   54.028438  -12.969337   2.975e-38  -806.61563  -594.81043       14552    1.960127           0</span>
+<span id="cb25-8"><a href="regres.html#cb25-8" aria-hidden="true" tabindex="-1"></a>2.S1  -717.33567   54.061055  -13.268991   5.977e-40  -823.30221  -611.36914       14551    1.960127           0</span></code></pre></div>
+<p>Wie wissen wir jetzt, für was kontrolliert wurde?</p>
+<p>Wir nutzen den Zähler, um ein <code>global</code> mit der Zählernummer zu erstellen und eine Zeile in die <code>matrix</code> einzufügen:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="regres.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> predictors i.S1 c.F200 c.F200#c.F200 i.m1202 zpalter c.zpalter#c.zpalter</span>
+<span id="cb26-2"><a href="regres.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="fu">r</span> = 1 <span class="co">// Zähler </span></span>
+<span id="cb26-3"><a href="regres.html#cb26-3" aria-hidden="true" tabindex="-1"></a>loc uv      <span class="co">// uv rücksetzen (zur sicherheit)</span></span>
+<span id="cb26-4"><a href="regres.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> v <span class="kw">of</span> <span class="kw">local</span> predictors {</span>
+<span id="cb26-5"><a href="regres.html#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">local</span> uv <span class="ot">`uv&#39;</span> <span class="ot">`v&#39;</span></span>
+<span id="cb26-6"><a href="regres.html#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> <span class="kw">regress</span> F518_SUF <span class="ot">`uv&#39;</span></span>
+<span id="cb26-7"><a href="regres.html#cb26-7" aria-hidden="true" tabindex="-1"></a>    mat D = <span class="fu">r</span>(<span class="kw">table</span>)&#39;                       <span class="co">// reg-tabelle transponieren &amp; speichern </span></span>
+<span id="cb26-8"><a href="regres.html#cb26-8" aria-hidden="true" tabindex="-1"></a>    mat D2 = D[<span class="fu">rownumb</span>(D,<span class="st">&quot;2.S1&quot;</span>),1...]      <span class="co">// Koeffizient für S1=2 behalten</span></span>
+<span id="cb26-9"><a href="regres.html#cb26-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb26-10"><a href="regres.html#cb26-10" aria-hidden="true" tabindex="-1"></a>    mat M = <span class="ot">`r&#39;</span></span>
+<span id="cb26-11"><a href="regres.html#cb26-11" aria-hidden="true" tabindex="-1"></a>    mat colname M = <span class="fu">mod</span></span>
+<span id="cb26-12"><a href="regres.html#cb26-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb26-13"><a href="regres.html#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> (<span class="ot">`r&#39;</span> == 1) mat R = D2 , M            <span class="co">// ,r -&gt; zähler an Koeffizientzeile anfügen</span></span>
+<span id="cb26-14"><a href="regres.html#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> (<span class="ot">`r&#39;</span> != 1) mat R = R\(D2 , M)</span>
+<span id="cb26-15"><a href="regres.html#cb26-15" aria-hidden="true" tabindex="-1"></a>    glo cmd<span class="ot">`r&#39;</span> = <span class="st">&quot;`e(cmdline)&#39;&quot;</span></span>
+<span id="cb26-16"><a href="regres.html#cb26-16" aria-hidden="true" tabindex="-1"></a>    loc ++<span class="fu">r</span> <span class="co">// Zähler + 1</span></span>
+<span id="cb26-17"><a href="regres.html#cb26-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-18"><a href="regres.html#cb26-18" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> R</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="regres.html#cb27-1" aria-hidden="true" tabindex="-1"></a>R[6,10]</span>
+<span id="cb27-2"><a href="regres.html#cb27-2" aria-hidden="true" tabindex="-1"></a>               b          se           t      pvalue          ll          ul          df        crit       <span class="kw">eform</span>         <span class="fu">mod</span></span>
+<span id="cb27-3"><a href="regres.html#cb27-3" aria-hidden="true" tabindex="-1"></a>2.S1  -1431.8093   53.630001  -26.697917   8.52e-154  -1536.9298  -1326.6888       16633   1.9601066           0           1</span>
+<span id="cb27-4"><a href="regres.html#cb27-4" aria-hidden="true" tabindex="-1"></a>2.S1  -628.91281   55.392637  -11.353726   9.461e-30  -737.48935  -520.33627       14656   1.9601259           0           2</span>
+<span id="cb27-5"><a href="regres.html#cb27-5" aria-hidden="true" tabindex="-1"></a>2.S1   -661.6656   55.679749  -11.883416   2.034e-32  -770.80492  -552.52628       14655   1.9601259           0           3</span>
+<span id="cb27-6"><a href="regres.html#cb27-6" aria-hidden="true" tabindex="-1"></a>2.S1  -664.94219   53.793012  -12.361126   6.336e-35  -770.38328  -559.50111       14633   1.9601261           0           4</span>
+<span id="cb27-7"><a href="regres.html#cb27-7" aria-hidden="true" tabindex="-1"></a>2.S1  -700.71303   54.028438  -12.969337   2.975e-38  -806.61563  -594.81043       14552    1.960127           0           5</span>
+<span id="cb27-8"><a href="regres.html#cb27-8" aria-hidden="true" tabindex="-1"></a>2.S1  -717.33567   54.061055  -13.268991   5.977e-40  -823.30221  -611.36914       14551    1.960127           0           6</span></code></pre></div>
+<p>Diese <code>matrix</code> R schicken wir jetzt in einen <code>frame</code>:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="regres.html#cb28-1" aria-hidden="true" tabindex="-1"></a>cap frame <span class="kw">drop</span> rmods</span>
+<span id="cb28-2"><a href="regres.html#cb28-2" aria-hidden="true" tabindex="-1"></a>xsvmat R,  names(col) <span class="ot">rownames</span>(coef) frame(rmods)</span>
+<span id="cb28-3"><a href="regres.html#cb28-3" aria-hidden="true" tabindex="-1"></a>frame change rmods</span>
+<span id="cb28-4"><a href="regres.html#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="regres.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span>, <span class="kw">noobs</span> <span class="kw">clean</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="regres.html#cb29-1" aria-hidden="true" tabindex="-1"></a>coef           b         se           t     pvalue          ll          ul      df       crit   <span class="kw">eform</span>   <span class="fu">mod</span>  </span>
+<span id="cb29-2"><a href="regres.html#cb29-2" aria-hidden="true" tabindex="-1"></a>2.S1   -1431.809      53.63   -26.69792          0    -1536.93   -1326.689   16633   1.960107       0     1  </span>
+<span id="cb29-3"><a href="regres.html#cb29-3" aria-hidden="true" tabindex="-1"></a>2.S1   -628.9128   55.39264   -11.35373   9.46e-30   -737.4893   -520.3362   14656   1.960126       0     2  </span>
+<span id="cb29-4"><a href="regres.html#cb29-4" aria-hidden="true" tabindex="-1"></a>2.S1   -661.6656   55.67975   -11.88342   2.03e-32   -770.8049   -552.5263   14655   1.960126       0     3  </span>
+<span id="cb29-5"><a href="regres.html#cb29-5" aria-hidden="true" tabindex="-1"></a>2.S1   -664.9422   53.79301   -12.36113   6.34e-35   -770.3833   -559.5011   14633   1.960126       0     4  </span>
+<span id="cb29-6"><a href="regres.html#cb29-6" aria-hidden="true" tabindex="-1"></a>2.S1    -700.713   54.02844   -12.96934   2.97e-38   -806.6156   -594.8104   14552   1.960127       0     5  </span>
+<span id="cb29-7"><a href="regres.html#cb29-7" aria-hidden="true" tabindex="-1"></a>2.S1   -717.3357   54.06105   -13.26899          0   -823.3022   -611.3691   14551   1.960127       0     6  </span></code></pre></div>
+<p>Jetzt wissen zwar schon mal, aus welchem Modell der Koeffizient jeweils kommt (basierend auf <code>mod</code>).
+Eigentlich würden das aber gerne labeln.
+Dazu können wir jetzt auf die <code>globals</code> zurückgreifen - mit <a href="macro.html#allglo"><code>all globals</code></a> können wir nach ihnen suchen:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="regres.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> allglo:  <span class="ot">all</span> globals <span class="st">&quot;cmd*&quot;</span></span>
+<span id="cb30-2"><a href="regres.html#cb30-2" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> allglo</span>
+<span id="cb30-3"><a href="regres.html#cb30-3" aria-hidden="true" tabindex="-1"></a>allglo:         cmd6 cmd5 cmd4 cmd3 cmd2 cmd1</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="regres.html#cb31-1" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> cmd1</span>
+<span id="cb31-2"><a href="regres.html#cb31-2" aria-hidden="true" tabindex="-1"></a>cmd1:           <span class="kw">regress</span> F518_SUF i.S1</span></code></pre></div>
+<p>Jetzt können wir mit einer Schleife die Spalte <code>mod</code> labeln.
+Mit <code>label define ....</code> können Wertelabels erstellt werden - mit der Option <code>,modify</code> können wir das auch schrittweise verändern.
+Außerdem können wir einen kleinen Trick nutzen, um innerhalb der Schleife auf das <code>global</code> mit einer bestimmten Zahl zuzugreifen:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="regres.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">levelsof</span> <span class="fu">mod</span>, loc(mnrs)</span>
+<span id="cb32-2"><a href="regres.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">foreach</span> <span class="fu">m</span> <span class="kw">of</span> <span class="kw">local</span> mnrs {</span>
+<span id="cb32-3"><a href="regres.html#cb32-3" aria-hidden="true" tabindex="-1"></a>    lab def mod_lab <span class="ot">`m&#39;</span> <span class="st">&quot;${cmd`m&#39;}&quot;</span>, modify <span class="co">// value label verändern </span></span>
+<span id="cb32-4"><a href="regres.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb32-5"><a href="regres.html#cb32-5" aria-hidden="true" tabindex="-1"></a>lab val <span class="fu">mod</span> mod_lab</span>
+<span id="cb32-6"><a href="regres.html#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="regres.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span>, <span class="kw">noobs</span> <span class="kw">clean</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="regres.html#cb33-1" aria-hidden="true" tabindex="-1"></a>    coef           b         se           t     pvalue          ll          ul      df       crit   <span class="kw">eform</span>                                                                              <span class="fu">mod</span>  </span>
+<span id="cb33-2"><a href="regres.html#cb33-2" aria-hidden="true" tabindex="-1"></a>    2.S1   -1431.809      53.63   -26.69792          0    -1536.93   -1326.689   16633   1.960107       0                                                            <span class="kw">regress</span> F518_SUF i.S1  </span>
+<span id="cb33-3"><a href="regres.html#cb33-3" aria-hidden="true" tabindex="-1"></a>    2.S1   -628.9128   55.39264   -11.35373   9.46e-30   -737.4893   -520.3362   14656   1.960126       0                                                     <span class="kw">regress</span> F518_SUF i.S1 c.F200  </span>
+<span id="cb33-4"><a href="regres.html#cb33-4" aria-hidden="true" tabindex="-1"></a>    2.S1   -661.6656   55.67975   -11.88342   2.03e-32   -770.8049   -552.5263   14655   1.960126       0                                       <span class="kw">regress</span> F518_SUF i.S1 c.F200 c.F200#c.F200  </span>
+<span id="cb33-5"><a href="regres.html#cb33-5" aria-hidden="true" tabindex="-1"></a>    2.S1   -664.9422   53.79301   -12.36113   6.34e-35   -770.3833   -559.5011   14633   1.960126       0                               <span class="kw">regress</span> F518_SUF i.S1 c.F200 c.F200#c.F200 i.m1202  </span>
+<span id="cb33-6"><a href="regres.html#cb33-6" aria-hidden="true" tabindex="-1"></a>    2.S1    -700.713   54.02844   -12.96934   2.97e-38   -806.6156   -594.8104   14552   1.960127       0                       <span class="kw">regress</span> F518_SUF i.S1 c.F200 c.F200#c.F200 i.m1202 zpalter  </span>
+<span id="cb33-7"><a href="regres.html#cb33-7" aria-hidden="true" tabindex="-1"></a>    2.S1   -717.3357   54.06105   -13.26899          0   -823.3022   -611.3691   14551   1.960127       0   <span class="kw">regress</span> F518_SUF i.S1 c.F200 c.F200#c.F200 i.m1202 zpalter c.zpalter#c.zpalter  </span></code></pre></div>
+<p>Daraus können wir beispielsweise einen Koeffizientenplot erstellen:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="regres.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">///</span></span>
+<span id="cb34-2"><a href="regres.html#cb34-2" aria-hidden="true" tabindex="-1"></a>    (rcap ll ul <span class="fu">mod</span>,horizontal lcolor(<span class="st">&quot;57 65 101&quot;</span>) ) <span class="co">/// Konfidenzintervalle</span></span>
+<span id="cb34-3"><a href="regres.html#cb34-3" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">scatter</span> <span class="fu">mod</span> b,  mcolor(<span class="st">&quot;177 147 74&quot;</span>) )  , <span class="co">/// Punktschätzer</span></span>
+<span id="cb34-4"><a href="regres.html#cb34-4" aria-hidden="true" tabindex="-1"></a>    graphregion(fcolor(<span class="bn">white</span>)) <span class="co">/// Hintergundfarbe (außerhalb des eigentlichen Plots)</span></span>
+<span id="cb34-5"><a href="regres.html#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ylabel</span>(, valuelabel angle(0) <span class="bn">labsize</span>(tiny)) <span class="co">///</span></span>
+<span id="cb34-6"><a href="regres.html#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="bn">legend</span>(<span class="kw">off</span>) <span class="co">///</span></span>
+<span id="cb34-7"><a href="regres.html#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="bn">xtitle</span>(<span class="st">&quot;Einkommen (W) vs. Einkommen (M)&quot;</span>) <span class="co">/// Achsentitel</span></span>
+<span id="cb34-8"><a href="regres.html#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">&quot;&quot;</span>) <span class="co">/// </span></span>
+<span id="cb34-9"><a href="regres.html#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="bn">title</span>(<span class="st">&quot;Titel&quot;</span>)  <span class="co">///</span></span>
+<span id="cb34-10"><a href="regres.html#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="bn">subtitle</span>(<span class="st">&quot;Untertitel&quot;</span>) <span class="co">///</span></span>
+<span id="cb34-11"><a href="regres.html#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">&quot;{it:Quelle: Erwerbstätigenbefragung 2018}&quot;</span>, <span class="kw">size</span>(8pt) <span class="bn">position</span>(5) <span class="bn">ring</span>(5) )</span></code></pre></div>
+<p><img src="graph/Regplot.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<div class="note">
+<p>Diese labels sind alles andere ideal. Im nächsten Kapitel werden wir einige Möglichkeiten kennenlernen, da etwas zu ändern.</p>
+</div>
+</div>
+<div id="übungen-2" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Übungen</h2>
+<ul>
+<li>save the coefficients in a separate data set</li>
+<li>graph the educ and union coefficients against year</li>
+</ul>
+</div>
+<div id="anhang-1" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Anhang</h2>
+<div id="statsby" class="section level3" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> <code>statsby</code></h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="regres.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">statsby</span> _b _se, <span class="kw">by</span>(Bula) <span class="kw">noisily</span>: <span class="co">///</span></span>
+<span id="cb35-2"><a href="regres.html#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">regress</span> F518_SUF c.F200##c.F200 i.m1202 i.S1</span></code></pre></div>
+</div>
+<div id="weitere-matrix-befehle" class="section level3" number="3.8.2">
+<h3><span class="header-section-number">3.8.2</span> weitere <code>matrix</code>-Befehle</h3>
 <p>Wir können auch Rechnungen einfügen:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="regres.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> X1 = (1+1, 2*3/4 \ 5/2, 3)</span>
-<span id="cb27-2"><a href="regres.html#cb27-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1 </span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="regres.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> X1 = (1+1, 2*3/4 \ 5/2, 3)</span>
+<span id="cb36-2"><a href="regres.html#cb36-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1 </span></code></pre></div>
 <pre><code>X1[2,2]
      c1   c2
 r1    2  1.5
 r2  2.5    3</code></pre>
-<div id="teilmatrizen" class="section level4" number="3.5.2.1">
-<h4><span class="header-section-number">3.5.2.1</span> Teilmatrizen</h4>
-<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="regres.html#cb29-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)</span>
-<span id="cb29-2"><a href="regres.html#cb29-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div id="teilmatrizen" class="section level4" number="3.8.2.1">
+<h4><span class="header-section-number">3.8.2.1</span> Teilmatrizen</h4>
+<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="regres.html#cb38-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)</span>
+<span id="cb38-2"><a href="regres.html#cb38-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>X1[4,5]
      c1   c2   c3   c4   c5
 r1    1    2    3    4    5
@@ -457,12 +531,12 @@ r2    6    7    8    9   10
 r3    0   -1   -2   -3   -5
 r4   -6   -7   -8   -9  -10</code></pre>
 <p>Wir können aus diesen Matrizen auch Teilbereiche auswählen:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="regres.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> newmat = oldmat[Zeile(nbereich), Spalte(nbereich)]</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="regres.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> newmat = oldmat[Zeile(nbereich), Spalte(nbereich)]</span></code></pre></div>
 <p>Zeilenbereich und Spaltenbereich können einzelne Zahlen oder Bereiche mit durch zwei Punkte getrennten Start- und Endpositionen sein.</p>
 <p>Matrix B erstellen, welche die Zeile 2-4 und die Spalte 1-5 von X1 enthält:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="regres.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> B = X1[2..4,1..5]</span>
-<span id="cb32-2"><a href="regres.html#cb32-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B</span>
-<span id="cb32-3"><a href="regres.html#cb32-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="regres.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> B = X1[2..4,1..5]</span>
+<span id="cb41-2"><a href="regres.html#cb41-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B</span>
+<span id="cb41-3"><a href="regres.html#cb41-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>B[3,5]
      c1   c2   c3   c4   c5
 r2    6    7    8    9   10
@@ -477,9 +551,9 @@ r2    6    7    8    9   10
 r3    0   -1   -2   -3   -5
 r4   -6   -7   -8   -9  -10</code></pre>
 <p>Um alle Zeilen nach der zweiten Zeile zu übernehmen, verwenden wir drei Punkte:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="regres.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> C = X1[2...,1..5]</span>
-<span id="cb34-2"><a href="regres.html#cb34-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C</span>
-<span id="cb34-3"><a href="regres.html#cb34-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb43-1"><a href="regres.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> C = X1[2...,1..5]</span>
+<span id="cb43-2"><a href="regres.html#cb43-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C</span>
+<span id="cb43-3"><a href="regres.html#cb43-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>C[3,5]
      c1   c2   c3   c4   c5
 r2    6    7    8    9   10
@@ -494,12 +568,12 @@ r2    6    7    8    9   10
 r3    0   -1   -2   -3   -5
 r4   -6   -7   -8   -9  -10</code></pre>
 </div>
-<div id="spaltenzeilen-auswählen" class="section level4" number="3.5.2.2">
-<h4><span class="header-section-number">3.5.2.2</span> Spalten/Zeilen auswählen</h4>
+<div id="spaltenzeilen-auswählen" class="section level4" number="3.8.2.2">
+<h4><span class="header-section-number">3.8.2.2</span> Spalten/Zeilen auswählen</h4>
 <p>B1 enthält Spalte 1 und 3 aus <code>X1</code>:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="regres.html#cb36-1" aria-hidden="true" tabindex="-1"></a>mat B1 = X1[1..3,1],X1[1..3,3]</span>
-<span id="cb36-2"><a href="regres.html#cb36-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B1</span>
-<span id="cb36-3"><a href="regres.html#cb36-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb45-1"><a href="regres.html#cb45-1" aria-hidden="true" tabindex="-1"></a>mat B1 = X1[1...,1],X1[1...,3]</span>
+<span id="cb45-2"><a href="regres.html#cb45-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B1</span>
+<span id="cb45-3"><a href="regres.html#cb45-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>B1[4,2]
     c1  c3
 r1   1   3
@@ -515,9 +589,9 @@ r2    6    7    8    9   10
 r3    0   -1   -2   -3   -5
 r4   -6   -7   -8   -9  -10</code></pre>
 <p>B2 enthält Zeile 1 und 3 aus <code>X1</code>:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="regres.html#cb38-1" aria-hidden="true" tabindex="-1"></a>mat B2 = X1[1,1...] \ X1[4,1...]</span>
-<span id="cb38-2"><a href="regres.html#cb38-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B2</span>
-<span id="cb38-3"><a href="regres.html#cb38-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb47-1"><a href="regres.html#cb47-1" aria-hidden="true" tabindex="-1"></a>mat B2 = X1[1,1...] \ X1[4,1...]</span>
+<span id="cb47-2"><a href="regres.html#cb47-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B2</span>
+<span id="cb47-3"><a href="regres.html#cb47-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>B2[2,5]
      c1   c2   c3   c4   c5
 r1    1    2    3    4    5
@@ -532,24 +606,20 @@ r3    0   -1   -2   -3   -5
 r4   -6   -7   -8   -9  -10</code></pre>
 <!-- * https://thedatamonkey.blogspot.com/2011/01/stata-matrices.html -->
 </div>
-<div id="namensbasierte-auswahl" class="section level4" number="3.5.2.3">
-<h4><span class="header-section-number">3.5.2.3</span> Namensbasierte Auswahl</h4>
-<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="regres.html#cb40-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3 \ 8,9,10 )</span>
-<span id="cb40-2"><a href="regres.html#cb40-2" aria-hidden="true" tabindex="-1"></a>mat colname X1 = var1 var2 var3</span>
-<span id="cb40-3"><a href="regres.html#cb40-3" aria-hidden="true" tabindex="-1"></a>mat rowname X1 = set1 set2</span>
-<span id="cb40-4"><a href="regres.html#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="regres.html#cb40-5" aria-hidden="true" tabindex="-1"></a>mat X2 = X1[<span class="fu">rownumb</span>(X1,<span class="st">&quot;set1&quot;</span>),1...]</span>
-<span id="cb40-6"><a href="regres.html#cb40-6" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X2</span></code></pre></div>
+<div id="crnumb" class="section level4" number="3.8.2.3">
+<h4><span class="header-section-number">3.8.2.3</span> Namensbasierte Auswahl</h4>
+<p>Hier helfen <code>rownumb</code> und <code>colnumb</code></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb49-1"><a href="regres.html#cb49-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3 \ 8,9,10 )</span>
+<span id="cb49-2"><a href="regres.html#cb49-2" aria-hidden="true" tabindex="-1"></a>mat colname X1 = var1 var2 var3</span>
+<span id="cb49-3"><a href="regres.html#cb49-3" aria-hidden="true" tabindex="-1"></a>mat rowname X1 = set1 set2</span>
+<span id="cb49-4"><a href="regres.html#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="regres.html#cb49-5" aria-hidden="true" tabindex="-1"></a>mat X2 = X1[<span class="fu">rownumb</span>(X1,<span class="st">&quot;set1&quot;</span>),1...]</span>
+<span id="cb49-6"><a href="regres.html#cb49-6" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X2</span></code></pre></div>
 <pre><code>X2[1,3]
       var1  var2  var3
 set1     1     2     3</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="regres.html#cb42-1" aria-hidden="true" tabindex="-1"></a>mat X3 = X1[1...,<span class="fu">colnumb</span>(X1,<span class="st">&quot;var2&quot;</span>)]</span>
-<span id="cb42-2"><a href="regres.html#cb42-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X3</span></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb43-1"><a href="regres.html#cb43-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3 \ 8,9,10 )</span>
-<span id="cb43-2"><a href="regres.html#cb43-2" aria-hidden="true" tabindex="-1"></a>mat colname X1 = var1 var2 var3</span>
-<span id="cb43-3"><a href="regres.html#cb43-3" aria-hidden="true" tabindex="-1"></a>mat rowname X1 = set1 set2</span>
-<span id="cb43-4"><a href="regres.html#cb43-4" aria-hidden="true" tabindex="-1"></a>mat X3 = X1[1...,<span class="fu">colnumb</span>(X1,<span class="st">&quot;var2&quot;</span>)]</span>
-<span id="cb43-5"><a href="regres.html#cb43-5" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X3</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb51-1"><a href="regres.html#cb51-1" aria-hidden="true" tabindex="-1"></a>mat X3 = X1[1...,<span class="fu">colnumb</span>(X1,<span class="st">&quot;var2&quot;</span>)]</span>
+<span id="cb51-2"><a href="regres.html#cb51-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X3</span></code></pre></div>
 <pre><code>X3[2,1]
       var2
 set1     2

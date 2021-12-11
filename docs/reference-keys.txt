@@ -86,3 +86,9 @@ retue3
 übungen-2
 mat1
 labfun
+retue4
+e-und-r-der-regressionsergebnisse
+kategoriale-uv
+weitere-infos-aus-e
+reg-loop
+crnumb

@@ -12,6 +12,29 @@ library(magrittr)
 # library(ggthemes)
 ```
 
+## Arbeiten mit "Regular Expressions"
+
+
+"regular expressions" oder "regex" sind eine flexible Methode, strings (also Textinhalte) zu durchsuchen. 
+Dabei suchen wir nach Mustern, anstelle eines exakten matchings.
+
+In Stata können wir regex für Variablen, aber auch für macros und Labels verwenden.
+regex sind aber nicht immer die (einfachste) Lösung und oft werden die Befehle sehr unübersichtlich.
+Daher hier nur eine kurzer Überblick.
+
+Die drei Hauptfunktionen in Stata finden wir unter `help regex`:
+
+> `regexm(s,re)` allows you to search for the string described in your regular expressions. It evaluates to 1 if the string matches the expression.
+> `regexs(n)` returns the nth substring within an expression matched by regexm (hence, `regexm` must always be run before regexs).
+> `regexr(s1,re,s2)` searches for re within the string (s1) and replaces the matching portion with a new string (s2).
+
+Allerdings sind diese 
+
+ ustrregexrf() or ustrregexra().
+ 
+ 
+[Hier](https://github.com/asjadnaqvi/The-Stata-Guide/blob/master/Stata_regex_cheatsheet_v1.pdf) findet sich ein sehr gutes "Cheatsheet" zu den gebräuchlichsten regex.
+
 
 ## Variableneigenschaften
 
@@ -45,7 +68,7 @@ di "`: label (`v') 1'" 		   // Value label für Wert = 1
 
 
 
-
+## Abgleiche 
 Existiert eine Variable?
 ```{stata, eval = F }
 capture confirm  variable lm02
