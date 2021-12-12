@@ -11,7 +11,7 @@ glo pfad "D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt"
 global filelist: dir . files "*.*"			//Lister aller Dateien
 mac l filelist
 
-global dtalist: dir "${pfad}" files "baua*.dta" // Liste aller .dta-Dateien
+global dtalist: dir "${pfad}" files "*baua*.dta" // Liste aller .dta-Dateien
 mac l dtalist
 
 
@@ -35,9 +35,39 @@ mac l dtalist
 	
 
 
+* ---------------------------------- *
+* copy 
+global dtalist: dir "${pfad}" files "*baua*.dta" // Liste aller .dta-Dateien
+mac l dtalist
+
+
+loc usefile `: word 1 of ${dtalist}' 				// erster Eintrag aus der Liste
+loc copyfile "copy_`usefile'"
+dis "`usefile'"
+dis "`copyfile'"
+
+copy ${pfad}/`usefile' ${pfad}/`copyfile' , replace
+
+// hat das geklappt?
+global dtalist2: dir "${pfad}" files "*baua*.dta" // Liste aller .dta-Dateien
+mac l dtalist
+mac l dtalist2
+
+
+* ---------------------------------- *
 * erase
+loc usefile `: word 1 of ${dtalist}' 				// erster Eintrag aus der Liste
+loc copyfile "copy_`usefile'"
+erase ${pfad}/`copyfile'
+
+// hat auch das geklappt?
+global dtalist3: dir "${pfad}" files "*baua*.dta" // Liste aller .dta-Dateien
+mac l dtalist
+mac l dtalist2
+mac l dtalist3
 
 * ------------ * 
+glo pfad "D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt"
 mkdir "${pfad}/test"
 
 

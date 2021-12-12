@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="regres.html"/>
-
+<link rel="next" href="data.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -247,6 +247,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.7.1" data-path="labmacro.html"><a href="labmacro.html#wörter-aus-einem-satz"><i class="fa fa-check"></i><b>4.7.1</b> Wörter aus einem Satz</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>5</b> Dateien- und DoFile-Verwaltung</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data.html"><a href="data.html#dir---alles-einlesen"><i class="fa fa-check"></i><b>5.1</b> <code>dir</code> - alles einlesen</a></li>
+<li class="chapter" data-level="5.2" data-path="data.html"><a href="data.html#verzeichnisse-erstellen"><i class="fa fa-check"></i><b>5.2</b> Verzeichnisse erstellen</a></li>
+<li class="chapter" data-level="5.3" data-path="data.html"><a href="data.html#master-dofile"><i class="fa fa-check"></i><b>5.3</b> Master DoFile</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data.html"><a href="data.html#dofile-mit-argumenten-starten"><i class="fa fa-check"></i><b>5.3.1</b> DoFile mit Argumenten starten</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data.html"><a href="data.html#mehrere-sessions-starten"><i class="fa fa-check"></i><b>5.3.2</b> mehrere Sessions starten</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data.html"><a href="data.html#übungen-4"><i class="fa fa-check"></i><b>5.4</b> Übungen</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data.html"><a href="data.html#dir_readin"><i class="fa fa-check"></i><b>5.4.1</b> Übung</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data.html"><a href="data.html#anhang-3"><i class="fa fa-check"></i><b>5.5</b> Anhang</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>6</b> Literatur &amp; Links</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -474,7 +490,9 @@ Die Übersicht der <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-extr
 <div id="regexue" class="section level3" number="4.6.1">
 <h3><span class="header-section-number">4.6.1</span> Übung</h3>
 <ul>
-<li>Laden Sie den <code>regex.dta</code>: <code>use "https://github.com/filius23/StataProgBIBB/raw/main/docs/regex1.dta", clear</code> und teilen Sie die Informationen aus <code>address</code> in 4 Variablen auf: Hausnummer (erste Zahl), Straße, PLZ, Region
+<li>Laden Sie den <code>regex.dta</code>:<br />
+<code>use "https://github.com/filius23/StataProgBIBB/raw/main/docs/regex1.dta", clear</code>
+und teilen Sie die Informationen aus <code>address</code> in 4 Variablen auf: Hausnummer (erste Zahl), Straße, PLZ, Region
 <ul>
 <li>Wandeln Sie alle Einträge in Großbuchstaben um</li>
 <li>Verwenden Sie <code>split</code>, um zwischen Adresse und PLZ &amp; Ort zu trennen</li>
@@ -551,8 +569,8 @@ Die Übersicht der <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-extr
           </div>
         </div>
       </div>
-<a href="regres.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="regres.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

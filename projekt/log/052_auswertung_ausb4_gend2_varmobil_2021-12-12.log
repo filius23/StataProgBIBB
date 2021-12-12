@@ -1,0 +1,56 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt/log/052_auswertung_ausb4_gend2_varmobil_2021-12-12.log
+  log type:  text
+ opened on:  12 Dec 2021, 12:39:41
+
+. 
+. loc sleeptime = 1000*30
+
+. sleep `sleeptime'
+
+. 
+. use "${orig}/BIBBBAuA_2018_suf1.0.dta", clear
+
+. dis "Auszählung für Ausbildung = `ausb' & Geschlecht = `gend'"
+Auszählung für Ausbildung = 4 & Geschlecht = 2
+
+. tab gkpol if m1202 == `ausb' & S1 == `gend'
+
+       Gemeindekennziffer politisch |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+              unter 2.000 Einwohner |        173        4.51        4.51
+    2.000 bis unter 5.000 Einwohner |        244        6.36       10.86
+   5.000 bis unter 20.000 Einwohner |        759       19.77       30.63
+  20.000 bis unter 50.000 Einwohner |        621       16.18       46.81
+ 50.000 bis unter 100.000 Einwohner |        298        7.76       54.57
+100.000 bis unter 500.000 Einwohner |        676       17.61       72.18
+         500.000 und mehr Einwohner |      1,068       27.82      100.00
+------------------------------------+-----------------------------------
+                              Total |      3,839      100.00
+
+. 
+. tab gkpol `var' if m1202 == `ausb' & S1 == `gend'
+
+   Gemeindekennziffer |  Mobilfunkinterview
+            politisch |  Festnetz  Mobilfunk |     Total
+----------------------+----------------------+----------
+unter 2.000 Einwohner |       140         33 |       173 
+2.000 bis unter 5.000 |       197         47 |       244 
+5.000 bis unter 20.00 |       576        183 |       759 
+20.000 bis unter 50.0 |       473        148 |       621 
+50.000 bis unter 100. |       229         69 |       298 
+100.000 bis unter 500 |       486        190 |       676 
+500.000 und mehr Einw |       749        319 |     1,068 
+----------------------+----------------------+----------
+                Total |     2,850        989 |     3,839 
+
+. 
+. cap log close master
+
+. clear
+
+. exit, STATA clear
+
+end of do-file
+

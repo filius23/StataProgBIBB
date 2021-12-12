@@ -40,6 +40,42 @@ foreach lvl  of global ausb {
 }
 ```
 
+## Schleifen über strings
+
+### Wörter indizieren
+```{stata}
+local phrase `" "2 guys" "1 girl" "1 pizza place" "'
+di "`:word 2 of `phrase' '"
+```
+
+### Wörter zählen
+```{stata}
+local sentence "here is a sentence 7"
+local len: word count `sentence'
+mac list _len
+```
+
+### Wörter in Schleife
+```{stata}
+local phrase1 "here is a sentence of 7 words"
+local len1: word count `phrase1'
+
+forvalues i = 1(1)`len1' {
+	loc word: word `i' of `phrase1'
+	dis "this is word number " `i' ": `word'"
+}
+```
+
+```{stata}
+local phrase2 `" "here is" "a sentence" "of 7 words" "'
+local len2: word count `phrase2'
+
+forvalues i = 1(1)`len2' {
+	loc word: word `i' of `phrase2'
+	dis "this is word number " `i' ": `word'"
+}
+```
+
 
 
 ## Informationen aus Schleifen behalten
@@ -123,8 +159,8 @@ Anstatt zu versuchen, den Überblick darüber zu behalten, was wo gespeichert wi
 ### `e()` und `r()` sind getrennte Welten
 
 Neben dem Prinzip "One Data" folgt Stata auch dem Prinzip "One _-class".
-Das bedeutet, dass wir nur den return oder ereturn für den letzten Befehl dieser Klasse sehen können.
-Wenn wir also `reg` ausführen und dann eine Reihe von r-Klassen-Aufrufen machen (z.B. `su`), wird uns der Aufruf von `ereturn` immer noch die Werte für `reg`` anzeigen. 
+Das bedeutet, dass wir nur den return oder ereturn für den letzten Befehl *dieser* Klasse sehen können.
+Wenn wir also `reg` ausführen und dann eine Reihe von r-Klassen-Aufrufen machen (z.B. `su`), wird uns der Aufruf von `ereturn` immer noch die Werte für `reg` anzeigen. 
 Sobald wir jedoch einen weiteren r-class-Befehl ausführen, verlieren wir den Zugriff auf die Ergebnisse des ersten Befehls. 
 ```{stata erl0, eval = F}
 reg az F200
@@ -670,3 +706,6 @@ list, noobs clean
 - Erstellen Sie nun eine Schleife um die existierende Schleife herum, sodass nicht nur die Werte entlang von `gkpol`, sondern auch `F233_nuts2` berechnet und gesammelt werden. Erstellen Sie also einen "nested loop", sodass erst eine `matrix` für `gkpol` und dann eine für `F233_nuts2` erstellt wird.
 
 - Wie würden Sie die Schleife anpassen, wenn nur Gruppen mit N >= 100 ausgewertet werden dürften?
+
+
+

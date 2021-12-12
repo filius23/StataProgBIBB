@@ -1,6 +1,6 @@
 # Label- und Variablenfunktionen {#labmacro}
 
-```{r setup3, echo = F, message=F, warning = F}
+```{r setup4, echo = F, message=F, warning = F}
 if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
 # stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
@@ -182,6 +182,7 @@ gen r6 = ustrregexs(0) if ustrregexm(r5, "(\d+)$") // Zahlenfolge am Ende -> aus
 Das zugehörige [Tutorial](https://medium.com/the-stata-guide/regular-expressions-regex-in-stata-6e5c200ef27c) ist ebenfalls sehr lesenswert.
 Die Übersicht der [UCLA](https://stats.idre.ucla.edu/stata/faq/how-can-i-extract-a-portion-of-a-string-variable-using-regular-expressions/) bietet auch nochmal einige Hinweise - allerdings auf Basis der ASCII-basierten Befehle.
 [Stata Hilfe](http://www.stata.com/support/faqs/data/regex.html)
+[Hier](http://w.bruunisejs.dk/StataHacks/Datamanagement/regex/regular_expressions/) findet sich ein weiteres hilfreiches Tutorial
 
 ***
 
@@ -221,12 +222,29 @@ di "`: label (`v') 1'" 		   // Value label für Wert = 1
 ```
 
 
-Damit können wir bspw. ein Label kürzen:
+Damit können wir bspw. ein Variable Label kürzen:
 ```{stata labshort, eval = F}
-local longlabel: var label m1202
-local shortlabel = substr("`longlabel'",1,10)
-label var m1202 "`shortlabel'"
+local longlabel: var label m1202       	// variable label für variable m1202 suchen
+local shortlabel = substr("`longlabel'",1,10) // verändern mit string Funktion 
+label var m1202 "`shortlabel'"         // anwenden
 ```
+
+Um an die Value Labels zu kommen, braucht es etwas mehr:
+```{stata vallabaccess,eval = F}
+local lblname: value label m1202	// value labels für variable m1202 suchen
+cap label drop `lblname'_n			//neuen namen droppen zur Sicherheit
+label copy `lblname' `lblname'_n	// value labelbook kopieren
+
+local lab1: label (m1202) 2 // value label für Wert = 2 aufrufen
+loc lab2 = upper("`lab1'")  	// dieses value labels verändern
+label define `lblname'_n `lvl' "`lab2'", modify // in neues value labelbook einfügen
+
+labelbook `lblname' `lblname'_n // vergleich alt vs neu
+```
+
+
+
+
 
 Mit `label copy oldname newname`, `local lblname: value label var` und `local lab1: label (var) level` können wir auch value-Labels bearbeiten:
 ```{stata vallab, eval = F}
@@ -241,10 +259,10 @@ foreach lvl of local x {
 	local lab1: label (`v') `lvl'     // Value label Variable v bei Level lvl
 	loc lab2 = substr("`lab1'",1,8)         // kürzen 
 	
-	label define `lblname'_n `lvl' "`lab2'", modify // im value label ändern
+	label define `lblname'_n `lvl' "`lab2'", modify // im neuen value label ändern
   }
   
-lab val `v' `lblname'_n
+lab val `v' `lblname'_n             // anwenden
 ```
 
 
@@ -304,7 +322,9 @@ foreach v of varlist1 {
 
 ### Übung {#regexue}
 
-+ Laden Sie den `regex.dta`: `use "https://github.com/filius23/StataProgBIBB/raw/main/docs/regex1.dta", clear` und teilen Sie die Informationen aus `address` in 4 Variablen auf: Hausnummer (erste Zahl), Straße, PLZ, Region
++ Laden Sie den `regex.dta`:  
+  `use "https://github.com/filius23/StataProgBIBB/raw/main/docs/regex1.dta", clear` 
+  und teilen Sie die Informationen aus `address` in 4 Variablen auf: Hausnummer (erste Zahl), Straße, PLZ, Region
   + Wandeln Sie alle Einträge in Großbuchstaben um
   + Verwenden Sie `split`, um zwischen Adresse und PLZ & Ort zu trennen
   + Wie können Sie jetzt die Zahlen vom Text trennen?
@@ -322,6 +342,8 @@ foreach v of varlist1 {
 + Bearbeiten Sie das value label für `nuts2` - nutzen Sie dafür die `regex` und `string`-Funktionen von oben
   + Löschen Sie "Statistische" aus den den value labels und ersetzen Sie "Direktionsbezirk" durch "Bezirk"
 
++ Kehren Sie die Codierung vom `m1202` um: `gen m1202_n = 10 - m1202` und passen Sie die value labels entsprechend an die neue Codierung an.
+  + Tipp: auch die value labels müssen dann jeweils `10 - x` genommen werden.
 
 ### Übung {#valuesearch}
 
@@ -334,48 +356,13 @@ foreach v of varlist1 {
 
 ## Anhang 
 
-### Wörter aus einem Satz
-
-```{stata}
-local phrase `" "2 guys" "1 girl" "1 pizza place" "'
-di "`:word 2 of `phrase' '"
-```
-
-
-```{stata}
-local sentence "here is a sentence 7"
-local w2: word 4 of `sentence'
-mac list _w2
-```
-
-
-```{stata}
-local sentence "here is a sentence 7"
-local len: word count `sentence'
-mac list _len
-```
-```{stata}
-local phrase 2 guys 1 girl 1 pizza place
-di "`:word 2 of `phrase' '"
-```
-
-```{stata}
-local phrase "2 guys" "1 girl" "1 pizza place"
-di "`:word 2 of `phrase' '"
-```
-
-```{stata}
-local phrase `" "2 guys" "1 girl" "1 pizza place" "'
-di "`:word 2 of `phrase' '"
-```
-
-Variablen mit bestimmten Eigenschaften identifizieren  in ein `macro`
+Variablen mit bestimmten Eigenschaften identifizieren in ein `macro`
 ```{stata, eval = F}
 ds, has(type byte)
-global bytevars `r(varlist)'
+loc bytevars `r(varlist)'
 
-foreach v of global bytevars {
-	rename `v' B`v'
+foreach v of local bytevars {
+	rename `v' b_`v'
 }
 ```
 

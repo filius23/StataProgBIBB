@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-11" />
+<meta name="date" content="2021-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="loopmacro.html"/>
-
+<link rel="next" href="labmacro.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -180,7 +180,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.1" data-path="loopmacro.html"><a href="loopmacro.html#gespeichterte-ergebnisse"><i class="fa fa-check"></i><b>2.2.1</b> Gespeichterte Ergebnisse</a></li>
 <li class="chapter" data-level="2.2.2" data-path="loopmacro.html"><a href="loopmacro.html#e-und-r-sind-getrennte-welten"><i class="fa fa-check"></i><b>2.2.2</b> <code>e()</code> und <code>r()</code> sind getrennte Welten</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="loopmacro.html"><a href="loopmacro.html#ergebnisse-weiter-verwenden"><i class="fa fa-check"></i><b>2.3</b> Ergebnisse weiter verwenden</a></li>
+<li class="chapter" data-level="2.3" data-path="loopmacro.html"><a href="loopmacro.html#ergebnisse-weiter-verwenden"><i class="fa fa-check"></i><b>2.3</b> Ergebnisse weiter verwenden</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="loopmacro.html"><a href="loopmacro.html#recur"><i class="fa fa-check"></i><b>2.3.1</b> Rekursivität</a></li>
+</ul></li>
 <li class="chapter" data-level="2.4" data-path="loopmacro.html"><a href="loopmacro.html#mat1"><i class="fa fa-check"></i><b>2.4</b> Kennzahlen in einer <code>matrix</code> ablegen</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="loopmacro.html"><a href="loopmacro.html#namen-für-spalten-und-zeilen-einer-matrix"><i class="fa fa-check"></i><b>2.4.1</b> Namen für Spalten und Zeilen einer <code>matrix</code></a></li>
@@ -221,6 +224,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8.2" data-path="regres.html"><a href="regres.html#weitere-matrix-befehle"><i class="fa fa-check"></i><b>3.8.2</b> weitere <code>matrix</code>-Befehle</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="labmacro.html"><a href="labmacro.html"><i class="fa fa-check"></i><b>4</b> Label- und Variablenfunktionen</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="labmacro.html"><a href="labmacro.html#stringfunktionen"><i class="fa fa-check"></i><b>4.1</b> Stringfunktionen</a></li>
+<li class="chapter" data-level="4.2" data-path="labmacro.html"><a href="labmacro.html#arbeiten-mit-regular-expressions"><i class="fa fa-check"></i><b>4.2</b> Arbeiten mit “Regular Expressions”</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="labmacro.html"><a href="labmacro.html#regex-grund-regeln"><i class="fa fa-check"></i><b>4.2.1</b> regex (Grund-)Regeln</a></li>
+<li class="chapter" data-level="4.2.2" data-path="labmacro.html"><a href="labmacro.html#beispiele"><i class="fa fa-check"></i><b>4.2.2</b> Beispiele</a></li>
+<li class="chapter" data-level="4.2.3" data-path="labmacro.html"><a href="labmacro.html#weiterführende-links"><i class="fa fa-check"></i><b>4.2.3</b> Weiterführende Links</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="labmacro.html"><a href="labmacro.html#labfuns"><i class="fa fa-check"></i><b>4.3</b> Label bearbeiten</a></li>
+<li class="chapter" data-level="4.4" data-path="labmacro.html"><a href="labmacro.html#abgleiche"><i class="fa fa-check"></i><b>4.4</b> Abgleiche</a></li>
+<li class="chapter" data-level="4.5" data-path="labmacro.html"><a href="labmacro.html#valsearch"><i class="fa fa-check"></i><b>4.5</b> wo kommt überall -4 vor?</a></li>
+<li class="chapter" data-level="4.6" data-path="labmacro.html"><a href="labmacro.html#übungen-3"><i class="fa fa-check"></i><b>4.6</b> Übungen</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="labmacro.html"><a href="labmacro.html#regexue"><i class="fa fa-check"></i><b>4.6.1</b> Übung</a></li>
+<li class="chapter" data-level="4.6.2" data-path="labmacro.html"><a href="labmacro.html#varlab"><i class="fa fa-check"></i><b>4.6.2</b> Übung</a></li>
+<li class="chapter" data-level="4.6.3" data-path="labmacro.html"><a href="labmacro.html#valuesearch"><i class="fa fa-check"></i><b>4.6.3</b> Übung</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="labmacro.html"><a href="labmacro.html#anhang-2"><i class="fa fa-check"></i><b>4.7</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="labmacro.html"><a href="labmacro.html#wörter-aus-einem-satz"><i class="fa fa-check"></i><b>4.7.1</b> Wörter aus einem Satz</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>5</b> Dateien- und DoFile-Verwaltung</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data.html"><a href="data.html#dir---alles-einlesen"><i class="fa fa-check"></i><b>5.1</b> <code>dir</code> - alles einlesen</a></li>
+<li class="chapter" data-level="5.2" data-path="data.html"><a href="data.html#verzeichnisse-erstellen"><i class="fa fa-check"></i><b>5.2</b> Verzeichnisse erstellen</a></li>
+<li class="chapter" data-level="5.3" data-path="data.html"><a href="data.html#master-dofile"><i class="fa fa-check"></i><b>5.3</b> Master DoFile</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data.html"><a href="data.html#dofile-mit-argumenten-starten"><i class="fa fa-check"></i><b>5.3.1</b> DoFile mit Argumenten starten</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data.html"><a href="data.html#mehrere-sessions-starten"><i class="fa fa-check"></i><b>5.3.2</b> mehrere Sessions starten</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data.html"><a href="data.html#übungen-4"><i class="fa fa-check"></i><b>5.4</b> Übungen</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data.html"><a href="data.html#dir_readin"><i class="fa fa-check"></i><b>5.4.1</b> Übung</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data.html"><a href="data.html#anhang-3"><i class="fa fa-check"></i><b>5.5</b> Anhang</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>6</b> Literatur &amp; Links</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -493,15 +535,12 @@ Außerdem können wir einen kleinen Trick nutzen, um innerhalb der Schleife auf 
 <span id="cb34-10"><a href="regres.html#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="bn">subtitle</span>(<span class="st">&quot;Untertitel&quot;</span>) <span class="co">///</span></span>
 <span id="cb34-11"><a href="regres.html#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">&quot;{it:Quelle: Erwerbstätigenbefragung 2018}&quot;</span>, <span class="kw">size</span>(8pt) <span class="bn">position</span>(5) <span class="bn">ring</span>(5) )</span></code></pre></div>
 <p><img src="graph/Regplot.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
-<div class="note">
-<p>Diese labels sind alles andere ideal. Im nächsten Kapitel werden wir einige Möglichkeiten kennenlernen, da etwas zu ändern.</p>
-</div>
+<p>Diese labels sind natürlich alles andere als ideal. Im nächsten Kapitel werden wir einige Möglichkeiten kennenlernen, da etwas zu ändern.</p>
 </div>
 <div id="übungen-2" class="section level2" number="3.7">
 <h2><span class="header-section-number">3.7</span> Übungen</h2>
 <ul>
-<li>save the coefficients in a separate data set</li>
-<li>graph the educ and union coefficients against year</li>
+<li><code>mig</code></li>
 </ul>
 </div>
 <div id="anhang-1" class="section level2" number="3.8">
@@ -634,8 +673,8 @@ set2     9</code></pre>
           </div>
         </div>
       </div>
-<a href="loopmacro.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="loopmacro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="labmacro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -677,7 +716,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["Progammieren mit Stata @ BIBB.pdf", "Progammieren mit Stata @ BIBB.epub"],
+"download": ["Progammieren mit Stata BIBB.pdf", "Progammieren mit Stata BIBB.epub"],
 "search": {
 "engine": "fuse",
 "options": null
