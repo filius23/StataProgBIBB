@@ -396,13 +396,7 @@ Diese labels sind natürlich alles andere als ideal. Im nächsten Kapitel werden
 
 ## Übungen
 
-
-+ save the coefficients in a separate data set
-+ graph the educ and union coefficients against year
-
-
-
-
++ `mig`
 
 
 ## Anhang

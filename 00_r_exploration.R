@@ -29,9 +29,30 @@ xt <- baua2 %>% summarise(across(everything(), ~sum(as.numeric(.x) %in% c(9999))
   t(.) %>% data.frame(.) %>% rownames_to_column(.,var = "var") %>% janitor::clean_names() %>% tibble() %>% filter(x)
 
 
+reg <- readstata13::read.dta13("./docs/regex1.dta",convert.factors = F)
+reg$rnd <- runif(8,0,1)
+reg$address <- ifelse(reg$rnd<.5, tolower(reg$address), reg$address)
+haven::write_dta(data = data.frame(address= reg[,1]),path = "./docs/regex1.dta")
 
 
+baua <- haven::read_dta("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta")
+baua$random1 <- runif(nrow(baua),0,1)
+
+library(tidyverse)
+
+walk( seq(0,1,.1), function(x) {
+    # baua %>% filter(between(random1,x-.1,x)) %>%   select(-random1) %>%  haven::write_dta(.,path = paste0("./projekt/baua",x*10,".dta"))
+    baua %>% filter(between(random1,x-.1,x)) %>%  select(-random1) %>%  
+    select(1:20) %>% 
+    readr::write_delim(.,file = paste0("./projekt/baua",x*10,".csv"),delim = ";")
+})
+             
   
+  
+
+
+
+  ?walk
 
 unique(baua$zpalter) %>% length(.)
 

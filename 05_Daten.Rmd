@@ -1,0 +1,95 @@
+# Dateien- und DoFile-Verwaltung {#data}
+
+```{r setup3, echo = F, message=F, warning = F}
+if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+library(Statamarkdown)
+library(kableExtra)
+library(magrittr)
+# library(tidyverse)
+# library(ggthemes)
+```
+
+
+## `dir` - alles einlesen
+
+```{stata, eval = F}
+glo pfad "D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt"
+
+global filelist: dir . files "*.*"			//Lister aller Dateien
+mac l filelist
+
+global dtalist: dir "${pfad}" files "baua*.dta" // Liste aller .dta-Dateien
+mac l dtalist
+
+
+loc usefile `: word 1 of ${dtalist}' 				// erster Eintrag aus der Liste
+dis "${pfad}/`usefile'"
+
+use "${pfad}/`usefile'", clear 						// dta laden
+loc n_datasets : list sizeof global(dtalist)		// anzahl weiterer listen
+foreach i of numlist 2(1)`n_datasets' {
+	loc appendfile `: word `i' of ${dtalist}'		// name aus list aufrufen
+	qui append using "${pfad}/`appendfile'"			 // append
+	dis "`appendfile' appended"						      // Kontrolle
+}
+	
+```
+
+Mit `erase` können wir auch Dateien löschen.
+
+
+***
+
+**[Übung 1](#dir_readin)**
+
+***
+
+## Verzeichnisse erstellen
+
+```{stata, eval = F}
+global projekt "D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt"
+mkdir		"${project}"
+
+mkdir 	"${pfad}/data"
+mkdir 	"${pfad}/log"
+mkdir 	"${pfad}/graph"
+mkdir 	"${pfad}/results"
+mkdir 	"${pfad}/tables"
+```
+
+
+## Master DoFile
+
+### DoFile mit Argumenten starten
+
+
+Ein DoFile kann auch direkt aus einem Master-DoFile gestartet werden. 
+
+### mehrere Sessions starten
+
+
+***
+
+**[Übung 1](#labue1)**
+
+***
+
+
+
+## Übungen
+
+### Übung {#dir_readin}
+
++ Im zip-Ordner finden sich auch `.csv`-Dateien  und PDFs. Erstellen Sie eine Schleife mit `if`-Bedingung, sodass die csv-Dateien eingelesen werden, die PDF Dateien aber übergangen werden.
+  + Verwenden Sie also die `filelist` statt der `dtalist` von oben.
+  + Lesen Sie mit `import delimited ".... baua3.csv", delimiter(";") encoding(ISO-8859-2) clear` die csv-Dateien jeweils ein und legen Sie als `dta` ab.
+  + Anschließend können Sie den `dta`-Schleife von oben verwenden, um alle Teildatensätze einzulesen. Kommen Sie auf am Ende wieder auf 20012 Befragte?
+
+
+## Anhang
+
+[weitere File-Loops](https://sites.google.com/site/jenniferlvwinter/stata-code)
+

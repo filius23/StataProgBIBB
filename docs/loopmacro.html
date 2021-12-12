@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-11" />
+<meta name="date" content="2021-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -182,7 +182,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.1" data-path="loopmacro.html"><a href="loopmacro.html#gespeichterte-ergebnisse"><i class="fa fa-check"></i><b>2.2.1</b> Gespeichterte Ergebnisse</a></li>
 <li class="chapter" data-level="2.2.2" data-path="loopmacro.html"><a href="loopmacro.html#e-und-r-sind-getrennte-welten"><i class="fa fa-check"></i><b>2.2.2</b> <code>e()</code> und <code>r()</code> sind getrennte Welten</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="loopmacro.html"><a href="loopmacro.html#ergebnisse-weiter-verwenden"><i class="fa fa-check"></i><b>2.3</b> Ergebnisse weiter verwenden</a></li>
+<li class="chapter" data-level="2.3" data-path="loopmacro.html"><a href="loopmacro.html#ergebnisse-weiter-verwenden"><i class="fa fa-check"></i><b>2.3</b> Ergebnisse weiter verwenden</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="loopmacro.html"><a href="loopmacro.html#recur"><i class="fa fa-check"></i><b>2.3.1</b> Rekursivität</a></li>
+</ul></li>
 <li class="chapter" data-level="2.4" data-path="loopmacro.html"><a href="loopmacro.html#mat1"><i class="fa fa-check"></i><b>2.4</b> Kennzahlen in einer <code>matrix</code> ablegen</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="loopmacro.html"><a href="loopmacro.html#namen-für-spalten-und-zeilen-einer-matrix"><i class="fa fa-check"></i><b>2.4.1</b> Namen für Spalten und Zeilen einer <code>matrix</code></a></li>
@@ -201,22 +204,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.8.1" data-path="loopmacro.html"><a href="loopmacro.html#retue1"><i class="fa fa-check"></i><b>2.8.1</b> Übung</a></li>
 <li class="chapter" data-level="2.8.2" data-path="loopmacro.html"><a href="loopmacro.html#retue2"><i class="fa fa-check"></i><b>2.8.2</b> Übung</a></li>
 <li class="chapter" data-level="2.8.3" data-path="loopmacro.html"><a href="loopmacro.html#retue3"><i class="fa fa-check"></i><b>2.8.3</b> Übung</a></li>
+<li class="chapter" data-level="2.8.4" data-path="loopmacro.html"><a href="loopmacro.html#retue4"><i class="fa fa-check"></i><b>2.8.4</b> Übung</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="regres.html"><a href="regres.html"><i class="fa fa-check"></i><b>3</b> Regressionsergebnisse weiterverarbeiten</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="regres.html"><a href="regres.html#ereturn-und-return-der-regressionsergebnisse"><i class="fa fa-check"></i><b>3.1</b> <code>ereturn</code> und <code>return</code> der Regressionsergebnisse</a>
+<li class="chapter" data-level="3.1" data-path="regres.html"><a href="regres.html#e-und-r-der-regressionsergebnisse"><i class="fa fa-check"></i><b>3.1</b> <code>e()</code> und <code>r()</code> der Regressionsergebnisse</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="regres.html"><a href="regres.html#koeffizienten-mit-_b-_se-aufrufen"><i class="fa fa-check"></i><b>3.1.1</b> Koeffizienten mit <code>_b</code> / <code>_se</code> aufrufen</a></li>
 <li class="chapter" data-level="3.1.2" data-path="regres.html"><a href="regres.html#komplette-regressionstabelle"><i class="fa fa-check"></i><b>3.1.2</b> Komplette Regressionstabelle</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="regres.html"><a href="regres.html#regressionstabellen-als-matrix-speichern-und-anpassen"><i class="fa fa-check"></i><b>3.2</b> Regressionstabellen als <code>matrix</code> speichern und anpassen</a></li>
-<li class="chapter" data-level="3.3" data-path="regres.html"><a href="regres.html#als-datensatz-ablegen"><i class="fa fa-check"></i><b>3.3</b> Als Datensatz ablegen:</a></li>
-<li class="chapter" data-level="3.4" data-path="regres.html"><a href="regres.html#übungen-2"><i class="fa fa-check"></i><b>3.4</b> Übungen</a></li>
-<li class="chapter" data-level="3.5" data-path="regres.html"><a href="regres.html#anhang-1"><i class="fa fa-check"></i><b>3.5</b> Anhang</a>
+<li class="chapter" data-level="3.3" data-path="regres.html"><a href="regres.html#kategoriale-uv"><i class="fa fa-check"></i><b>3.3</b> kategoriale UV</a></li>
+<li class="chapter" data-level="3.4" data-path="regres.html"><a href="regres.html#als-datensatz-ablegen"><i class="fa fa-check"></i><b>3.4</b> Als Datensatz ablegen:</a></li>
+<li class="chapter" data-level="3.5" data-path="regres.html"><a href="regres.html#weitere-infos-aus-e"><i class="fa fa-check"></i><b>3.5</b> weitere Infos aus <code>e()</code></a></li>
+<li class="chapter" data-level="3.6" data-path="regres.html"><a href="regres.html#reg-loop"><i class="fa fa-check"></i><b>3.6</b> <code>reg</code>-Loop</a></li>
+<li class="chapter" data-level="3.7" data-path="regres.html"><a href="regres.html#übungen-2"><i class="fa fa-check"></i><b>3.7</b> Übungen</a></li>
+<li class="chapter" data-level="3.8" data-path="regres.html"><a href="regres.html#anhang-1"><i class="fa fa-check"></i><b>3.8</b> Anhang</a>
 <ul>
-<li class="chapter" data-level="3.5.1" data-path="regres.html"><a href="regres.html#statsby"><i class="fa fa-check"></i><b>3.5.1</b> <code>statsby</code></a></li>
-<li class="chapter" data-level="3.5.2" data-path="regres.html"><a href="regres.html#weitere-matrix-befehle"><i class="fa fa-check"></i><b>3.5.2</b> weitere <code>matrix</code>-Befehle</a></li>
+<li class="chapter" data-level="3.8.1" data-path="regres.html"><a href="regres.html#statsby"><i class="fa fa-check"></i><b>3.8.1</b> <code>statsby</code></a></li>
+<li class="chapter" data-level="3.8.2" data-path="regres.html"><a href="regres.html#weitere-matrix-befehle"><i class="fa fa-check"></i><b>3.8.2</b> weitere <code>matrix</code>-Befehle</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="labmacro.html"><a href="labmacro.html"><i class="fa fa-check"></i><b>4</b> Label- und Variablenfunktionen</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="labmacro.html"><a href="labmacro.html#stringfunktionen"><i class="fa fa-check"></i><b>4.1</b> Stringfunktionen</a></li>
+<li class="chapter" data-level="4.2" data-path="labmacro.html"><a href="labmacro.html#arbeiten-mit-regular-expressions"><i class="fa fa-check"></i><b>4.2</b> Arbeiten mit “Regular Expressions”</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="labmacro.html"><a href="labmacro.html#regex-grund-regeln"><i class="fa fa-check"></i><b>4.2.1</b> regex (Grund-)Regeln</a></li>
+<li class="chapter" data-level="4.2.2" data-path="labmacro.html"><a href="labmacro.html#beispiele"><i class="fa fa-check"></i><b>4.2.2</b> Beispiele</a></li>
+<li class="chapter" data-level="4.2.3" data-path="labmacro.html"><a href="labmacro.html#weiterführende-links"><i class="fa fa-check"></i><b>4.2.3</b> Weiterführende Links</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="labmacro.html"><a href="labmacro.html#label-bearbeiten"><i class="fa fa-check"></i><b>4.3</b> Label bearbeiten</a></li>
+<li class="chapter" data-level="4.4" data-path="labmacro.html"><a href="labmacro.html#abgleiche"><i class="fa fa-check"></i><b>4.4</b> Abgleiche</a></li>
+<li class="chapter" data-level="4.5" data-path="labmacro.html"><a href="labmacro.html#valsearch"><i class="fa fa-check"></i><b>4.5</b> wo kommt überall -4 vor?</a></li>
+<li class="chapter" data-level="4.6" data-path="labmacro.html"><a href="labmacro.html#übungen-3"><i class="fa fa-check"></i><b>4.6</b> Übungen</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="labmacro.html"><a href="labmacro.html#regexue"><i class="fa fa-check"></i><b>4.6.1</b> Übung</a></li>
+<li class="chapter" data-level="4.6.2" data-path="labmacro.html"><a href="labmacro.html#varlab"><i class="fa fa-check"></i><b>4.6.2</b> Übung</a></li>
+<li class="chapter" data-level="4.6.3" data-path="labmacro.html"><a href="labmacro.html#valuesearch"><i class="fa fa-check"></i><b>4.6.3</b> Übung</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="labmacro.html"><a href="labmacro.html#anhang-2"><i class="fa fa-check"></i><b>4.7</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="labmacro.html"><a href="labmacro.html#wörter-aus-einem-satz"><i class="fa fa-check"></i><b>4.7.1</b> Wörter aus einem Satz</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -549,6 +579,8 @@ functions:
 <span id="cb14-14"><a href="loopmacro.html#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> su S01 <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span></span>
 <span id="cb14-15"><a href="loopmacro.html#cb14-15" aria-hidden="true" tabindex="-1"></a>    glo gend<span class="ot">`lvl&#39;</span>: <span class="kw">display</span> <span class="st">&quot;Der Frauenanteil in m1202=&quot;</span> <span class="ot">`lvl&#39;</span> <span class="st">&quot; beträgt: &quot;</span> <span class="fu">round</span>(<span class="fu">r</span>(<span class="kw">mean</span>)*100,.1) <span class="st">&quot;%&quot;</span></span>
 <span id="cb14-16"><a href="loopmacro.html#cb14-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="recur" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Rekursivität</h3>
 <p>Macros können auch “recursively” erstellt werden:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="loopmacro.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> x <span class="st">&quot;&quot;</span></span>
 <span id="cb15-2"><a href="loopmacro.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> i = 1/20 {</span>
@@ -569,6 +601,7 @@ gend:           m1202=1 45.6% m1202=2 53% m1202=3 37.8% m1202=4 48.9%</code></pr
 <hr />
 <p><strong><a href="loopmacro.html#retue1">Übung 1</a></strong></p>
 <hr />
+</div>
 </div>
 <div id="mat1" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Kennzahlen in einer <code>matrix</code> ablegen</h2>
@@ -758,7 +791,7 @@ r4          4         39  47.760744         49         57</code></pre>
 <div id="labfun" class="section level3" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span> <code>extended macro function</code> für Labels</h3>
 <p>Idealerweise würden wir aber gerne nicht nur 1-4 in <code>m1202</code> behalten, sondern die Labels (<code>Ohne Berufsabschluss</code>) usw.
-Um Informationen zu Variablen &amp; Labels abzurufen, lernen wir <a href="#labmacro">später</a> eine ganze Reihe an extended macro functions kennen, für den Moment reicht uns <code>label (varname) varvalue</code>:</p>
+Um Informationen zu Variablen &amp; Labels abzurufen, lernen wir <a href="labmacro.html#labmacro">später</a> eine ganze Reihe an extended macro functions kennen, für den Moment reicht uns <code>label (varname) varvalue</code>:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="loopmacro.html#cb41-1" aria-hidden="true" tabindex="-1"></a>loc v m1202</span>
 <span id="cb41-2"><a href="loopmacro.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> vallab1 :    <span class="kw">label</span> (<span class="ot">`v&#39;</span>) 1            <span class="co">// Value label für Wert = 1</span></span>
 <span id="cb41-3"><a href="loopmacro.html#cb41-3" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;`vallab1&#39;&quot;</span>     <span class="co">// display local &quot;valuelab1&quot;</span></span></code></pre></div>
@@ -876,7 +909,7 @@ Seit Version 16 bietet Stata mit den <a href="https://www.stata.com/features/ove
 <div id="retue3" class="section level3" number="2.8.3">
 <h3><span class="header-section-number">2.8.3</span> Übung</h3>
 <ul>
-<li><p>Verwenden Sie die Schleife aus <a href="loopmacro.html#retue2"><em>Übung</em></a> und passen diese so an, dass die Labels für <code>F233_nuts2</code> erhalten werden legen Sie die Ergebnismatrix in einen <code>frame</code> ab.</p>
+<li>Verwenden Sie die Schleife aus <a href="loopmacro.html#retue2">Übung 2</a> und passen diese so an, dass die Labels für <code>gkpol</code> erhalten werden legen Sie die Ergebnismatrix in einen <code>frame</code> ab.
 <ul>
 <li>Nutzen Sie die <a href="loopmacro.html#labfun"><code>label (</code>v’) 1`</a> extended macro function um das jeweilige Label anzuzeigen</li>
 <li>Setzen Sie das entsprechende Label als <code>rowname</code></li>
@@ -884,8 +917,18 @@ Seit Version 16 bietet Stata mit den <a href="https://www.stata.com/features/ove
 <li>Nutzen Sie <code>xsvmat</code>, um einen <code>frame</code> zu erstellen</li>
 <li>Nutzen Sie <code>frame change</code>, um in die Ergebnis-<code>frame</code> zu wechseln (und wieder zurück)</li>
 </ul></li>
-<li><p>Wie könnten Sie mit Hilfe einer Schleife den Schritt des Zusammenfügens mit weniger Tipparbeit erledigen? (Tipp: Überführen Sie die erste Ergebnis-<code>matrix</code> in eine neue Ergebnismatrix, an die dann die weiteren <code>matrix</code> per <code>row join</code> angefügt werden)</p></li>
-<li><p>Wie würden Sie die Schleife anpassen, wenn nur Gruppen mit N &gt;= 1500 ausgewertet werden dürften?</p></li>
+<li>Wie könnten Sie mit Hilfe einer Schleife den Schritt des Zusammenfügens mit weniger Tipparbeit erledigen?
+<ul>
+<li>Tipp: Überführen Sie die erste Ergebnis-<code>matrix</code> in eine neue Ergebnismatrix, an die dann die weiteren <code>matrix</code> per <code>row join</code> angefügt werden - ggf. hilft hier <code>if</code>/<code>else</code></li>
+<li>Ließe sich auch ein Befehl integrieren, der die <code>matrix</code> für Einzelergebnisse dann gleich wieder löscht?</li>
+</ul></li>
+</ul>
+</div>
+<div id="retue4" class="section level3" number="2.8.4">
+<h3><span class="header-section-number">2.8.4</span> Übung</h3>
+<ul>
+<li><p>Erstellen Sie nun eine Schleife um die existierende Schleife herum, sodass nicht nur die Werte entlang von <code>gkpol</code>, sondern auch <code>F233_nuts2</code> berechnet und gesammelt werden. Erstellen Sie also einen “nested loop,” sodass erst eine <code>matrix</code> für <code>gkpol</code> und dann eine für <code>F233_nuts2</code> erstellt wird.</p></li>
+<li><p>Wie würden Sie die Schleife anpassen, wenn nur Gruppen mit N &gt;= 100 ausgewertet werden dürften?</p></li>
 </ul>
 
 </div>
@@ -939,7 +982,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["Progammieren mit Stata @ BIBB.pdf", "Progammieren mit Stata @ BIBB.epub"],
+"download": ["Progammieren mit Stata BIBB.pdf", "Progammieren mit Stata BIBB.epub"],
 "search": {
 "engine": "fuse",
 "options": null

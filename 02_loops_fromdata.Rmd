@@ -192,7 +192,7 @@ foreach lvl  of global ausb {
 }
 ```
 
-
+### Rekursivität {#recur}
 Macros können auch "recursively" erstellt werden:
 ```{stata mloretn2}
 global x ""
@@ -419,7 +419,7 @@ mat l G2
 ### `extended macro function` für Labels {#labfun}
 
 Idealerweise würden wir aber gerne nicht nur 1-4 in `m1202` behalten, sondern die Labels (`Ohne Berufsabschluss`) usw. 
-Um Informationen zu Variablen & Labels abzurufen, lernen wir [später](#labmacro) eine ganze Reihe an extended macro functions kennen, für den Moment reicht uns `label (varname) varvalue`: 
+Um Informationen zu Variablen & Labels abzurufen, lernen wir [später](#labfuns) eine ganze Reihe an extended macro functions kennen, für den Moment reicht uns `label (varname) varvalue`: 
 ```{stata varlab0, eval = F}
 loc v m1202
 local vallab1 :    label (`v') 1		 	// Value label für Wert = 1

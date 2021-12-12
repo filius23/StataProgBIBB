@@ -419,7 +419,7 @@ Wir können unterschiedliche Typen von `foreach`-Listen verwenden:
 foreach lname in any_list {
 foreach lname of local    local      {
 foreach lname of global   global     {
-foreach lname of varlist  variablen  {
+foreach lname of varlist  variablen  { //auch Wildcards möglich - analog zu d F2**
 foreach lname of newlist  newvarlist { //wenn variablen erst generiert werden
 foreach lname of numlist  numlist    {
 ```
@@ -606,6 +606,7 @@ r(111);
   - Legen Sie die Erwerbstätigenbefragung 2018 in den *data*-Ordner (oder dessen Äquivalent) 
   - Wie ist der Username auf Ihrem Gerät?
   - Verwenden Sie ein `if`-Statement, um den Dateipfad zu erstellen
+  - Erstellen Sie ein LogFile, welches das heutige Datum im Namen trägt.
 
 - Lassen Sie sich alle `globals`, die mit "S" beginnen, in ein `gobal allS` ablegen. Was wurde alles gefunden?
   - Denken Sie an die `extended macro function`  [`all globals`](#allglo) 
@@ -614,7 +615,7 @@ r(111);
   
 ### FizzBuzz-Challenge {#ue2}
 
-Fizz Buzz wird/wurde ein Screening-Instrument für Programmierer\*innen verwendet. Fizz Buzz ist ein Kinderlernspiel, bei dem die Kinder üblicherweise im Kreis sitzen und reihum laut von eins aufwärts zählen. Allerdings gibt es drei Regeln:
+Fizz Buzz wird/wurde als ein Screening-Instrument für Programmierer\*innen verwendet. Fizz Buzz ist ein Kinderlernspiel, bei dem die Kinder üblicherweise im Kreis sitzen und reihum laut von eins aufwärts zählen. Allerdings gibt es drei Regeln:
 
 + Alle Zahlen, die durch drei teilbar sind, müssen durch das Wort "Fizz" ersetzt werden 
 + Alle Zahlen, die durch fünf teilbar sind, müssen durch das Wort "Buzz" ersetzt werden
