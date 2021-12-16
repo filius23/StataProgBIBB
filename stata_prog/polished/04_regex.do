@@ -1,4 +1,4 @@
-* --------------------------------- *
+﻿* --------------------------------- *
 * Programmieren mit Stata
 * Kapitel 4: regex - ein (kurzer) Überblick
 * --------------------------------- *
@@ -30,6 +30,9 @@ list
 drop x*
 gen x6 = proper(add) // nur erster Buchstabe groß
 gen x7 = trim(add) // Leerzeichen am Ende und Beginn raus
+gen x8 = strlen(add) // Leerzeichen am Ende und Beginn raus
+
+
 list
 
 // ustrupper() and ustrlower() bei Umlauten -> siehe Hilfe

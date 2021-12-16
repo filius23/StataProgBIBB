@@ -135,3 +135,6 @@ verzeichnisse-dofiles-erstellen
 neue-session-starten
 masterdofile
 in-neuer-session-starten
+ue0
+loop1
+strue

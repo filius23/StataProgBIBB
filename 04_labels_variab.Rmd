@@ -40,6 +40,7 @@ gen x4 = upper(add)			// alles groß
 gen x5 = lower(add)     // alles klein
 gen x6 = proper(add)    // jeweiles erster Buchstabe eines Wortes groß
 gen x7 = trim(add)      // Leerzeichen am Ende und Beginn raus
+gen x8 = strlen(add)    // Anzahl der Zeichen in add
 ```
 
 Allerdings sind diese Funktionen auf ASCII-Zeichen ausgelegt - einfach gesagt: Umlaute, ß usw. bereiten Probleme. Daher gibt es eine Erweiterung mit `usubstr`, `ustrupper()`, `ustrlower()` usw.  - mehr dazu jeweils in der Hilfe.
@@ -66,6 +67,15 @@ Hier wenig hilfreich, aber häufig eine gute Abkürzung: `split`
 ```{stata split1, eval = F}
 split add, parse(" ") gen(t)
 ```
+
+***
+
+**[Übung](#strue)**
+
+***
+
+
+
 
 ## Arbeiten mit "Regular Expressions"
 
@@ -186,7 +196,7 @@ Die Übersicht der [UCLA](https://stats.idre.ucla.edu/stata/faq/how-can-i-extrac
 
 ***
 
-**[Übung 1](#regexue)**
+**[Übung](#regexue)**
 
 ***
 
@@ -312,13 +322,19 @@ foreach v of varlist1 {
 
 ***
 
-**[Übung 3](#valuesearch)**
+**[Übung](#valuesearch)**
 
 ***
 
 
 
 ## Übungen
+
+### Übung {#strue}
+
++ Wie kommen Sie jeweils an das vorletztes Wort aus der Adressliste?
++ Wie kommen Sie jeweils an das 10.letzte bis 3.letzte Zeichen in der Adressliste?
+
 
 ### Übung {#regexue}
 
@@ -344,6 +360,10 @@ foreach v of varlist1 {
 
 + Kehren Sie die Codierung vom `m1202` um: `gen m1202_n = 10 - m1202` und passen Sie die value labels entsprechend an die neue Codierung an.
   + Tipp: auch die value labels müssen dann jeweils `10 - x` genommen werden.
+  
+**Für alle, die schon fertig sind:**
+
++ Wie könnten Sie automatisiert den Variable label für die Muttersprachenvariablen kürzen, sodass statt "Muttersprache:" nur noch "MSpr" im label steht?
 
 ### Übung {#valuesearch}
 

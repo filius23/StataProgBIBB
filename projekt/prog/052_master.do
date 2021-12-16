@@ -18,7 +18,9 @@ estimates clear
 
 * ------------------------------ *
 * Pfade setzen
+if ("`c(username)'" == "Filser") {
 glo pfad 		"D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt"		// projekt
+}
 glo orig		"${pfad}/orig"		// wo liegen die original Datensätze?
 glo data		"${pfad}/data"		// wo liegen die fertigen Datensätze?
 glo log			"${pfad}/log"		// Ordner fuer log Files

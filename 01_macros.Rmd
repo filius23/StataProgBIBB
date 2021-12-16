@@ -114,6 +114,13 @@ dis "${t4}"
 mac list t1 t2 t3 t4
 ```
 
+***
+
+**[Übung](#ue0)**
+
+***
+
+
 ## Dateipfade 
 
 Ein macro kann auch Text enthalten und wir können diesen bspw. für Dateipfade macros verwenden:
@@ -148,6 +155,23 @@ Sollten aber Leerzeichen im Pfad vorkommen, brauchen wir auf jeden Fall `" "`.
 Außerdem ist [`\` beim Zusammenbauen mit macros manchmal problematisch](#dir)) - auch hier helfen `" "`. 
 Alternativ hilft hier `/` statt `\` zu verwenden.
 
+
+Mit `mkdir` können wir auch Ordner erstellen.
+Wenn also noch kein log-Ordner existiert, können wir ihn so erstellen:
+```{stata mkdir, eval = F}
+mkdir ${log}
+```
+
+Mit `cap cd` können wir das vorher überprüfen:
+```{stata mkdir2, eval=F}
+capture cd 	"${log}"
+	if _rc!=0  {
+		mkdir ${log}
+		display "${log} erstellt"
+	} 
+```
+
+**Siehe `01_init_beispiel.do` für ein Beispiel für einige Befehle beim Erstellen eines Projektverzeichnisses.**
 
 ## Bereits definierte Macros {#cmac}
 
@@ -289,7 +313,7 @@ su F`n'
 Ein macro kann auch ein Programm sein:
 ```{stata mac8b, eval=F}
 loc t tab
-`t' zpalter
+`t' mobil
 ```
 
 ```{stata mac8b1, echo=F}
@@ -376,7 +400,7 @@ tab mobil
 
 ***
 
-**[Übung 1](#ue1)**
+**[Übung](#ue1)**
 
 ***
 
@@ -551,6 +575,12 @@ forvalues n = 1/10 {
 
 ### nested loop
 
+```{stata nloop1}
+
+```
+
+
+
 ### `display` vs. `macro list`
 
 `macro list` stoppt das DoFile wenn der macro nicht existiert, `display` zeigt nur ein leeres Feld an:
@@ -583,7 +613,7 @@ r(111);
 
 ***
 
-**[Übung 2](#ue2)**
+**[Übung](#ue2)**
 
 ***
 
@@ -598,6 +628,28 @@ r(111);
 
 
 ## Übungen
+
+### Übung {#ue0}
+
+
++ Was ist das Ergebnis dieser Rechnung? Nehmen Sie sich einen Moment Zeit und rechnen Sie im Kopf - Überprüfen Sie dann ihr Ergebnis.
+```{stata, eval = F}
+loc x = 4
+glo y = 1+5
+loc y 1+5
+dis `x' * `y'
+```
+
++ Wie können Sie hier aus `Hallo zusammen! :-)` folgende Ausgabe machen: `Hallo, zusammen! :-)` ohne die macros zu verändern oder einen neuen anzulegen?
+```{stata, eval = F}
+glo t1 "Hallo"
+glo t2 " zusammen"
+glo t3 "! :-)"
+
+glo t4 = "${t1}${t2}${t3}"
+dis "${t4}"
+```
+
 
 ### Übung {#ue1}
 
@@ -621,14 +673,14 @@ Fizz Buzz wird/wurde als ein Screening-Instrument für Programmierer\*innen verw
 + Alle Zahlen, die durch fünf teilbar sind, müssen durch das Wort "Buzz" ersetzt werden
 + Wenn eine Zahl durch drei und fünf teilbar ist, dann wird "Fizz Buzz" gerufen.
 
-Diskutieren Sie erst in der Gruppe, wie Sie mit `if` & `else` eine Schleife bauen würden, welche diese Regeln umsetzt. 
+Wie würden Sie mit `if` & `else` eine Schleife bauen, welche diese Regeln umsetzt. 
 Was wäre der erste Schritt? 
 Bauen Sie dann die Schleife und lassen Sie die Schleife für den Wertebereich 0-30 laufen.
 
 
 ### Übung {#ue3}
 
-Passen Sie die Schleife mit [`ferest()`](#ferest) an, sodass hier im 5. Durchlauf nicht mehr `Es kommen noch:  ` steht, sondern `Fertig :-)`.
+Passen Sie die Schleife mit [`ferest()`](#ferest) an, sodass hier im 5. Durchlauf nicht mehr `Es kommen noch:  ` steht, sondern `Fertig`.
 
 ## Anhang
 

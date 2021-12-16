@@ -66,6 +66,7 @@ forvalues i = 1(1)`len1' {
 }
 ```
 
+... dabei macht es einen Unterschied, wo die `""` stehen:
 ```{stata}
 local phrase2 `" "here is" "a sentence" "of 7 words" "'
 local len2: word count `phrase2'
@@ -77,6 +78,12 @@ forvalues i = 1(1)`len2' {
 ```
 
 
+
+***
+
+**[Übung](#loop)**
+
+***
 
 ## Informationen aus Schleifen behalten
 
@@ -660,13 +667,18 @@ list, noobs clean
 
 ***
 
-**[Übung 3](#retue3)**
+**[Übung](#retue3)**
 
 ***
 
 
 
 ## Übungen
+
+### Übung {#loop1}
+
++ einfach einige globals geben 
++ dann zählen und vllt `if`
 
 ### Übung {#retue1}
 

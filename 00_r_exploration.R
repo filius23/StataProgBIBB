@@ -41,10 +41,11 @@ baua$random1 <- runif(nrow(baua),0,1)
 library(tidyverse)
 
 walk( seq(0,1,.1), function(x) {
-    # baua %>% filter(between(random1,x-.1,x)) %>%   select(-random1) %>%  haven::write_dta(.,path = paste0("./projekt/baua",x*10,".dta"))
+    # baua %>% filter(between(random1,x-.1,x)) %>%   select(-random1) %>% 
     baua %>% filter(between(random1,x-.1,x)) %>%  select(-random1) %>%  
     select(1:20) %>% 
-    readr::write_delim(.,file = paste0("./projekt/baua",x*10,".csv"),delim = ";")
+    haven::write_dta(.,path = paste0("./projekt/baua",x*10,".dta"))
+    # readr::write_delim(.,file = paste0("./projekt/baua",x*10,".csv"),delim = ";")
 })
              
   
