@@ -140,3 +140,14 @@ loop1
 strue
 mcollect
 mrown
+capture
+macro-extended-functions-for-parsing
+weitere-matrix-befehle-1
+teilmatrizen-1
+spaltenzeilen-auswählen-1
+esample
+misc
+reg-schrittweise-aufbauen
+reg-ergebnisse-für-modelle-sammeln-schleife
+reg1
+reg2

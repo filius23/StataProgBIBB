@@ -53,6 +53,7 @@ mvdecode F518_SUF, mv( 99998/ 99999)
 mvdecode F200 F1408, mv( 97/99)
 mvdecode m1202, mv(-1)
 mvdecode Mig, mv(-4)
+mvdecode F1604, mv(9)
 gen mig01 = Mig != 0 if !missing(Mig)
 gen S01 = S1-1
 
