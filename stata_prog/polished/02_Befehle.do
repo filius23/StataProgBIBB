@@ -1,6 +1,6 @@
 * --------------------------------- *
 * Programmieren mit Stata
-* Kapitel 2: Ergebnisse aus Schleifen sammeln
+* Kapitel 2
 * --------------------------------- *
 
 

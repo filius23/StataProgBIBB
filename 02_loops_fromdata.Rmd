@@ -277,7 +277,7 @@ mac l gend
 
 ***
 
-**[Übung 1](#retue1)**
+**[Übung](#retue1)**
 
 ***
 
@@ -677,13 +677,19 @@ list, noobs clean
 
 ### Übung {#loop1}
 
-+ einfach einige globals geben 
-+ dann zählen und vllt `if`
++ Zählen Sie die Wörter in den folgenden beiden String-locals
+```{stata, eval = F}
+loc x1 "ein sehr langer satz mit vielen wörtern"
+
+ds *wib*
+loc x2 =  r(varlist)
+```
+
++ Wie würde eine Schleife aussehen, die jeweils ein Wort aus den locals nacheinander mit `display` ausgibt?
 
 ### Übung {#retue1}
 
 - Erstellen Sie eine Schleife, welche jeweils das Maximaleinkommen (basierend auf `F518_SUF`) für die Gemeindegrößenklassen (`gkpol`) anzeigt.
-  + Schließen Sie mit `mvdecode F518_SUF, mv( 99998/ 99999)` missings aus
   + Wie kommen Sie an den Maximalwert für `F518_SUF`? Verwenden Sie bspw. `su` oder `tabstat` zusammen mit `return list`.
   + Erstellen Sie mit `display` eine aussagekräftige Ausgabe
   + Testen Sie Ihre Schleifenlogik mit einem `local`, um anschließend die Schleife "außen herumzubauen"

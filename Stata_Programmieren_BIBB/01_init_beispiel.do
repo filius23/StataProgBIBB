@@ -42,3 +42,16 @@ foreach dir1 in data word tex prog {
 
 cd "${pfad}"
 
+* ------------------ *
+* clean data: label kürzen & missings raus
+* Daten in data-Verzeichnis
+use "${data}/BIBBBAuA_2018_suf1.0.dta", clear
+
+mvdecode zpalter F1104, mv(9999)
+mvdecode F518_SUF, mv( 99998/ 99999)
+mvdecode F200 F1408, mv( 97/99)
+mvdecode m1202, mv(-1)
+mvdecode Mig, mv(-4)
+gen mig01 = Mig != 0 if !missing(Mig)
+
+save "${data}/BIBBBAuA_2018_suf1.0_clean.dta", replace 
