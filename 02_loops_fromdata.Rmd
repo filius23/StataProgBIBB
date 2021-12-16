@@ -340,12 +340,12 @@ mat G0 = J(4,2,0)
 mat l G0
 ```
 
-Mit `mat name[Spalte,Zeile]` können wir auf einen Teilbereich zugreifen:
-```{stata matrix04c}
-mat G0 = J(4,2,0)
-mat G0[3,2] = 2
-mat list G0
-```
+<!-- Mit `mat name[Spalte,Zeile]` können wir auf einen Teilbereich zugreifen: -->
+<!-- ```{stata matrix04c} -->
+<!-- mat G0 = J(4,2,0) -->
+<!-- mat G0[3,2] = 2 -->
+<!-- mat list G0 -->
+<!-- ``` -->
 
 ### Namen für Spalten und Zeilen einer `matrix` 
 
@@ -377,58 +377,52 @@ mat list G0
 
 
 
-### Zeile einfügen
+<!-- ### Zeile einfügen -->
 
-```{stata tm08, eval = F}
-matrix A = J(3,4,.) 
-mat A1 = (1, 4, 2, 1) 
-```
+<!-- ```{stata tm08, eval = F} -->
+<!-- matrix A = J(3,4,.)  -->
+<!-- mat A1 = (1, 4, 2, 1)  -->
+<!-- ``` -->
 
-```{stata tm10, eval = F}
-mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile
-mat li A
-```
+<!-- ```{stata tm10, eval = F} -->
+<!-- mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile -->
+<!-- mat li A -->
+<!-- ``` -->
 
-```{stata tm11, echo = F}
-matrix A = J(3,4,.) // A besteht nur aus .
-mat A1 = (1, 4, 2, 1)
-mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile
-mat li A
-```
+<!-- ```{stata tm11, echo = F} -->
+<!-- matrix A = J(3,4,.) // A besteht nur aus . -->
+<!-- mat A1 = (1, 4, 2, 1) -->
+<!-- mat A[1,1]  =A1 // !! überschreibt die ganze 1. Zeile -->
+<!-- mat li A -->
+<!-- ``` -->
 
-### `matrix` befüllen
+### `matrix` erstellen {#mcollect}
 
 Das nutzen wir jetzt um unsere Ergebnisse zu speichern:
 ```{stata matrix05, eval = F}
 levelsof m1202, loc(ausb)
-glo ausb `ausb'
-
-mat G = J(4,2,.) // leere Matrix 
-mat l G
+foreach lvl  of local ausb {
+	qui su S01 if m1202 == `lvl'
+	
+	// 1. Spalte level von m1202
+	//2.Spalte: Frauenanteil
+	mat G`lvl' = `lvl' ,r(mean)*100 
+}
+mat G = GX1\GX2\GX3\GX4
 mat colname G = m1202 share_w
 mat l G
-
-foreach lvl  of global ausb {
-	qui su S01 if m1202 == `lvl'
-	mat G[`lvl',1] = `lvl'  // 1. Spalte level von m1202
-	mat G[`lvl',2] = r(mean)*100 //2.Spalte: Frauenanteil
-}
 ```
 
 
 Damit können wir auch zeilenweise eine `matrix` befüllen, indem wir mit `,` mehrere Werte verbinden ([row join](#mat1)):
 ```{stata tm12, eval = F}
-mat G2 = J(4,5,.) // leere Matrix 
-mat l G2
-mat colname G2 = m1202 p25 mean median p75 
-mat l G2
-
 foreach lvl  of global ausb {
 	qui su zpalter if m1202 == `lvl', det
-	mat GX = `lvl', r(p25), r(mean), r(p50), r(p75) // Werte zeilenweise verbinden
-	mat G2[`lvl',1] = GX
+	mat A`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75)
 }
-mat l G2
+mat A2 = A1\A2\A3\A4
+mat colname A2 = m1202 p25 mean median p75
+mat l A2
 ```
 
 
@@ -440,20 +434,18 @@ quietly{
   mvdecode F200, mv( 97/99)
   mvdecode m1202, mv(-1)
 }
-mat G2 = J(4,5,.) // leere Matrix 
-mat colname G2 = m1202 p25 mean median p75 
-qui levelsof m1202, loc(ausb)
-foreach lvl  of local ausb {
+foreach lvl  of global ausb {
 	qui su zpalter if m1202 == `lvl', det
-	mat GX = `lvl', r(p25), r(mean), r(p50), r(p75) 
-	mat G2[`lvl',1] = GX
+	mat A`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75)
 }
-mat l G2
+mat A2 = A1\A2\A3\A4
+mat colname A2 = m1202 p25 mean median p75
+mat l A2
 ```
 
 ***
 
-**[Übung 2](#retue2)**
+**[Übung](#retue2)**
 
 ***
 
@@ -487,7 +479,7 @@ mat GX = `lvl', r(p25), r(mean), r(p50), r(p75)
 local vallab1 :    label (m1202) `lvl' // label aufrufen
 ```
 
-### Labels als `rowname`
+### Labels als `rowname` {#mrown}
 
 Leider können wir nicht einfach die Labels der Variable in die `matrix` schreiben.
 In einer Matrix sind nur Zahlenwerte erlaubt:
@@ -506,33 +498,17 @@ mat l GX
 ```
 
 ...damit erweitern wir die Schleife von oben:
-```{stata matrname02, eval = F}
-mat G2 = J(4,5,.) // leere Matrix 
-mat colname G2 = m1202 p25 mean median p75 
-foreach lvl  of local ausb {
-	qui su zpalter if m1202 == `lvl', det
-	mat GX = `lvl', r(p25), r(mean), r(p50), r(p75) 
-  
-  local vallab1 :    label (m1202) `lvl' // label aufrufen
-  mat rowname GX =  "`vallab1'" // in Zeilenname ablegen
-	
-	mat G2[`lvl',1] = GX
-}
-mat l G2
-```
-
-... beim letzten Schritt (`mat G2['lvl',1] = GX`) ginge aber rowname von `GX` wieder verloren, daher bauen wir die Schleife etwas um:
 ```{stata matrname03, eval=F}
 levelsof m1202, loc(ausb)
 foreach lvl  of local ausb {
 	qui su zpalter if m1202 == `lvl', det
-	mat GX`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75) 
-	mat colname GX`lvl' = m1202 p25 mean median p75 
+	mat GX`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75)
 	
 	local vallab1 :    label (m1202) `lvl'
 	mat rowname GX`lvl' =  "`vallab1'"
 }
 mat G = GX1\GX2\GX3\GX4
+mat colname GX = m1202 p25 mean median p75
 mat l G
 ```
 
@@ -549,18 +525,16 @@ quietly{
     glo ausb `ausb'
 }
 
-mat G2 = J(4,5,.) // leere Matrix 
-mat colname G2 = m1202 p25 mean median p75 
-
-foreach lvl  of global ausb {
+levelsof m1202, loc(ausb)
+foreach lvl  of local ausb {
 	qui su zpalter if m1202 == `lvl', det
-	mat GX`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75) 
-	mat colname GX`lvl' = m1202 p25 mean median p75 
+	mat GX`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75)
 	
 	local vallab1 :    label (m1202) `lvl'
 	mat rowname GX`lvl' =  "`vallab1'"
 }
 mat G = GX1\GX2\GX3\GX4
+mat colname GX = m1202 p25 mean median p75
 mat l G
 ```
 
@@ -597,9 +571,8 @@ list, noobs clean
 
 ## Von der `matrix` zum Datensatz
 
-Mit `svmat` bzw. dem ado `xsvmat` können wir eine `matrix` in einen Datensatz umwandeln. 
-Mit `svmat` gehen allerdings mühsam erstellen Zeilennamen verloren.
-In `xsvmat` können wir diese mit `rownames(lab)` in die Variable `lab` ablegen.
+Mit `xsvmat` bzw. dem ado `xsvmat` können wir eine `matrix` in einen Datensatz umwandeln. 
+Mit `rownames(lab)` können wir Zeilennamen in die Variable `lab` ablegen.
 Außerdem nutzt `xsvmat` die neue [`frame`](#frame)- Funktion, um einen neuen Datensatz zu erstellen.
 
 ```{stata xsvmat0, eval = F}
@@ -624,13 +597,24 @@ list, noobs clean
 
 ## `frame`: mehrere Datensätze in Stata {#frame}
 
-Das hat allerdings den Nachteil, dass wir die Originaldaten verändern oder löschen. 
+Die `frame`-Option basiert auf einer relativ neuen Funktion in Stata.
 Seit Version 16 bietet Stata  mit den [`frame`](https://www.stata.com/features/overview/multiple-datasets-in-memory/)-Befehlen auch die Möglichkeit, mehrere Datensätze parallel zu bearbeiten.
 
 + mit `frame create nameX` können wir einen neuen Datensatz mit dem Namen `nameX` erstellen (der bisherige wird als `default` bezeichnet)
 + mit `frame dir` bekommen wir eine Übersicht zu den verschiedenen `frame`s der aktuellen Stata-Session
 + mit `frame change` *name* können wir zwischen den verschiedenen `frame`s hin- und herspringen 
-+ mit `frame drop` *name*  können wir einen `frame` wieder löschen
+
+```{stata, eval = F}
+frame change res1
+frame change default
+```
+
+
++ mit `frame drop` *name*  können wir einen `frame` wieder löschen:
+```{stata,eval= F}
+frame drop res1
+```
+
 
 
 
@@ -689,6 +673,7 @@ loc x2 =  r(varlist)
 
 ### Übung {#retue1}
 
++ Laden Sie die Erwerbstätigenbefragung - am besten in der Version ohne Missings in den relevanten Variablen  ( `"${data}/BIBBBAuA_2018_suf1.0_clean.dta"`, siehe `01_init.do`)
 - Erstellen Sie eine Schleife, welche jeweils das Maximaleinkommen (basierend auf `F518_SUF`) für die Gemeindegrößenklassen (`gkpol`) anzeigt.
   + Wie kommen Sie an den Maximalwert für `F518_SUF`? Verwenden Sie bspw. `su` oder `tabstat` zusammen mit `return list`.
   + Erstellen Sie mit `display` eine aussagekräftige Ausgabe
@@ -699,31 +684,32 @@ loc x2 =  r(varlist)
 
 ### Übung {#retue2}
 
-- Kopieren Sie die oben erstellte Schleife und passen Sie diese so an, dass jeweils die Werte für Min, Mean, Median, Max und N in `matrix` gesammelt werden. 
+- Kopieren Sie die in Übung 2 erstellte Schleife und passen Sie diese [so](#mcollect) an, dass jeweils die Werte für Min, Mean, Median, Max und N in `matrix` gesammelt werden. 
   - Verwenden Sie den `row join` für `matrix` mit `,` um jeweils eine Ergebniszeile zu erstellen
 
 
 
 ### Übung {#retue3}
 
-- Verwenden Sie die Schleife aus [Übung 2](#retue2) und passen diese so an, dass die Labels für `gkpol` erhalten werden legen Sie die Ergebnismatrix in einen `frame` ab.
-  + Nutzen Sie die [`label (`v') 1`](#labfun) extended macro function um das jeweilige Label anzuzeigen
+- Passen Ihre Schleife von eben mit `gkpol` so mit Hilfe der Schleife von [oben](#mrown) so an, dass die Labels für `gkpol` als `rownames` werden legen Sie die Ergebnismatrix in einen `frame` ab.
+  + Nutzen Sie die [`label (v') 1`](#labfun) extended macro function um das jeweilige Label anzuzeigen
   + Setzen Sie das entsprechende Label als `rowname`
   + Fügen Sie die einzelnen Ergebnis in eine `matrix` zusammen
   + Nutzen Sie `xsvmat`, um einen `frame` zu erstellen
   + Nutzen Sie `frame change`, um in die Ergebnis-`frame` zu wechseln (und wieder zurück)
 
-- Wie könnten Sie mit Hilfe einer Schleife den Schritt des Zusammenfügens mit weniger Tipparbeit erledigen? 
-  + Tipp: Überführen Sie die erste Ergebnis-`matrix` in eine neue Ergebnismatrix, an die dann die weiteren `matrix` per `row join` angefügt werden - ggf. hilft hier `if`/`else`
-  + Ließe sich auch ein Befehl integrieren, der die `matrix` für Einzelergebnisse dann gleich wieder löscht?
+
+<!-- *Für alle, die schon fertig sind:* -->
+
+<!-- - Wie könnten Sie mit Hilfe einer Schleife den Schritt des Zusammenfügens mit weniger Tipparbeit erledigen?  -->
+<!-- ```{stata, eval = F} -->
+<!-- mat G = GX1\GX2\GX3\GX4\GX5\GX6\GX7 -->
+<!-- ``` -->
+
+<!--   + Tipp: Überführen Sie die erste Ergebnis-`matrix` in eine neue Ergebnismatrix, an die dann die weiteren `matrix` per `row join` angefügt werden - ggf. hilft hier `if`/`else` -->
+<!--   + Ließe sich auch ein Befehl integrieren, der die `matrix` für Einzelergebnisse dann gleich wieder löscht? -->
 
 
-
-### Übung {#retue4}
-
-- Erstellen Sie nun eine Schleife um die existierende Schleife herum, sodass nicht nur die Werte entlang von `gkpol`, sondern auch `F233_nuts2` berechnet und gesammelt werden. Erstellen Sie also einen "nested loop", sodass erst eine `matrix` für `gkpol` und dann eine für `F233_nuts2` erstellt wird.
-
-- Wie würden Sie die Schleife anpassen, wenn nur Gruppen mit N >= 100 ausgewertet werden dürften?
 
 
 

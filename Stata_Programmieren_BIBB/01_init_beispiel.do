@@ -19,7 +19,7 @@ estimates clear
 * ------------------------------ *
 * Pfade setzen
 if ("`c(username)'" == "Filser") {
-	glo pfad 		"D:\oCloud\Home-Cloud\Lehre\BIBB\StataProg"		// Projekt/Kursordner
+	glo pfad 		"D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB"		// Projekt/Kursordner
 }
 * hier statt meinem den eigenen Projektordner angeben
 * glo pfad 		""		// Projekt/Kursordner
@@ -32,13 +32,14 @@ glo prog		"${pfad}/prog"		// wo liegen die doFiles?
 
 * ----------------------------- *
 *  Ordner erstellen wenn nicht bereits vorhanden
-foreach dir1 in data word tex prog {
+foreach dir1 in data log results prog {
 	capture cd 	"${`dir1'}"
 	if _rc!=0  {
 		mkdir ${`dir1'}
 		display "${`dir1'} erstellt"
 	} 
  }
+
 
 cd "${pfad}"
 
@@ -53,5 +54,6 @@ mvdecode F200 F1408, mv( 97/99)
 mvdecode m1202, mv(-1)
 mvdecode Mig, mv(-4)
 gen mig01 = Mig != 0 if !missing(Mig)
+gen S01 = S1-1
 
 save "${data}/BIBBBAuA_2018_suf1.0_clean.dta", replace 

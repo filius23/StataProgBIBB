@@ -252,7 +252,7 @@ local predictors i.S1 c.F200 c.F200#c.F200 i.m1202 zpalter c.zpalter#c.zpalter /
 local r = 1 // Zähler 
 loc uv 		// uv rücksetzen (zur sicherheit)
 foreach v of local predictors {
-    local uv `uv' `v'
+  local uv `uv' `v'
 	qui regress F518_SUF `uv'
 	mat D = r(table)'						// reg-tabelle transponieren & speichern 
 	mat D2 = D[rownumb(D,"2.S1"),1...]		// Koeffizient für S1=2 behalten
