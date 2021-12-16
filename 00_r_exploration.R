@@ -80,7 +80,7 @@ map(1:length(chp1), function(x){
 
 
 # befehle ----
-knitr::purl(input = "03_reg.Rmd",output = "./stata_prog/03_Befehle1.do")
+knitr::purl(input = "04_labels_variab.Rmd",output = "./stata_prog/04_Befehle.do")
 
 
 pagedown::chrome_print(rmarkdown::render('../pdf/StataBIBB1.Rmd'))
