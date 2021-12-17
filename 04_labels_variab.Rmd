@@ -64,6 +64,7 @@ Regensburger Straße 100, 90478 Nürnberg Germany
 ```
 
 Hier wenig hilfreich, aber häufig eine gute Abkürzung: `split`
+Mit `parse()` können wir einen Trenner angeben.
 ```{stata split1, eval = F}
 split add, parse(" ") gen(t)
 ```
@@ -336,6 +337,12 @@ foreach v of varlist1 {
   qui count if `v' == -4
   if r(N) > 0 display "`v'"
 }
+
+* oder direkt:
+foreach v of varlist * {
+  qui count if `v' == -4
+  if r(N) > 0 display "`v'"
+}
 ```
 
 
@@ -362,8 +369,8 @@ foreach v of varlist1 {
   `use "https://github.com/filius23/StataProgBIBB/raw/main/docs/regex1.dta", clear` 
   und teilen Sie die Informationen aus `address` in 4 Variablen auf: Hausnummer (erste Zahl), Straße, PLZ, Region
   + Wandeln Sie alle Einträge in Großbuchstaben um
-  + Verwenden Sie `split`, um zwischen Adresse und PLZ & Ort zu trennen
-  + Wie können Sie jetzt die Zahlen vom Text trennen?
+  + Verwenden Sie `split` mit geeignetem `parse()`-Argument, um zwischen Hausnummer & Straße und PLZ & Region zu trennen.
+  + Wie können Sie jetzt die Zahlen vom Text trennen? (Tipp: Suchen Sie erst nach den Zahlen. Tipp2: Was wollen wir dann in den Textvariablen nicht mehr?)
   + Löschen Sie ggf. Leerzeichen zu Beginn und am Ende der Variablen
   
 ### Übung {#varlab}  
@@ -375,15 +382,25 @@ foreach v of varlist1 {
   + Spielen Sie die Routine erst für eine Variable durch: welche Label-Befehle brauchen Sie?
   + Denken Sie an `foreach ... of varlist` und die Möglichkeit, wildcards zu verwenden. Alternativ hilft evtl. auch [`ds`](#valsearch) mit Wildcards
 
+So können Sie überpürfen, ob das geklappt hat:
+```{stata, eval =F}
+d *wib*
+```
+
+
 + Bearbeiten Sie das value label für `nuts2` - nutzen Sie dafür die `regex` und `string`-Funktionen von oben
-  + Löschen Sie "Statistische" aus den den value labels und ersetzen Sie "Direktionsbezirk" durch "Bezirk"
+  + Löschen Sie "Statistische" aus den den value labels und ersetzen Sie "Direktionsbezirk" durch "Bezirk":
+```{stata, eval = F}
+tab nuts2
+```
+
 
 + Kehren Sie die Codierung vom `m1202` um: `gen m1202_n = 10 - m1202` und passen Sie die value labels entsprechend an die neue Codierung an.
   + Tipp: auch die value labels müssen dann jeweils `10 - x` genommen werden.
   
 **Für alle, die schon fertig sind:**
 
-+ Wie könnten Sie automatisiert den Variable label für die Muttersprachenvariablen kürzen, sodass statt "Muttersprache:" nur noch "MSpr" im label steht?
++ Wie könnten Sie automatisiert den Variable label für die Muttersprachenvariablen (`F1606_*`) kürzen, sodass statt "Muttersprache:" nur noch "MSpr" im label steht?
 
 ### Übung {#valuesearch}
 

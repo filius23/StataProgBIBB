@@ -344,7 +344,8 @@ So zeigt sich hier bspw., dass <code>proper()</code> hier “ß” und “ü” 
 <p>…in der Hilfe finden wir <code>ustrtitle</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="labmacro.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">display</span> ustrtitle(<span class="st">&quot;Regensburger Straße 100, 90478 nüRnberg germany&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="labmacro.html#cb6-1" aria-hidden="true" tabindex="-1"></a>Regensburger Straße 100, 90478 Nürnberg Germany</span></code></pre></div>
-<p>Hier wenig hilfreich, aber häufig eine gute Abkürzung: <code>split</code></p>
+<p>Hier wenig hilfreich, aber häufig eine gute Abkürzung: <code>split</code>
+Mit <code>parse()</code> können wir einen Trenner angeben.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="labmacro.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">split</span> add, <span class="kw">parse</span>(<span class="st">&quot; &quot;</span>) <span class="kw">gen</span>(t)</span></code></pre></div>
 <hr />
 <p><strong><a href="labmacro.html#strue">Übung</a></strong></p>
@@ -567,7 +568,13 @@ Die Übersicht der <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-extr
 <span id="cb25-4"><a href="labmacro.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> v <span class="kw">of</span> varlist1 {</span>
 <span id="cb25-5"><a href="labmacro.html#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">qui</span> <span class="fu">count</span> <span class="kw">if</span> <span class="ot">`v&#39;</span> == -4</span>
 <span id="cb25-6"><a href="labmacro.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> <span class="fu">r</span>(<span class="kw">N</span>) &gt; 0 <span class="kw">display</span> <span class="st">&quot;`v&#39;&quot;</span></span>
-<span id="cb25-7"><a href="labmacro.html#cb25-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb25-7"><a href="labmacro.html#cb25-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-8"><a href="labmacro.html#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="labmacro.html#cb25-9" aria-hidden="true" tabindex="-1"></a>* oder direkt:</span>
+<span id="cb25-10"><a href="labmacro.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> v <span class="kw">of</span> <span class="kw">varlist</span> * {</span>
+<span id="cb25-11"><a href="labmacro.html#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">qui</span> <span class="fu">count</span> <span class="kw">if</span> <span class="ot">`v&#39;</span> == -4</span>
+<span id="cb25-12"><a href="labmacro.html#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> <span class="fu">r</span>(<span class="kw">N</span>) &gt; 0 <span class="kw">display</span> <span class="st">&quot;`v&#39;&quot;</span></span>
+<span id="cb25-13"><a href="labmacro.html#cb25-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <hr />
 <p><strong><a href="labmacro.html#valuesearch">Übung</a></strong></p>
 <hr />
@@ -590,8 +597,8 @@ Die Übersicht der <a href="https://stats.idre.ucla.edu/stata/faq/how-can-i-extr
 und teilen Sie die Informationen aus <code>address</code> in 4 Variablen auf: Hausnummer (erste Zahl), Straße, PLZ, Region
 <ul>
 <li>Wandeln Sie alle Einträge in Großbuchstaben um</li>
-<li>Verwenden Sie <code>split</code>, um zwischen Adresse und PLZ &amp; Ort zu trennen</li>
-<li>Wie können Sie jetzt die Zahlen vom Text trennen?</li>
+<li>Verwenden Sie <code>split</code> mit geeignetem <code>parse()</code>-Argument, um zwischen Hausnummer &amp; Straße und PLZ &amp; Region zu trennen.</li>
+<li>Wie können Sie jetzt die Zahlen vom Text trennen? (Tipp: Suchen Sie erst nach den Zahlen. Tipp2: Was wollen wir dann in den Textvariablen nicht mehr?)</li>
 <li>Löschen Sie ggf. Leerzeichen zu Beginn und am Ende der Variablen</li>
 </ul></li>
 </ul>
@@ -606,18 +613,25 @@ und teilen Sie die Informationen aus <code>address</code> in 4 Variablen auf: Ha
 <li>Spielen Sie die Routine erst für eine Variable durch: welche Label-Befehle brauchen Sie?</li>
 <li>Denken Sie an <code>foreach ... of varlist</code> und die Möglichkeit, wildcards zu verwenden. Alternativ hilft evtl. auch <a href="labmacro.html#valsearch"><code>ds</code></a> mit Wildcards</li>
 </ul></li>
-<li><p>Bearbeiten Sie das value label für <code>nuts2</code> - nutzen Sie dafür die <code>regex</code> und <code>string</code>-Funktionen von oben</p>
+</ul>
+<p>So können Sie überpürfen, ob das geklappt hat:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="labmacro.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">d</span> *wib*</span></code></pre></div>
 <ul>
-<li>Löschen Sie “Statistische” aus den den value labels und ersetzen Sie “Direktionsbezirk” durch “Bezirk”</li>
+<li>Bearbeiten Sie das value label für <code>nuts2</code> - nutzen Sie dafür die <code>regex</code> und <code>string</code>-Funktionen von oben
+<ul>
+<li>Löschen Sie “Statistische” aus den den value labels und ersetzen Sie “Direktionsbezirk” durch “Bezirk”:</li>
 </ul></li>
-<li><p>Kehren Sie die Codierung vom <code>m1202</code> um: <code>gen m1202_n = 10 - m1202</code> und passen Sie die value labels entsprechend an die neue Codierung an.</p>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="labmacro.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> nuts2</span></code></pre></div>
+<ul>
+<li>Kehren Sie die Codierung vom <code>m1202</code> um: <code>gen m1202_n = 10 - m1202</code> und passen Sie die value labels entsprechend an die neue Codierung an.
 <ul>
 <li>Tipp: auch die value labels müssen dann jeweils <code>10 - x</code> genommen werden.</li>
 </ul></li>
 </ul>
 <p><strong>Für alle, die schon fertig sind:</strong></p>
 <ul>
-<li>Wie könnten Sie automatisiert den Variable label für die Muttersprachenvariablen kürzen, sodass statt “Muttersprache:” nur noch “MSpr” im label steht?</li>
+<li>Wie könnten Sie automatisiert den Variable label für die Muttersprachenvariablen (<code>F1606_*</code>) kürzen, sodass statt “Muttersprache:” nur noch “MSpr” im label steht?</li>
 </ul>
 </div>
 <div id="valuesearch" class="section level3" number="4.6.4">
@@ -635,12 +649,12 @@ und teilen Sie die Informationen aus <code>address</code> in 4 Variablen auf: Ha
 <div id="anhang-2" class="section level2" number="4.7">
 <h2><span class="header-section-number">4.7</span> Anhang</h2>
 <p>Variablen mit bestimmten Eigenschaften identifizieren in ein <code>macro</code></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="labmacro.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ds</span>, has(<span class="dv">type</span> <span class="kw">byte</span>)</span>
-<span id="cb26-2"><a href="labmacro.html#cb26-2" aria-hidden="true" tabindex="-1"></a>loc bytevars <span class="ot">`r(varlist)&#39;</span></span>
-<span id="cb26-3"><a href="labmacro.html#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="labmacro.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> v <span class="kw">of</span> <span class="kw">local</span> bytevars {</span>
-<span id="cb26-5"><a href="labmacro.html#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">rename</span> <span class="ot">`v&#39;</span> b_<span class="ot">`v&#39;</span></span>
-<span id="cb26-6"><a href="labmacro.html#cb26-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="labmacro.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ds</span>, has(<span class="dv">type</span> <span class="kw">byte</span>)</span>
+<span id="cb28-2"><a href="labmacro.html#cb28-2" aria-hidden="true" tabindex="-1"></a>loc bytevars <span class="ot">`r(varlist)&#39;</span></span>
+<span id="cb28-3"><a href="labmacro.html#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="labmacro.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> v <span class="kw">of</span> <span class="kw">local</span> bytevars {</span>
+<span id="cb28-5"><a href="labmacro.html#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">rename</span> <span class="ot">`v&#39;</span> b_<span class="ot">`v&#39;</span></span>
+<span id="cb28-6"><a href="labmacro.html#cb28-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 
 </div>
 </div>

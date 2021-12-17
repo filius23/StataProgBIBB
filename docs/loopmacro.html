@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-16" />
+<meta name="date" content="2021-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -223,13 +223,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="regres.html"><a href="regres.html#regressionstabellen-als-matrix-speichern-und-anpassen"><i class="fa fa-check"></i><b>3.2</b> Regressionstabellen als <code>matrix</code> speichern und anpassen</a></li>
 <li class="chapter" data-level="3.3" data-path="regres.html"><a href="regres.html#kategoriale-uv"><i class="fa fa-check"></i><b>3.3</b> kategoriale UV</a></li>
 <li class="chapter" data-level="3.4" data-path="regres.html"><a href="regres.html#als-datensatz-ablegen"><i class="fa fa-check"></i><b>3.4</b> Als Datensatz ablegen:</a></li>
-<li class="chapter" data-level="3.5" data-path="regres.html"><a href="regres.html#weitere-infos-aus-e"><i class="fa fa-check"></i><b>3.5</b> weitere Infos aus <code>e()</code></a></li>
-<li class="chapter" data-level="3.6" data-path="regres.html"><a href="regres.html#reg-loop"><i class="fa fa-check"></i><b>3.6</b> <code>reg</code>-Loop</a></li>
-<li class="chapter" data-level="3.7" data-path="regres.html"><a href="regres.html#übungen-2"><i class="fa fa-check"></i><b>3.7</b> Übungen</a></li>
+<li class="chapter" data-level="3.5" data-path="regres.html"><a href="regres.html#weitere-infos-aus-e"><i class="fa fa-check"></i><b>3.5</b> weitere Infos aus <code>e()</code></a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="regres.html"><a href="regres.html#esample"><i class="fa fa-check"></i><b>3.5.1</b> <code>e(sample)</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="regres.html"><a href="regres.html#reg-schrittweise-aufbauen"><i class="fa fa-check"></i><b>3.6</b> <code>reg</code> schrittweise aufbauen</a></li>
+<li class="chapter" data-level="3.7" data-path="regres.html"><a href="regres.html#übungen-2"><i class="fa fa-check"></i><b>3.7</b> Übungen</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="regres.html"><a href="regres.html#reg1"><i class="fa fa-check"></i><b>3.7.1</b> Übung</a></li>
+<li class="chapter" data-level="3.7.2" data-path="regres.html"><a href="regres.html#reg2"><i class="fa fa-check"></i><b>3.7.2</b> Übung</a></li>
+</ul></li>
 <li class="chapter" data-level="3.8" data-path="regres.html"><a href="regres.html#anhang-1"><i class="fa fa-check"></i><b>3.8</b> Anhang</a>
 <ul>
 <li class="chapter" data-level="3.8.1" data-path="regres.html"><a href="regres.html#statsby"><i class="fa fa-check"></i><b>3.8.1</b> <code>statsby</code></a></li>
-<li class="chapter" data-level="3.8.2" data-path="regres.html"><a href="regres.html#weitere-matrix-befehle"><i class="fa fa-check"></i><b>3.8.2</b> weitere <code>matrix</code>-Befehle</a></li>
+<li class="chapter" data-level="3.8.2" data-path="regres.html"><a href="regres.html#reg-ergebnisse-für-modelle-sammeln-schleife"><i class="fa fa-check"></i><b>3.8.2</b> <code>reg</code>-Ergebnisse für Modelle sammeln: Schleife</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="labmacro.html"><a href="labmacro.html"><i class="fa fa-check"></i><b>4</b> Label- und Variablenfunktionen</a>
@@ -274,7 +281,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="data.html"><a href="data.html#anhang-3"><i class="fa fa-check"></i><b>5.5</b> Anhang</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>6</b> Literatur &amp; Links</a></li>
+<li class="chapter" data-level="6" data-path="misc.html"><a href="misc.html"><i class="fa fa-check"></i><b>6</b> Weitere <code>macro</code> &amp; <code>matrix</code> Funktionen</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="misc.html"><a href="misc.html#capture"><i class="fa fa-check"></i><b>6.1</b> <code>capture</code></a></li>
+<li class="chapter" data-level="6.2" data-path="misc.html"><a href="misc.html#macro-extended-functions-for-parsing"><i class="fa fa-check"></i><b>6.2</b> Macro extended functions for parsing</a></li>
+<li class="chapter" data-level="6.3" data-path="misc.html"><a href="misc.html#weitere-matrix-befehle"><i class="fa fa-check"></i><b>6.3</b> weitere <code>matrix</code>-Befehle</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="misc.html"><a href="misc.html#teilmatrizen"><i class="fa fa-check"></i><b>6.3.1</b> Teilmatrizen</a></li>
+<li class="chapter" data-level="6.3.2" data-path="misc.html"><a href="misc.html#spaltenzeilen-auswählen"><i class="fa fa-check"></i><b>6.3.2</b> Spalten/Zeilen auswählen</a></li>
+<li class="chapter" data-level="6.3.3" data-path="misc.html"><a href="misc.html#crnumb"><i class="fa fa-check"></i><b>6.3.3</b> Namensbasierte Auswahl</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>7</b> Literatur &amp; Links</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 

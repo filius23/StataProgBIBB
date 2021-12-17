@@ -40,12 +40,20 @@ baua$random1 <- runif(nrow(baua),0,1)
 
 library(tidyverse)
 
+
+dfx <- 
+    data.frame(x1 = sample(1:100,2000,T),
+               x2 = sample(LETTERS,size = 2000,replace = T),
+               xyz = paste0(sample(LETTERS,2000,T),sample(LETTERS,2000,T),sample(LETTERS,2000,T),sample(LETTERS,2000,T)),
+               age = sample(18:81,2000,T))  
+dfx$random1 <- runif(nrow(dfx),0,1)
+
+
 walk( seq(0,1,.1), function(x) {
     # baua %>% filter(between(random1,x-.1,x)) %>%   select(-random1) %>% 
-    baua %>% filter(between(random1,x-.1,x)) %>%  select(-random1) %>%  
-    select(1:20) %>% 
-    haven::write_dta(.,path = paste0("./projekt/baua",x*10,".dta"))
-    # readr::write_delim(.,file = paste0("./projekt/baua",x*10,".csv"),delim = ";")
+    dfx %>% filter(between(random1,x-.1,x)) %>%  select(-random1) %>%  
+    readr::write_delim(.,file = paste0("./projekt/data",x*20,".csv"),delim = ";")
+    #haven::write_dta(.,path = paste0("./projekt/data",x*10,".dta"))
 })
              
   

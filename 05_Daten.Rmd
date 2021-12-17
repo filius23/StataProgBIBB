@@ -77,7 +77,7 @@ mac l dtalist3
 
 ***
 
-**[Übung 1](#dir_readin)**
+**[Übung](#dir_readin)**
 
 ***
 
@@ -177,18 +177,18 @@ forvalues s = 1/2{
 
 ### Übung {#dir_readin}
 
-+ Im zip-Ordner finden sich auch `.csv`-Dateien  und PDFs. Erstellen Sie eine Schleife mit `if`-Bedingung, sodass die csv-Dateien eingelesen werden, die PDF Dateien aber übergangen werden.
++ Im zip-Ordner `dir_übung.zip` finden sich auch `.csv`-Dateien. Lesen Sie diese nach der Reihe ein und speichern Sie die Daten als `.dta` - danach können alle Datensätze zusammengefügt werden.
+  + Entpacken Sie die Dateien aus dem `zip`-Ordner in passendes ein Verzeichnis (bspw., das welches Sie mit `$data` ansteuern).
   + Verwenden Sie also die `filelist` statt der `dtalist` von oben.
   + Lesen Sie mit `import delimited ".... baua3.csv", delimiter(";") encoding(ISO-8859-2) clear` die csv-Dateien jeweils ein und legen Sie als `dta` ab.
-  + Anschließend können Sie den `dta`-Schleife von oben verwenden, um alle Teildatensätze einzulesen. Kommen Sie auf am Ende wieder auf 20012 Befragte?
+  + Anschließend können Sie den `dta`-Schleife von oben verwenden, um alle Teildatensätze einzulesen. Wie viele Fälle haben Sie im Datensatz?
 
 + Kopieren Sie eine der Dateien und löschen Sie sie anschließend wieder.
 
 
 ### Übung {#masterdofile}
 
-
-+ Starten Sie getrennte Au
++ Starten Sie getrennte Auswertungen für Männer und Frauen für das Merkmal `zpalter`, bspw. mit `summary` und stoßen Sie dieses mit `do ... ` an.
 
 ## Anhang
 
