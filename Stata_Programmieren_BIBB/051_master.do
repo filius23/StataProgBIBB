@@ -41,7 +41,7 @@ cd ${pfad}
 
 * ----------------------------- *
 * Ein Argument mitgeben
-do "${prog}/051_DoFile.do"	4
+do "${prog}/051_DoFile.do"	1
 
 
 * ----------------------------- *
@@ -60,7 +60,9 @@ forvalues d = 1/4 {
 
 * ----------------------------- *
 * Mehrere Argumente mitgeben
-
+* 1 - ausbildung
+* 2 - geschlecht
+* 3 - variable auf die tab angewendet wird
 do "${prog}/051_DoFile2.do"	4 2 mobil
 
 

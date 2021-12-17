@@ -4,8 +4,8 @@
 * --------------------------------- *
 
 * global und locals definieren:
-glo xg = 1
-loc xl = 2
+global xg = 1
+local xl = 2
 
 dis ${xg}
 dis `xl'
@@ -24,11 +24,31 @@ mac list _yx
 
 
 * achtung bei Rechnungen:
-local m1 2+2
+local m1   2+2
 local m2 = 2+2
 display `m1'
 display `m2'
 mac list _m1 _m2
+
+display `m1' * 3
+display `m2' * 3
+
+
+* auch bei globals
+global gm1 2+2
+global gm2 = 2+2
+display $gm1
+display $gm2
+display "$gm1"
+display "$gm2"
+
+mac list gm1 gm2
+
+display $gm1 *3
+display $gm2 *3 
+
+display "2 text 6"
+display 2 text 6
 
 
 * ------------ 
@@ -38,7 +58,8 @@ glo t2 " zusammen"
 glo t3 "! :-)"
 
 glo t4 = "${t1}${t2}${t3}"
-
+ 
+dis "${t4}"
 
 
 glo pfad "D:\Projekt\daten\BIBB_BAuA" // wo liegt der Datensatz?
@@ -48,8 +69,8 @@ use "${pfad}/BIBBBAuA_2018_suf1.0.dta", clear // laden des Datensatzes
 * --------------------------------------------------------------------------
 * Dateipfade erstellen 
 
-glo pfad "C:\Projekte\Micha" // wo liegt der Datensatz bei Alex?
 glo pfad "D:\Arbeit\Alex"    // wo liegt der Datensatz bei Micha?
+glo pfad "C:\Projekte\Micha" // wo liegt der Datensatz bei Alex?
 glo prog "${pfad}/prog"
 glo data "${pfad}/data"
 glo log  "${pfad}/log"
@@ -73,7 +94,9 @@ mac list
 dis "$S_DATE"
 dis "$S_TIME"
 
-log using "${log}/logfile.txt", t replace
+log using "${log}/logfile.txt", text replace
+*log using "${log}/logfile.txt", text replace
+
 
 dis "Start: $S_DATE um $S_TIME"
 * Hier kommen aufwändige Modelle
@@ -83,6 +106,8 @@ cap log close
 * log file benennen
 global date = string( d($S_DATE), "%tdCY-N-D" )
 * help datetime_display_formats // für andere Datumsformate
+
+mac l date
 
 cap log close
 log using "${log}/01_macro_loops_${date}.log", replace text
@@ -146,22 +171,24 @@ global allglo2: all globals "x?"
 
 mac l allglo2 allglo
 
+glo  d 2+2
+glo d2: display 2+2
+
+mac list d d2
 
 * --------------------------------------------------------------------------
 * if und else
-loc n = 5
+loc n = 2
+
 if `n'==1 {
 	local word "one"
      }
-
 else if `n'==2 {
 	local word "two"
 }
-
 else if `n'==3 {
 	local word "three"
 }
-
 else {
 	local word "big"
 }
@@ -224,12 +251,18 @@ foreach n of numlist 6 4: -4  {
 * ferest
 foreach n of numlist 1(1)5 {
     dis "`n'"
-    dis "Es kommen noch: `ferest()'"
+    dis "Es kommen noch: `ferest()' "
 
 }
 
+`ferest()' == ""
+
 * -------------------------------------
 * weitere schleifentypen
+forvalues d = 0(2)8 {
+	dis "`d'"
+}
+
 loc i = 1
 while `i' <= 5 {
   display "`i'"
@@ -246,7 +279,7 @@ while `i' <= 5 {
 
 * -------------------------------------
 * Anwendung
-qui use "${data}/BIBBBAuA_2018_suf1.0.dta", clear
+qui use "${data}/BIBBBAuA_2018_suf1.0_clean.dta", clear
 foreach v of numlist 19(5)35 {
 	display "Alter bis `v'"
 	tab S1 if zpalter <= `v'
@@ -263,44 +296,40 @@ foreach v of numlist 19(5)35 {
 * -------------------------------------
 *  Schleifen aufbauen
 loc n = 5
-
 if trunc(`n'/2) == `n'/2 display "ja"
-
 if trunc(`n'/2) != `n'/2 display "nein"
 
 
-loc n = 5
 
-dis mod(`n',2)
-
-
+dis mod(4,2)
 
 forvalues n = 1/10 {
-
 	if  mod(`n',2)  == 0 dis "`n' ist gerade"
-
 	if  mod(`n',2)  >  0  dis "`n' ist ungerade"
-
 }
 
 
 forvalues n = 1/10 {
-
-	if  mod(`n',2)  == 0 {
-
-		dis "`n' ist gerade"
-
+	if  mod(`n',2)  == 0 {  
+		dis "`n' ist gerade" 
 	}
-
 	else if mod(`n',2)  > 0 {
-
 		dis "`n' ist ungerade"
-
 	}
-
 }
 
+* -------------------------------------
+* nested loop
+set trace on
+foreach x of numlist 1(1)5 {
+	foreach y of numlist 6(1)10 {
+	dis "y=`y' und x = `x'"
+	}
+}
+set trace off
 
+* -------------------------------------
+* display vs macro list
 global labormarket LABOUR
 display "${labormarket}"
 display "${labourmarket}"

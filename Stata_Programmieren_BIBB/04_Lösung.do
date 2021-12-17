@@ -25,15 +25,18 @@ list
 gen nword = wordcount(add) 	  // Worte zählen
 gen vorletz = word(add,nword-1) 	  // vorletztes Wort
 gen vorletz2 = word(add,wordcount(add)-1) 	  // vorletztes Wort
+gen vorl2 = word(add,-2)  	  // Worte zählen
 list
 
-* Wie kommen Sie jeweils an das 10.letzte bis 3.letzte Zeichen in der Adressliste?
-replace add = trim(add)
+* Wie kommen Sie jeweils an das 10.letzte bis 4.letzte Zeichen in der Adressliste?
+* replace add = trim(add)
+
 gen len = strlen(add)
 gen zehn = strlen(add)-10
-gen zehndreiletzt = substr(add, zehn , 7)
+gen vier = strlen(add)-3
+gen zehndreiletzt = substr(add, zehn , vier)
 list
-gen zehndreiletzt2 = substr(add, strlen(add)-10, 7)
+gen zehndreiletzt2 = substr(add, strlen(add)-10, strlen(add)-3)
 list
 
 help substr
@@ -78,17 +81,17 @@ use "${data}/BIBBBAuA_2018_suf1.0_clean.dta", replace
     * Spielen Sie die Routine erst für eine Variable durch: welche Label-Befehle brauchen Sie?
     * Denken Sie an foreach ... of varlist und die Möglichkeit, wildcards zu verwenden. Alternativ hilft evtl. auch ds mit Wildcards
 
+d *wib* 
 foreach v of varlist *wib* {
 	local longlabel: var label `v'        // variable label für variable m1202 suchen
 	local shortlabel = ustrregexra("`longlabel'","wissensintensiver Beruf","wib.") // verändern mit regex Funktion 
 	label var `v' "`shortlabel'"         // anwenden
 }
-
+d *wib* 
 	
 * Bearbeiten Sie das value label für nuts2 - nutzen Sie dafür die regex und string-Funktionen von oben
 * Löschen Sie “Statistische” aus den den value labels und ersetzen Sie “Direktionsbezirk” durch “Bezirk”
 loc v nuts2 
-
 local lblname: value label `v'       // value label aufrufen
 cap label drop `lblname'_n           // neuen Namen zur Sicherheit droppen
 label copy `lblname' `lblname'_n     // kopieren
@@ -129,6 +132,8 @@ foreach v of varlist F1606_* {
 	label var `v' "`shortlabel'"         // anwenden
 	}
 
+d F1606_*	
+	
 * --------------------------------- *
 *4 Übung
 
@@ -145,7 +150,7 @@ foreach v of varlist * {
 	glo min9 ${min9} `v'
   }
 }
-
+mac l min9
 mvdecode ${min9}, mv(-9)
 
 

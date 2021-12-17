@@ -26,7 +26,7 @@ if ("`c(username)'" == "Filser") {
 
 glo data		"${pfad}/data"		// wo liegen die Datensätze?
 glo log			"${pfad}/log"		// log-Ordner
-glo tex 		"${pfad}/results"		// results-Ordner
+glo results		"${pfad}/results"		// results-Ordner
 glo prog		"${pfad}/prog"		// wo liegen die doFiles?
 
 
@@ -44,7 +44,7 @@ foreach dir1 in data log results prog {
 cd "${pfad}"
 
 * ------------------ *
-* clean data: label kürzen & missings raus
+* clean data: missings raus
 * Daten in data-Verzeichnis
 use "${data}/BIBBBAuA_2018_suf1.0.dta", clear
 

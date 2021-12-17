@@ -1,8 +1,9 @@
 * --------------------------------- *
 * Programmieren mit Stata
-* Kapitel 4,clear all
+* Kapitel 4: variablen labels & strings
 * --------------------------------- *
 
+clear all
 input str60 add
 "4905 Lakeway Drive, College Station, Texas 77845 USA"
 "673 Jasmine Street, Los Angeles, CA 90024"
@@ -24,12 +25,14 @@ gen x6 = proper(add)    // jeweiles erster Buchstabe eines Wortes groß
 gen x7 = trim(add)      // Leerzeichen am Ende und Beginn raus
 gen x8 = strlen(add)    // Anzahl der Zeichen in add
 
+list
+drop x*
+
 
 display proper("Regensburger Straße 100, 90478 nüRnberg germany")
 display proper("Regensburger Straße 100, 90478 nüRnberg germany")
 display proper("Regensburger Straße 100, 90478 nüRnberg germany")
 display ustrtitle("Regensburger Straße 100, 90478 nüRnberg germany")
-
 
 split add, parse(" ") gen(t)
 
@@ -37,7 +40,7 @@ split add, parse(" ") gen(t)
 * real() vs destring
 clear all
 
-input str1 x1
+input str2 x1
 "2"
 "3"
 "5"
@@ -47,7 +50,6 @@ input str1 x1
 "--"
 "2"
 end
-
 
 gen num = real(x1)
 list
@@ -76,6 +78,13 @@ gen d = ustrregexm(add, "GERMANY")
 list
 gen d2 = ustrregexm(add, "GERMANY|Germany") // ODER
 list
+gen d3 = ustrregexm(add, "G(ERMANY|ermany)")
+list
+
+* irgendeine ZahL?
+gen d4 = ustrregexm(add, "\d")
+list
+
 * ustrregexs --> extrahieren
 gen d3 = ustrregexs(0) if ustrregexm(add, "GERMANY|Germany")
 gen d4 = ustrregexs(0) if ustrregexm(add, "G(ERMANY|ermany)")  // entspricht d3
@@ -89,6 +98,9 @@ gen s2 = ustrregexra(add, "[street]", "!")
 list
 drop s*
 list
+
+* gen s2 = ustrregexra(add, "regress", "")
+
 
 * ersetzen mit regex-Regelausdrücken
 cap drop z*
@@ -116,26 +128,31 @@ gen r6 = ustrregexs(0) if ustrregexm(r5, "(\d+)$") // Zahlenfolge am Ende -> aus
 list
 
 
+* Suche/ersetze Funktion in regex
+loc x = "das ist ein zweiter String"
+dis ustrregexra("`x'", "ein", "EIN") 
+
 * ---------------------------------------------------------------------------------
 * label/Variablen bearbeiten
 
-
 use "${data}/BIBBBAuA_2018_suf1.0_clean.dta", replace 
 
-
+tab m1202
+d  m1202
 
 * information abspeichern
 loc v m1202
-local vartype:     type `v' 				  // Variablen "storage type" (byte etc)
+local vartype:     type `v' 		  // Variablen "storage type" (byte etc)
 local varlab:      variable label `v' // variable label
 local vallabname:  value label `v' 	  // Name des value label
-local vallab1 :    label (`v') 1		 	// Value label für Wert = 1
+local vallab1 :    label (`v') 1	  // Value label für Wert = 1
 
 *anzeigen
 di "`vartype'"     // display local "vartype"
 di "`varlab'"      // display local "varlabel"
 di "`vallabname'"  // display local "valuelabname"
 di "`vallab1'"     // display local "valuelab1"
+
 
 *direkt anzeigen
 loc v m1202
@@ -157,7 +174,7 @@ label copy `lblname' `lblname'_n	// value labelbook kopieren
 * value label abrufen und verarbeiten
 local lab1: label (m1202) 2 					// value label für Wert = 2 aufrufen
 loc lab2 = upper("`lab1'")  					// dieses value labels verändern
-label define `lblname'_n `lvl' "`lab2'", modify // in neues value labelbook einfügen
+label define `lblname'_n  2 "`lab2'", modify // in neues value labelbook einfügen
 labelbook `lblname' `lblname'_n 				// vergleich alt vs neu
 
 
@@ -198,6 +215,10 @@ foreach v of varlist1 {
   if r(N) > 0 display "`v'"
 }
 
+foreach v of varlist * {
+  qui count if `v' == -4
+  if r(N) > 0 display "`v'"
+}
 
 
 * -------------------------

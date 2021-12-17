@@ -30,12 +30,43 @@ foreach lvl  of global ausb {
 	tab S1 if m1202 == `lvl'
 }
 
+* --------------------------------- *
+* strings und macros
+
+* Wort nr# extrahieren
+local phrase `" "2 guys" "1 girl" "1 pizza place" "'
+mac l _phrase
+di "`:word 1 of `phrase' '"
+
+* WÖRTER zählen
+local sentence "here is a sentence 7"
+local len: word count `sentence'
+mac list _len
+
+* beides zu einer schleife
+local phrase1 "here is a sentence of 7 words"
+local len1: word count `phrase1'
+
+forvalues i = 1(1)`len1' {
+    loc word: word `i' of `phrase1'
+    dis "this is word number " `i' ": `word'"
+}
+
+* Anführungszeichen machen einen Unterschied:
+local phrase2 `" "here is" "a sentence" "of 7 words" "'
+mac l _phrase2 // hier sind die Worte in "" gruppiert!
+local len2: word count `phrase2'
+forvalues i = 1(1)`len2' {
+    loc word: word `i' of `phrase2'
+    dis "this is word number " `i' ": `word'"
+}
+
 
 * --------------------------------- *
 * return & ereturn
 tab S1
 return list
-su S1
+su S1, detail
 return list
 
 reg F518_SUF zpalter
@@ -59,10 +90,17 @@ foreach lvl  of global ausb {
 	dis "Der Frauenanteil in m1202=" `lvl' " beträgt: " round(r(mean)*100,.1) "%"
 }
 
+return list
+dis  r(sum) / 3
+dis  r(Var) / 3
+tab m1202
+return list
+
 * rekursive Verwendung von globals
 global x ""
 forvalues i = 1/20 {
 	global x $x `i'
+	dis "${x}"
 }
 mac list x
 
@@ -98,6 +136,9 @@ mat list G0
 mat rowname G0 = year result
 mat list G0
 
+mat rowname G0 = year result1 result2 result3
+mat list G0
+
 * --------------------------------- *
 * ergebnisse in einer matrix sammeln
 levelsof m1202, loc(ausb)
@@ -106,9 +147,12 @@ foreach lvl  of local ausb {
 	
 	// 1. Spalte level von m1202
 	//2.Spalte: Frauenanteil
-	mat G`lvl' = `lvl' ,r(mean)*100 
+	mat GX`lvl' = `lvl' ,r(mean)*100 
 }
+mat dir
 mat G = GX1\GX2\GX3\GX4
+mat l GX1
+mat l G
 mat colname G = m1202 share_w
 mat l G
 
@@ -116,17 +160,22 @@ mat l G
 * mehrere Werte
 clear matrix
 mat dir
-
-foreach lvl  of global ausb {
+levelsof m1202, loc(ausb)
+foreach lvl  of local ausb {
 	qui su zpalter if m1202 == `lvl', det
 	mat A`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75)
 }
-mat A2 = A1\A2\A3\A4
-mat colname A2 = m1202 p25 mean median p75
-mat l A2
+mat dir
+mat l A4
+mat A = A1\A2\A3\A4
+mat colname A = m1202 p25 mean median p75
+mat l A
 
 * ----------------------------------------------- *
 * Labels behalten  
+tab m1202
+labelbook M1202
+
 loc v m1202
 local vallab1 :    label (`v') 1		 	// Value label für Wert = 1
 dis "`vallab1'"     // display local "valuelab1"
@@ -150,22 +199,27 @@ foreach lvl  of local ausb {
 	mat rowname GX`lvl' =  "`vallab1'"
 }
 mat G = GX1\GX2\GX3\GX4
-mat colname GX = m1202 p25 mean median p75
+mat colname G = m1202 p25 mean median p75
 mat l G
 
 * -------------------------------- *
 * matrix zu Datensatz
+*help svmat
+
 ssc install  xsvmat
-
 * frame 
-frame dir
-frame change default
 xsvmat G, names(col) rownames(lab) frame(res1) // erstellt frame res1
+
+
+
+frame dir
+frame change res1 // in den res1-frame
+frame change default
 frame dir
 
-frame change res1 // in den res1-frame
 list , noobs clean
 
 frame change default // wieder zurück
+
 
 

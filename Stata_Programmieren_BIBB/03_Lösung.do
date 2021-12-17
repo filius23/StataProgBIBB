@@ -26,6 +26,7 @@ foreach c in "1.mig01" zpalter {
 }
 
 * Extrahieren Sie die Regressionstabelle als `matrix` und legen sie diese als `frame` ab.
+return list
 mat R = r(table)'
 mat l R
 
@@ -44,7 +45,7 @@ cap frame drop regres1
 * --------------------------------- *
 * 2 Bauen Sie folgendes Modell Schritt für Schritt auf und lassen Sie sich die Tabelle mit `esttab` ausgeben:
 
-
+est clear
 glo mod1 i.S1 zpalter c.zpalter#c.zpalter i.gkpol i.F1604 i.F1604##i.S1
 qui regress az ${mod1}
 gen smpl2 = e(sample)

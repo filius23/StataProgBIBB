@@ -15,8 +15,9 @@ use "${data}/BIBBBAuA_2018_suf1.0_clean.dta", replace
 reg F518_SUF F200
 ereturn list
 
-
+dis e(N)
 mat l e(b) // koeffizienten
+
 *schnellzugriff:
 dis "Der Koeffizient für F200 ist " _b[F200]
 dis "Der Standardfehler des Koeffizienten für F200 ist " _se[F200]
@@ -41,7 +42,9 @@ mat l r(table)
 mat C = r(table)'
 mat l C
 
-
+* rownumb hilft, einen Koeffizienten zu suchen
+mat C1 = C[rownumb(C,"F200"),1...]
+mat l C1
 
 * einfaches reg-Modell mit kat. UV
 reg F518_SUF i.S1 F200
@@ -63,7 +66,7 @@ dis "`e(cmdline)'"
 gen mo = "`e(cmdline)'"
 list, noobs clean 
 
-
+frame change default
 * ----------------------------------------------------------------------------
 * e(sample)
 

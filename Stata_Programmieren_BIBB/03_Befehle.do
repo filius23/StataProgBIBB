@@ -68,6 +68,7 @@ list, noobs clean
 * e(sample)
 
 reg F518_SUF i.S1 F200
+ereturn list
 gen smpl = e(sample)
 tab smpl
 
@@ -84,13 +85,17 @@ gen smpl2 = e(sample)
 
 local len2: word count ${mod1}
 forvalues i = 1(1)`len2' {
-    loc word: word `i' of ${mod1}
-    dis "Modell Nr" `i' ": mit `word'"
-	loc x `x' `word'
+    loc var1: word `i' of ${mod1}
+    dis "Modell Nr" `i' ": mit `var1'"
+	loc x `x' `var1'
 	qui reg F518_SUF `x' if smpl2 == 1
 	est store m`i'
 }
 
+
+
+ssc install esttab
+ssc install estout
 est dir
 esttab m*
 

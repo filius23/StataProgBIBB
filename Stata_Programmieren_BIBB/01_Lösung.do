@@ -26,9 +26,23 @@ global allS: all globals "S*"
 mac l allS 
 
 * --------------------------------- *
-* 3
+* 3 FizzBuzz
 
-if 
+forvalues n = 1/30 {
+	if  mod(`n',3)  == 0 & mod(`n',5)  == 0 {  
+		dis "FizzBuzz" 
+	}
+	else if mod(`n',3) == 0 {
+		dis "Fizz"
+	} 
+	else if mod(`n',5) == 0 {
+		dis "Buzz"
+	} 
+	else {
+		dis `n'
+	}
+	
+}
 
 
 * --------------------------------- *
@@ -38,3 +52,7 @@ foreach n of numlist 1(1)5 {
     if "`ferest()'" != ""  dis "Es kommen noch: `ferest()'"
 	if "`ferest()'" == ""  dis "Fertig"
 }
+
+
+
+
