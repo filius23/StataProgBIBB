@@ -49,7 +49,7 @@ dfx <-
 dfx$random1 <- runif(nrow(dfx),0,1)
 
 
-walk( seq(0,1,.1), function(x) {
+walk( seq(0,1,.2), function(x) {
     # baua %>% filter(between(random1,x-.1,x)) %>%   select(-random1) %>% 
     dfx %>% filter(between(random1,x-.1,x)) %>%  select(-random1) %>%  
     readr::write_delim(.,file = paste0("./projekt/data",x*20,".csv"),delim = ";")
