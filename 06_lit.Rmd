@@ -14,6 +14,9 @@ library(Statamarkdown)
 
 
 **[Stata Cookbook](https://sites.google.com/site/imirkina/cookbook-stata)**
+
 **[Stata Coding Guide](https://julianreif.com/guide/)**
 
-(wird noch gepflegt)
+**[Ausführliche Einführung in `frames`](https://medium.com/the-stata-guide/the-stata-frames-guide-1149b50864e3)**
+
+
