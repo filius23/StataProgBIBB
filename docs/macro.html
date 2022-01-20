@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-17" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -916,6 +916,28 @@ In vielen Fällen möchte man den Code Schritt für Schritt durchgehen, dann abe
 <span id="cb80-7"><a href="macro.html#cb80-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">avplots</span></span>
 <span id="cb80-8"><a href="macro.html#cb80-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">graph</span> <span class="kw">export</span> <span class="st">&quot;${graph}/avplots`y&#39;.png&quot;</span>, <span class="kw">replace</span></span>
 <span id="cb80-9"><a href="macro.html#cb80-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Alternativ hilft häufig auch <code>set trace on</code> weiter. Hier werden immer die zuerst die macros und dann erst die eingesetzten Werte angezeigt:</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb81-1"><a href="macro.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="kw">set</span> <span class="fu">trace</span> <span class="kw">on</span></span>
+<span id="cb81-2"><a href="macro.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> v <span class="kw">of</span> numlist 19(5)35 {</span>
+<span id="cb81-3"><a href="macro.html#cb81-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span> <span class="st">&quot;Alter &quot;</span> <span class="ot">`v&#39;</span> - 4 <span class="st">&quot; bis &quot;</span> <span class="ot">`v&#39;</span></span>
+<span id="cb81-4"><a href="macro.html#cb81-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>- foreach v of numlist 19(5)35 {
+- display &quot;Alter &quot; `v&#39; - 4 &quot; bis &quot; `v&#39;
+= display &quot;Alter &quot; 19 - 4 &quot; bis &quot; 19
+Alter 15 bis 19
+- }
+- display &quot;Alter &quot; `v&#39; - 4 &quot; bis &quot; `v&#39;
+= display &quot;Alter &quot; 24 - 4 &quot; bis &quot; 24
+Alter 20 bis 24
+- }
+- display &quot;Alter &quot; `v&#39; - 4 &quot; bis &quot; `v&#39;
+= display &quot;Alter &quot; 29 - 4 &quot; bis &quot; 29
+Alter 25 bis 29
+- }
+- display &quot;Alter &quot; `v&#39; - 4 &quot; bis &quot; `v&#39;
+= display &quot;Alter &quot; 34 - 4 &quot; bis &quot; 34
+Alter 30 bis 34
+- }</code></pre>
 <!-- ### `local x` entspricht `global _x` -->
 <!-- Theoretisch kann man auch mit `global _x` einen `local x` erzeugen: -->
 <!-- ```{stata det0a, eval= F} -->

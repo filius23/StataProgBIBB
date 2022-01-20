@@ -727,6 +727,21 @@ forvalues y = 1982/1985 {
 ```
 
 
+Alternativ hilft häufig auch `set trace on` weiter. Hier werden immer die zuerst die macros und dann erst die eingesetzten Werte angezeigt:
+```{stata settracetabloop4a, eval = F}
+set trace on
+foreach v of numlist 19(5)35 {
+	display "Alter " `v' - 4 " bis " `v'
+}
+```
+
+```{stata settracetabloop4, echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+set trace on
+foreach v of numlist 19(5)35 {
+	display "Alter " `v' - 4 " bis " `v'
+}
+```
 
 <!-- ### `local x` entspricht `global _x` -->
 
