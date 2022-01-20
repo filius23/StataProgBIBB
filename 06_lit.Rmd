@@ -19,4 +19,4 @@ library(Statamarkdown)
 
 **[Ausführliche Einführung in `frames`](https://medium.com/the-stata-guide/the-stata-frames-guide-1149b50864e3)**
 
-
+**[Stata Cheatsheets](https://www.stata.com/bookstore/stata-cheat-sheets/)**

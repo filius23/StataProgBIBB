@@ -12,7 +12,7 @@ description: "This is a minimal example of using the bookdown package to write a
 
 ```{r setup, echo = F, message=F, warning = F}
 # output: bookdown::pdf_document2
-if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
+if(Sys.getenv("USERNAME") == "filse" ) .libPaths("D:/R-library4")  # set library
 list.of.packages <- c("tidyr","dplyr","readr","haven","rmarkdown","bookdown","devtools","tidyverse","knitr") # Pakete eintragen
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -50,10 +50,3 @@ knitr::include_graphics("./pics/00_titel.png")
 
 
 
-
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
