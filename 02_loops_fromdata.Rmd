@@ -510,7 +510,7 @@ foreach lvl  of local ausb {
 	mat rowname GX`lvl' =  "`vallab1'"
 }
 mat G = GX1\GX2\GX3\GX4
-mat colname GX = m1202 p25 mean median p75
+mat colname G = m1202 p25 mean median p75
 mat l G
 ```
 
@@ -536,7 +536,7 @@ foreach lvl  of local ausb {
 	mat rowname GX`lvl' =  "`vallab1'"
 }
 mat G = GX1\GX2\GX3\GX4
-mat colname GX = m1202 p25 mean median p75
+mat colname G = m1202 p25 mean median p75
 mat l G
 ```
 

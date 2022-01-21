@@ -913,17 +913,20 @@ r(133);</code></pre>
 <span id="cb50-7"><a href="loopmacro.html#cb50-7" aria-hidden="true" tabindex="-1"></a>    mat rowname GX<span class="ot">`lvl&#39;</span> =  <span class="st">&quot;`vallab1&#39;&quot;</span></span>
 <span id="cb50-8"><a href="loopmacro.html#cb50-8" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb50-9"><a href="loopmacro.html#cb50-9" aria-hidden="true" tabindex="-1"></a>mat G = GX1\GX2\GX3\GX4</span>
-<span id="cb50-10"><a href="loopmacro.html#cb50-10" aria-hidden="true" tabindex="-1"></a>mat colname GX = m1202 p25 <span class="kw">mean</span> <span class="kw">median</span> p75</span>
+<span id="cb50-10"><a href="loopmacro.html#cb50-10" aria-hidden="true" tabindex="-1"></a>mat colname G = m1202 p25 <span class="kw">mean</span> <span class="kw">median</span> p75</span>
 <span id="cb50-11"><a href="loopmacro.html#cb50-11" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> G</span></code></pre></div>
 <pre><code>1 2 3 4
 
 
 
-matrix GX not found
-r(111);
 
-end of do-file
-r(111);</code></pre>
+
+G[4,5]
+                  m1202        p25       mean     median        p75
+Ohne Beruf~s          1         29  42.627213         46         55
+duale o. s~l          2         39  47.076531         49         56
+Aufstiegsf~T          3         41  48.092344         50         56
+Fachhochsc~h          4         39  47.760744         49         57</code></pre>
 </div>
 </div>
 <div id="von-der-matrix-zum-datensatz" class="section level2" number="2.7">
