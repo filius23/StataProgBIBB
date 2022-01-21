@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-17" />
+<meta name="date" content="2022-01-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -852,18 +852,20 @@ result   0   0</code></pre>
 <span id="cb41-10"><a href="loopmacro.html#cb41-10" aria-hidden="true" tabindex="-1"></a>mat colname G = m1202 share_w</span>
 <span id="cb41-11"><a href="loopmacro.html#cb41-11" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> G</span></code></pre></div>
 <p>Damit können wir auch zeilenweise eine <code>matrix</code> befüllen, indem wir mit <code>,</code> mehrere Werte verbinden (<a href="loopmacro.html#mat1">row join</a>):</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="loopmacro.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">global</span> ausb {</span>
-<span id="cb42-2"><a href="loopmacro.html#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> su zpalter <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span>, <span class="fu">det</span></span>
-<span id="cb42-3"><a href="loopmacro.html#cb42-3" aria-hidden="true" tabindex="-1"></a>    mat A<span class="ot">`lvl&#39;</span> = <span class="ot">`lvl&#39;</span>, <span class="fu">r</span>(p25), <span class="fu">r</span>(<span class="kw">mean</span>), <span class="fu">r</span>(p50), <span class="fu">r</span>(p75)</span>
-<span id="cb42-4"><a href="loopmacro.html#cb42-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb42-5"><a href="loopmacro.html#cb42-5" aria-hidden="true" tabindex="-1"></a>mat A2 = A1\A2\A3\A4</span>
-<span id="cb42-6"><a href="loopmacro.html#cb42-6" aria-hidden="true" tabindex="-1"></a>mat colname A2 = m1202 p25 <span class="kw">mean</span> <span class="kw">median</span> p75</span>
-<span id="cb42-7"><a href="loopmacro.html#cb42-7" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> A2</span></code></pre></div>
-<pre><code>A1 not found
-r(111);
-
-end of do-file
-r(111);</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="loopmacro.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">qui</span> <span class="kw">levelsof</span> m1202, loc(ausb)</span>
+<span id="cb42-2"><a href="loopmacro.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> lvl  <span class="kw">of</span> <span class="kw">local</span> ausb {</span>
+<span id="cb42-3"><a href="loopmacro.html#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> su zpalter <span class="kw">if</span> m1202 == <span class="ot">`lvl&#39;</span>, <span class="fu">det</span></span>
+<span id="cb42-4"><a href="loopmacro.html#cb42-4" aria-hidden="true" tabindex="-1"></a>    mat A<span class="ot">`lvl&#39;</span> = <span class="ot">`lvl&#39;</span>, <span class="fu">r</span>(p25), <span class="fu">r</span>(<span class="kw">mean</span>), <span class="fu">r</span>(p50), <span class="fu">r</span>(p75)</span>
+<span id="cb42-5"><a href="loopmacro.html#cb42-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-6"><a href="loopmacro.html#cb42-6" aria-hidden="true" tabindex="-1"></a>mat A = A1\A2\A3\A4</span>
+<span id="cb42-7"><a href="loopmacro.html#cb42-7" aria-hidden="true" tabindex="-1"></a>mat colname A = m1202 p25 <span class="kw">mean</span> <span class="kw">median</span> p75</span>
+<span id="cb42-8"><a href="loopmacro.html#cb42-8" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> A</span></code></pre></div>
+<pre><code>A[4,5]
+        m1202        p25       mean     median        p75
+r1          1         29  42.627213         46         55
+r1          2         39  47.076531         49         56
+r1          3         41  48.092344         50         56
+r1          4         39  47.760744         49         57</code></pre>
 <hr />
 <p><strong><a href="loopmacro.html#retue2">Übung</a></strong></p>
 <hr />

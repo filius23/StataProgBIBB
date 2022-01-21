@@ -416,13 +416,14 @@ mat l G
 
 Damit können wir auch zeilenweise eine `matrix` befüllen, indem wir mit `,` mehrere Werte verbinden ([row join](#mat1)):
 ```{stata tm12, eval = F}
-foreach lvl  of global ausb {
+qui levelsof m1202, loc(ausb)
+foreach lvl  of local ausb {
 	qui su zpalter if m1202 == `lvl', det
 	mat A`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75)
 }
-mat A2 = A1\A2\A3\A4
-mat colname A2 = m1202 p25 mean median p75
-mat l A2
+mat A = A1\A2\A3\A4
+mat colname A = m1202 p25 mean median p75
+mat l A
 ```
 
 
@@ -434,13 +435,14 @@ quietly{
   mvdecode F200, mv( 97/99)
   mvdecode m1202, mv(-1)
 }
-foreach lvl  of global ausb {
+qui levelsof m1202, loc(ausb)
+foreach lvl  of local ausb {
 	qui su zpalter if m1202 == `lvl', det
 	mat A`lvl' = `lvl', r(p25), r(mean), r(p50), r(p75)
 }
-mat A2 = A1\A2\A3\A4
-mat colname A2 = m1202 p25 mean median p75
-mat l A2
+mat A = A1\A2\A3\A4
+mat colname A = m1202 p25 mean median p75
+mat l A
 ```
 
 ***

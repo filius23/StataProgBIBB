@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-17" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,8 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -315,54 +317,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">5</span> Dateien- und DoFile-Verwaltung</h1>
 <div id="dir---alles-einlesen" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> <code>dir</code> - alles einlesen</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="data.html#cb1-1" aria-hidden="true" tabindex="-1"></a>glo pfad <span class="st">&quot;D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt&quot;</span></span>
-<span id="cb1-2"><a href="data.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="data.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> filelist: <span class="ot">dir</span> . files <span class="st">&quot;*.*&quot;</span>          <span class="co">//Lister aller Dateien</span></span>
-<span id="cb1-4"><a href="data.html#cb1-4" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> filelist</span>
-<span id="cb1-5"><a href="data.html#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="data.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> dtalist: <span class="ot">dir</span> <span class="st">&quot;${pfad}&quot;</span> files <span class="st">&quot;baua*.dta&quot;</span> <span class="co">// Liste aller .dta-Dateien</span></span>
-<span id="cb1-7"><a href="data.html#cb1-7" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist</span>
-<span id="cb1-8"><a href="data.html#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="data.html#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="data.html#cb1-10" aria-hidden="true" tabindex="-1"></a>loc usefile <span class="ot">`: word 1 of ${dtalist}&#39;</span>                <span class="co">// erster Eintrag aus der Liste</span></span>
-<span id="cb1-11"><a href="data.html#cb1-11" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;${pfad}/`usefile&#39;&quot;</span></span>
-<span id="cb1-12"><a href="data.html#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="data.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;${pfad}/`usefile&#39;&quot;</span>, <span class="kw">clear</span>                      <span class="co">// dta laden</span></span>
-<span id="cb1-14"><a href="data.html#cb1-14" aria-hidden="true" tabindex="-1"></a>loc n_datasets : <span class="ot">list</span> <span class="kw">sizeof</span> <span class="kw">global</span>(dtalist)        <span class="co">// anzahl  dta einträge</span></span>
-<span id="cb1-15"><a href="data.html#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> i <span class="kw">of</span> numlist 2(1)<span class="ot">`n_datasets&#39;</span> {</span>
-<span id="cb1-16"><a href="data.html#cb1-16" aria-hidden="true" tabindex="-1"></a>    loc appendfile <span class="ot">`: word `i&#39;</span> <span class="kw">of</span> <span class="ot">${dtalist}</span>&#39;       <span class="co">// name aus list aufrufen</span></span>
-<span id="cb1-17"><a href="data.html#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> <span class="kw">append</span> <span class="kw">using</span> <span class="st">&quot;${pfad}/`appendfile&#39;&quot;</span>          <span class="co">// append</span></span>
-<span id="cb1-18"><a href="data.html#cb1-18" aria-hidden="true" tabindex="-1"></a>    dis <span class="st">&quot;`appendfile&#39; appended&quot;</span>                           <span class="co">// Kontrolle</span></span>
-<span id="cb1-19"><a href="data.html#cb1-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-20"><a href="data.html#cb1-20" aria-hidden="true" tabindex="-1"></a>    </span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb187-1"><a href="data.html#cb187-1" aria-hidden="true" tabindex="-1"></a>glo pfad <span class="st">&quot;D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt&quot;</span></span>
+<span id="cb187-2"><a href="data.html#cb187-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-3"><a href="data.html#cb187-3" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> filelist: <span class="ot">dir</span> . files <span class="st">&quot;*.*&quot;</span>          <span class="co">//Lister aller Dateien</span></span>
+<span id="cb187-4"><a href="data.html#cb187-4" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> filelist</span>
+<span id="cb187-5"><a href="data.html#cb187-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-6"><a href="data.html#cb187-6" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> dtalist: <span class="ot">dir</span> <span class="st">&quot;${pfad}&quot;</span> files <span class="st">&quot;baua*.dta&quot;</span> <span class="co">// Liste aller .dta-Dateien</span></span>
+<span id="cb187-7"><a href="data.html#cb187-7" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist</span>
+<span id="cb187-8"><a href="data.html#cb187-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-9"><a href="data.html#cb187-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-10"><a href="data.html#cb187-10" aria-hidden="true" tabindex="-1"></a>loc usefile <span class="ot">`: word 1 of ${dtalist}&#39;</span>                <span class="co">// erster Eintrag aus der Liste</span></span>
+<span id="cb187-11"><a href="data.html#cb187-11" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;${pfad}/`usefile&#39;&quot;</span></span>
+<span id="cb187-12"><a href="data.html#cb187-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-13"><a href="data.html#cb187-13" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;${pfad}/`usefile&#39;&quot;</span>, <span class="kw">clear</span>                      <span class="co">// dta laden</span></span>
+<span id="cb187-14"><a href="data.html#cb187-14" aria-hidden="true" tabindex="-1"></a>loc n_datasets : <span class="ot">list</span> <span class="kw">sizeof</span> <span class="kw">global</span>(dtalist)        <span class="co">// anzahl  dta einträge</span></span>
+<span id="cb187-15"><a href="data.html#cb187-15" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> i <span class="kw">of</span> numlist 2(1)<span class="ot">`n_datasets&#39;</span> {</span>
+<span id="cb187-16"><a href="data.html#cb187-16" aria-hidden="true" tabindex="-1"></a>    loc appendfile <span class="ot">`: word `i&#39;</span> <span class="kw">of</span> <span class="ot">${dtalist}</span>&#39;       <span class="co">// name aus list aufrufen</span></span>
+<span id="cb187-17"><a href="data.html#cb187-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">qui</span> <span class="kw">append</span> <span class="kw">using</span> <span class="st">&quot;${pfad}/`appendfile&#39;&quot;</span>          <span class="co">// append</span></span>
+<span id="cb187-18"><a href="data.html#cb187-18" aria-hidden="true" tabindex="-1"></a>    dis <span class="st">&quot;`appendfile&#39; appended&quot;</span>                           <span class="co">// Kontrolle</span></span>
+<span id="cb187-19"><a href="data.html#cb187-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb187-20"><a href="data.html#cb187-20" aria-hidden="true" tabindex="-1"></a>    </span></code></pre></div>
 <p><code>, respectcase</code>: <code>global dtalist: dir "${pfad}" files "baua*.dta , respectcase"</code> würde “BAUA.dta” ignorieren.</p>
 <div id="copy" class="section level3" number="5.1.1">
 <h3><span class="header-section-number">5.1.1</span> <code>copy</code></h3>
 <p>Mit <code>copy</code> können wir Dateien kopieren.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="data.html#cb2-1" aria-hidden="true" tabindex="-1"></a>loc usefile <span class="ot">`: word 1 of ${dtalist}&#39;</span>                <span class="co">// erster Eintrag aus der Liste</span></span>
-<span id="cb2-2"><a href="data.html#cb2-2" aria-hidden="true" tabindex="-1"></a>loc copyfile <span class="st">&quot;copy_`usefile&#39;&quot;</span></span>
-<span id="cb2-3"><a href="data.html#cb2-3" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;`usefile&#39;&quot;</span></span>
-<span id="cb2-4"><a href="data.html#cb2-4" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;`copyfile&#39;&quot;</span></span>
-<span id="cb2-5"><a href="data.html#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="data.html#cb2-6" aria-hidden="true" tabindex="-1"></a>copy <span class="ot">${pfad}</span>/<span class="ot">`usefile&#39;</span> <span class="ot">${pfad}</span>/<span class="ot">`copyfile&#39;</span> , <span class="kw">replace</span></span>
-<span id="cb2-7"><a href="data.html#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="data.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">// hat das geklappt?</span></span>
-<span id="cb2-9"><a href="data.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> dtalist2: <span class="ot">dir</span> <span class="st">&quot;${pfad}&quot;</span> files <span class="st">&quot;*baua*.dta&quot;</span> <span class="co">// Liste aller .dta-Dateien</span></span>
-<span id="cb2-10"><a href="data.html#cb2-10" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist</span>
-<span id="cb2-11"><a href="data.html#cb2-11" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist2</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb188-1"><a href="data.html#cb188-1" aria-hidden="true" tabindex="-1"></a>loc usefile <span class="ot">`: word 1 of ${dtalist}&#39;</span>                <span class="co">// erster Eintrag aus der Liste</span></span>
+<span id="cb188-2"><a href="data.html#cb188-2" aria-hidden="true" tabindex="-1"></a>loc copyfile <span class="st">&quot;copy_`usefile&#39;&quot;</span></span>
+<span id="cb188-3"><a href="data.html#cb188-3" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;`usefile&#39;&quot;</span></span>
+<span id="cb188-4"><a href="data.html#cb188-4" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;`copyfile&#39;&quot;</span></span>
+<span id="cb188-5"><a href="data.html#cb188-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-6"><a href="data.html#cb188-6" aria-hidden="true" tabindex="-1"></a>copy <span class="ot">${pfad}</span>/<span class="ot">`usefile&#39;</span> <span class="ot">${pfad}</span>/<span class="ot">`copyfile&#39;</span> , <span class="kw">replace</span></span>
+<span id="cb188-7"><a href="data.html#cb188-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-8"><a href="data.html#cb188-8" aria-hidden="true" tabindex="-1"></a><span class="co">// hat das geklappt?</span></span>
+<span id="cb188-9"><a href="data.html#cb188-9" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> dtalist2: <span class="ot">dir</span> <span class="st">&quot;${pfad}&quot;</span> files <span class="st">&quot;*baua*.dta&quot;</span> <span class="co">// Liste aller .dta-Dateien</span></span>
+<span id="cb188-10"><a href="data.html#cb188-10" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist</span>
+<span id="cb188-11"><a href="data.html#cb188-11" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist2</span></code></pre></div>
 </div>
 <div id="erase" class="section level3" number="5.1.2">
 <h3><span class="header-section-number">5.1.2</span> <code>erase</code></h3>
 <p>Mit <code>erase</code> können wir Dateien löschen.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="data.html#cb3-1" aria-hidden="true" tabindex="-1"></a>loc usefile <span class="ot">`: word 1 of ${dtalist}&#39;</span>                <span class="co">// erster Eintrag aus der Liste</span></span>
-<span id="cb3-2"><a href="data.html#cb3-2" aria-hidden="true" tabindex="-1"></a>loc copyfile <span class="st">&quot;copy_`usefile&#39;&quot;</span></span>
-<span id="cb3-3"><a href="data.html#cb3-3" aria-hidden="true" tabindex="-1"></a>erase <span class="ot">${pfad}</span>/<span class="ot">`copyfile&#39;</span></span>
-<span id="cb3-4"><a href="data.html#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="data.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">// hat auch das geklappt?</span></span>
-<span id="cb3-6"><a href="data.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> dtalist3: <span class="ot">dir</span> <span class="st">&quot;${pfad}&quot;</span> files <span class="st">&quot;*baua*.dta&quot;</span> <span class="co">// Liste aller .dta-Dateien</span></span>
-<span id="cb3-7"><a href="data.html#cb3-7" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist</span>
-<span id="cb3-8"><a href="data.html#cb3-8" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist2</span>
-<span id="cb3-9"><a href="data.html#cb3-9" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist3</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb189-1"><a href="data.html#cb189-1" aria-hidden="true" tabindex="-1"></a>loc usefile <span class="ot">`: word 1 of ${dtalist}&#39;</span>                <span class="co">// erster Eintrag aus der Liste</span></span>
+<span id="cb189-2"><a href="data.html#cb189-2" aria-hidden="true" tabindex="-1"></a>loc copyfile <span class="st">&quot;copy_`usefile&#39;&quot;</span></span>
+<span id="cb189-3"><a href="data.html#cb189-3" aria-hidden="true" tabindex="-1"></a>erase <span class="ot">${pfad}</span>/<span class="ot">`copyfile&#39;</span></span>
+<span id="cb189-4"><a href="data.html#cb189-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb189-5"><a href="data.html#cb189-5" aria-hidden="true" tabindex="-1"></a><span class="co">// hat auch das geklappt?</span></span>
+<span id="cb189-6"><a href="data.html#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> dtalist3: <span class="ot">dir</span> <span class="st">&quot;${pfad}&quot;</span> files <span class="st">&quot;*baua*.dta&quot;</span> <span class="co">// Liste aller .dta-Dateien</span></span>
+<span id="cb189-7"><a href="data.html#cb189-7" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist</span>
+<span id="cb189-8"><a href="data.html#cb189-8" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist2</span>
+<span id="cb189-9"><a href="data.html#cb189-9" aria-hidden="true" tabindex="-1"></a>mac <span class="ot">l</span> dtalist3</span></code></pre></div>
 <hr />
 <p><strong><a href="data.html#dir_readin">Übung</a></strong></p>
 <hr />
@@ -371,23 +373,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="verzeichnisse-dofiles-erstellen" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Verzeichnisse &amp; DoFiles erstellen</h2>
 <p>Mit <code>mkdir</code> können wir Verzeichnisse erstellen:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="data.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> pfad <span class="st">&quot;D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt&quot;</span></span>
-<span id="cb4-2"><a href="data.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/data&quot;</span></span>
-<span id="cb4-3"><a href="data.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/log&quot;</span></span>
-<span id="cb4-4"><a href="data.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/graph&quot;</span></span>
-<span id="cb4-5"><a href="data.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/results&quot;</span></span>
-<span id="cb4-6"><a href="data.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/tables&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb190-1"><a href="data.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> pfad <span class="st">&quot;D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB\projekt&quot;</span></span>
+<span id="cb190-2"><a href="data.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/data&quot;</span></span>
+<span id="cb190-3"><a href="data.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/log&quot;</span></span>
+<span id="cb190-4"><a href="data.html#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/graph&quot;</span></span>
+<span id="cb190-5"><a href="data.html#cb190-5" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/results&quot;</span></span>
+<span id="cb190-6"><a href="data.html#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="kw">mkdir</span>   <span class="st">&quot;${pfad}/tables&quot;</span></span></code></pre></div>
 <p><code>file</code> können wir nutzen, um ein DoFile mit globals zu erstellen (oder natürlich auch locals oder allen anderen Informationen):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="data.html#cb5-1" aria-hidden="true" tabindex="-1"></a>*erstelle doFile fuer macros -&gt; kurzes doFile um Pfade <span class="kw">in</span> Schleifen richtig zu setzen, wird dann <span class="kw">in</span> Schleifen immer aufgerufen</span>
-<span id="cb5-2"><a href="data.html#cb5-2" aria-hidden="true" tabindex="-1"></a>file open macros <span class="kw">using</span> <span class="ot">${prog}</span>\macrodofile.<span class="kw">do</span>, write <span class="kw">replace</span></span>
-<span id="cb5-3"><a href="data.html#cb5-3" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo pfad     ${pfad}   &quot;</span>     <span class="dt">_n</span></span>
-<span id="cb5-4"><a href="data.html#cb5-4" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo orig     ${orig}   &quot;</span>     <span class="dt">_n</span></span>
-<span id="cb5-5"><a href="data.html#cb5-5" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo data     ${data}   &quot;</span>     <span class="dt">_n</span></span>
-<span id="cb5-6"><a href="data.html#cb5-6" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo log      ${log}    &quot;</span>     <span class="dt">_n</span></span>
-<span id="cb5-7"><a href="data.html#cb5-7" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo res      ${results}&quot;</span>     <span class="dt">_n</span></span>
-<span id="cb5-8"><a href="data.html#cb5-8" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo graph    ${graph}  &quot;</span>     <span class="dt">_n</span></span>
-<span id="cb5-9"><a href="data.html#cb5-9" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo prog     ${prog}   &quot;</span>     <span class="dt">_n</span></span>
-<span id="cb5-10"><a href="data.html#cb5-10" aria-hidden="true" tabindex="-1"></a>file <span class="kw">close</span> macros </span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb191-1"><a href="data.html#cb191-1" aria-hidden="true" tabindex="-1"></a>*erstelle doFile fuer macros -&gt; kurzes doFile um Pfade <span class="kw">in</span> Schleifen richtig zu setzen, wird dann <span class="kw">in</span> Schleifen immer aufgerufen</span>
+<span id="cb191-2"><a href="data.html#cb191-2" aria-hidden="true" tabindex="-1"></a>file open macros <span class="kw">using</span> <span class="ot">${prog}</span>\macrodofile.<span class="kw">do</span>, write <span class="kw">replace</span></span>
+<span id="cb191-3"><a href="data.html#cb191-3" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo pfad     ${pfad}   &quot;</span>     <span class="dt">_n</span></span>
+<span id="cb191-4"><a href="data.html#cb191-4" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo orig     ${orig}   &quot;</span>     <span class="dt">_n</span></span>
+<span id="cb191-5"><a href="data.html#cb191-5" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo data     ${data}   &quot;</span>     <span class="dt">_n</span></span>
+<span id="cb191-6"><a href="data.html#cb191-6" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo log      ${log}    &quot;</span>     <span class="dt">_n</span></span>
+<span id="cb191-7"><a href="data.html#cb191-7" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo res      ${results}&quot;</span>     <span class="dt">_n</span></span>
+<span id="cb191-8"><a href="data.html#cb191-8" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo graph    ${graph}  &quot;</span>     <span class="dt">_n</span></span>
+<span id="cb191-9"><a href="data.html#cb191-9" aria-hidden="true" tabindex="-1"></a>file write macros <span class="st">&quot;glo prog     ${prog}   &quot;</span>     <span class="dt">_n</span></span>
+<span id="cb191-10"><a href="data.html#cb191-10" aria-hidden="true" tabindex="-1"></a>file <span class="kw">close</span> macros </span></code></pre></div>
 </div>
 <div id="master-dofile" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Master DoFile</h2>
@@ -395,34 +397,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">5.3.1</span> DoFile mit Argumenten starten</h3>
 <p>Ein DoFile kann auch direkt aus einem Master-DoFile gestartet werden.
 Werte, die wir danach angeben, können im DoFile mit der Angabe der Position abgerufen werden:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="data.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> <span class="st">&quot;${prog}/051_DoFile.do&quot;</span> 2</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="data.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;${orig}/BIBBBAuA_2018_suf1.0.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb7-2"><a href="data.html#cb7-2" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Auszählung für `1&#39;&quot;</span></span>
-<span id="cb7-3"><a href="data.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> S1 <span class="kw">if</span> m1202 == <span class="ot">`1&#39;</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="data.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> <span class="st">&quot;${prog}/051_DoFile2.do&quot;</span> 4 2 mobil</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="data.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> ausb <span class="ot">`1&#39;</span></span>
-<span id="cb9-2"><a href="data.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> gend <span class="ot">`2&#39;</span></span>
-<span id="cb9-3"><a href="data.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="kw">var</span>  <span class="ot">`3&#39;</span></span>
-<span id="cb9-4"><a href="data.html#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="data.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;${orig}/BIBBBAuA_2018_suf1.0.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb9-6"><a href="data.html#cb9-6" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Auszählung für Ausbildung = `ausb&#39; &amp; Geschlecht = `gend&#39;&quot;</span></span>
-<span id="cb9-7"><a href="data.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> gkpol <span class="kw">if</span> m1202 == <span class="ot">`ausb&#39;</span> &amp; S1 == <span class="ot">`gend&#39;</span></span>
-<span id="cb9-8"><a href="data.html#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="data.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> gkpol <span class="ot">`var&#39;</span> <span class="kw">if</span> m1202 == <span class="ot">`ausb&#39;</span> &amp; S1 == <span class="ot">`gend&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb192-1"><a href="data.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> <span class="st">&quot;${prog}/051_DoFile.do&quot;</span> 2</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb193-1"><a href="data.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;${orig}/BIBBBAuA_2018_suf1.0.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb193-2"><a href="data.html#cb193-2" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Auszählung für `1&#39;&quot;</span></span>
+<span id="cb193-3"><a href="data.html#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> S1 <span class="kw">if</span> m1202 == <span class="ot">`1&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb194-1"><a href="data.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> <span class="st">&quot;${prog}/051_DoFile2.do&quot;</span> 4 2 mobil</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb195-1"><a href="data.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> ausb <span class="ot">`1&#39;</span></span>
+<span id="cb195-2"><a href="data.html#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> gend <span class="ot">`2&#39;</span></span>
+<span id="cb195-3"><a href="data.html#cb195-3" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="kw">var</span>  <span class="ot">`3&#39;</span></span>
+<span id="cb195-4"><a href="data.html#cb195-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-5"><a href="data.html#cb195-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;${orig}/BIBBBAuA_2018_suf1.0.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb195-6"><a href="data.html#cb195-6" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;Auszählung für Ausbildung = `ausb&#39; &amp; Geschlecht = `gend&#39;&quot;</span></span>
+<span id="cb195-7"><a href="data.html#cb195-7" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> gkpol <span class="kw">if</span> m1202 == <span class="ot">`ausb&#39;</span> &amp; S1 == <span class="ot">`gend&#39;</span></span>
+<span id="cb195-8"><a href="data.html#cb195-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-9"><a href="data.html#cb195-9" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> gkpol <span class="ot">`var&#39;</span> <span class="kw">if</span> m1202 == <span class="ot">`ausb&#39;</span> &amp; S1 == <span class="ot">`gend&#39;</span></span></code></pre></div>
 </div>
 <div id="in-neuer-session-starten" class="section level3" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> in neuer Session starten</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="data.html#cb10-1" aria-hidden="true" tabindex="-1"></a>cd <span class="ot">${prog}</span></span>
-<span id="cb10-2"><a href="data.html#cb10-2" aria-hidden="true" tabindex="-1"></a>winexec <span class="ot">`c(sysdir_stata)&#39;</span>StataSE-64.exe <span class="kw">do</span> <span class="st">&quot;${prog}/052_DoFile1.do&quot;</span> 4 2 mobil</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb196-1"><a href="data.html#cb196-1" aria-hidden="true" tabindex="-1"></a>cd <span class="ot">${prog}</span></span>
+<span id="cb196-2"><a href="data.html#cb196-2" aria-hidden="true" tabindex="-1"></a>winexec <span class="ot">`c(sysdir_stata)&#39;</span>StataSE-64.exe <span class="kw">do</span> <span class="st">&quot;${prog}/052_DoFile1.do&quot;</span> 4 2 mobil</span></code></pre></div>
 <p>Startet <code>052_DoFile1.do</code> in einer neuen Session.</p>
 <p><strong>Achtung</strong>: hier sind dann auch die globals, locals usw. weg. Um die globals zu übernehmen, muss dann ein <code>macrodofile</code> eingebunden werden.</p>
 </div>
 <div id="mehrere-sessions-starten" class="section level3" number="5.3.3">
 <h3><span class="header-section-number">5.3.3</span> mehrere Sessions starten</h3>
-<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="data.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="fu">s</span> = 1/2{</span>
-<span id="cb11-2"><a href="data.html#cb11-2" aria-hidden="true" tabindex="-1"></a>    cd <span class="ot">${prog}</span></span>
-<span id="cb11-3"><a href="data.html#cb11-3" aria-hidden="true" tabindex="-1"></a>    winexec <span class="ot">`c(sysdir_stata)&#39;</span>StataSE-64.exe <span class="kw">do</span> <span class="st">&quot;${prog}/052_DoFile1.do&quot;</span> 4 <span class="ot">`s&#39;</span> mobil</span>
-<span id="cb11-4"><a href="data.html#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb197-1"><a href="data.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="kw">forvalues</span> <span class="fu">s</span> = 1/2{</span>
+<span id="cb197-2"><a href="data.html#cb197-2" aria-hidden="true" tabindex="-1"></a>    cd <span class="ot">${prog}</span></span>
+<span id="cb197-3"><a href="data.html#cb197-3" aria-hidden="true" tabindex="-1"></a>    winexec <span class="ot">`c(sysdir_stata)&#39;</span>StataSE-64.exe <span class="kw">do</span> <span class="st">&quot;${prog}/052_DoFile1.do&quot;</span> 4 <span class="ot">`s&#39;</span> mobil</span>
+<span id="cb197-4"><a href="data.html#cb197-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <hr />
 <p><strong><a href="data.html#masterdofile">Übung</a></strong></p>
 <hr />
@@ -516,6 +518,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-16" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,8 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -225,11 +227,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.5.1" data-path="regres.html"><a href="regres.html#esample"><i class="fa fa-check"></i><b>3.5.1</b> <code>e(sample)</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="regres.html"><a href="regres.html#übungen-2"><i class="fa fa-check"></i><b>3.6</b> Übungen</a></li>
-<li class="chapter" data-level="3.7" data-path="regres.html"><a href="regres.html#anhang-1"><i class="fa fa-check"></i><b>3.7</b> Anhang</a>
+<li class="chapter" data-level="3.6" data-path="regres.html"><a href="regres.html#reg-schrittweise-aufbauen"><i class="fa fa-check"></i><b>3.6</b> <code>reg</code> schrittweise aufbauen</a></li>
+<li class="chapter" data-level="3.7" data-path="regres.html"><a href="regres.html#übungen-2"><i class="fa fa-check"></i><b>3.7</b> Übungen</a>
 <ul>
-<li class="chapter" data-level="3.7.1" data-path="regres.html"><a href="regres.html#statsby"><i class="fa fa-check"></i><b>3.7.1</b> <code>statsby</code></a></li>
-<li class="chapter" data-level="3.7.2" data-path="regres.html"><a href="regres.html#reg-loop"><i class="fa fa-check"></i><b>3.7.2</b> <code>reg</code>-Loop</a></li>
+<li class="chapter" data-level="3.7.1" data-path="regres.html"><a href="regres.html#reg1"><i class="fa fa-check"></i><b>3.7.1</b> Übung</a></li>
+<li class="chapter" data-level="3.7.2" data-path="regres.html"><a href="regres.html#reg2"><i class="fa fa-check"></i><b>3.7.2</b> Übung</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="regres.html"><a href="regres.html#anhang-1"><i class="fa fa-check"></i><b>3.8</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="regres.html"><a href="regres.html#statsby"><i class="fa fa-check"></i><b>3.8.1</b> <code>statsby</code></a></li>
+<li class="chapter" data-level="3.8.2" data-path="regres.html"><a href="regres.html#reg-ergebnisse-für-modelle-sammeln-schleife"><i class="fa fa-check"></i><b>3.8.2</b> <code>reg</code>-Ergebnisse für Modelle sammeln: Schleife</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="labmacro.html"><a href="labmacro.html"><i class="fa fa-check"></i><b>4</b> Label- und Variablenfunktionen</a>
@@ -310,17 +317,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">6</span> Weitere <code>macro</code> &amp; <code>matrix</code> Funktionen</h1>
 <div id="capture" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> <code>capture</code></h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="misc.html#cb1-1" aria-hidden="true" tabindex="-1"></a>cap <span class="kw">drop</span> S01 zpalter</span>
-<span id="cb1-2"><a href="misc.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">d</span> S0? zp*</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb198-1"><a href="misc.html#cb198-1" aria-hidden="true" tabindex="-1"></a>cap <span class="kw">drop</span> S01 zpalter</span>
+<span id="cb198-2"><a href="misc.html#cb198-2" aria-hidden="true" tabindex="-1"></a><span class="kw">d</span> S0? zp*</span></code></pre></div>
 </div>
 <div id="macro-extended-functions-for-parsing" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Macro extended functions for parsing</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="misc.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> wanted : <span class="kw">di</span> <span class="dt">_dup</span>(10) <span class="st">&quot;oo &quot;</span></span>
-<span id="cb2-2"><a href="misc.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> wanted : <span class="kw">di</span> <span class="dt">_dup</span>(10) <span class="st">&quot;oo &quot;</span></span>
-<span id="cb2-3"><a href="misc.html#cb2-3" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;`wanted&#39;&quot;</span></span>
-<span id="cb2-4"><a href="misc.html#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="misc.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> wanted : <span class="kw">di</span> <span class="st">&quot;{dup 10:99 }&quot;</span></span></code></pre></div>
-<pre><code>oo oo oo oo oo oo oo oo oo oo </code></pre>
+<div class="sourceCode" id="cb199"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb199-1"><a href="misc.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> wanted : <span class="kw">di</span> <span class="dt">_dup</span>(10) <span class="st">&quot;oo &quot;</span></span>
+<span id="cb199-2"><a href="misc.html#cb199-2" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> wanted : <span class="kw">di</span> <span class="dt">_dup</span>(10) <span class="st">&quot;oo &quot;</span></span>
+<span id="cb199-3"><a href="misc.html#cb199-3" aria-hidden="true" tabindex="-1"></a>dis <span class="st">&quot;`wanted&#39;&quot;</span></span>
+<span id="cb199-4"><a href="misc.html#cb199-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb199-5"><a href="misc.html#cb199-5" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> wanted : <span class="kw">di</span> <span class="st">&quot;{dup 10:99 }&quot;</span></span>
+<span id="cb199-6"><a href="misc.html#cb199-6" aria-hidden="true" tabindex="-1"></a>oo oo oo oo oo oo oo oo oo oo </span></code></pre></div>
 <!-- `pmacro` Seite 12: -->
 <!-- ```{stata, eval= F} -->
 <!-- word count string -->
@@ -368,29 +375,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="weitere-matrix-befehle" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> weitere <code>matrix</code>-Befehle</h2>
 <p>Wir können auch Rechnungen einfügen:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="misc.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> X1 = (1+1, 2*3/4 \ 5/2, 3)</span>
-<span id="cb4-2"><a href="misc.html#cb4-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1 </span></code></pre></div>
-<pre><code>X1[2,2]
-     c1   c2
-r1    2  1.5
-r2  2.5    3</code></pre>
+<div class="sourceCode" id="cb200"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb200-1"><a href="misc.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> X1 = (1+1, 2*3/4 \ 5/2, 3)</span>
+<span id="cb200-2"><a href="misc.html#cb200-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1 </span>
+<span id="cb200-3"><a href="misc.html#cb200-3" aria-hidden="true" tabindex="-1"></a>X1[2,2]</span>
+<span id="cb200-4"><a href="misc.html#cb200-4" aria-hidden="true" tabindex="-1"></a>     c1   c2</span>
+<span id="cb200-5"><a href="misc.html#cb200-5" aria-hidden="true" tabindex="-1"></a>r1    2  1.5</span>
+<span id="cb200-6"><a href="misc.html#cb200-6" aria-hidden="true" tabindex="-1"></a>r2  2.5    3</span></code></pre></div>
 <div id="teilmatrizen" class="section level3" number="6.3.1">
 <h3><span class="header-section-number">6.3.1</span> Teilmatrizen</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="misc.html#cb6-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)</span>
-<span id="cb6-2"><a href="misc.html#cb6-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
-<pre><code>X1[4,5]
-     c1   c2   c3   c4   c5
-r1    1    2    3    4    5
-r2    6    7    8    9   10
-r3    0   -1   -2   -3   -5
-r4   -6   -7   -8   -9  -10</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb201-1"><a href="misc.html#cb201-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3,4,5 \ 6,7,8,9,10 \ 0,-1,-2,-3,-5 \ -6,-7,-8,-9,-10)</span>
+<span id="cb201-2"><a href="misc.html#cb201-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span>
+<span id="cb201-3"><a href="misc.html#cb201-3" aria-hidden="true" tabindex="-1"></a>X1[4,5]</span>
+<span id="cb201-4"><a href="misc.html#cb201-4" aria-hidden="true" tabindex="-1"></a>     c1   c2   c3   c4   c5</span>
+<span id="cb201-5"><a href="misc.html#cb201-5" aria-hidden="true" tabindex="-1"></a>r1    1    2    3    4    5</span>
+<span id="cb201-6"><a href="misc.html#cb201-6" aria-hidden="true" tabindex="-1"></a>r2    6    7    8    9   10</span>
+<span id="cb201-7"><a href="misc.html#cb201-7" aria-hidden="true" tabindex="-1"></a>r3    0   -1   -2   -3   -5</span>
+<span id="cb201-8"><a href="misc.html#cb201-8" aria-hidden="true" tabindex="-1"></a>r4   -6   -7   -8   -9  -10</span></code></pre></div>
 <p>Wir können aus diesen Matrizen auch Teilbereiche auswählen:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="misc.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> newmat = oldmat[Zeile(nbereich), Spalte(nbereich)]</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb202-1"><a href="misc.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> newmat = oldmat[Zeile(nbereich), Spalte(nbereich)]</span></code></pre></div>
 <p>Zeilenbereich und Spaltenbereich können einzelne Zahlen oder Bereiche mit durch zwei Punkte getrennten Start- und Endpositionen sein.</p>
 <p>Matrix B erstellen, welche die Zeile 2-4 und die Spalte 1-5 von X1 enthält:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="misc.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> B = X1[2..4,1..5]</span>
-<span id="cb9-2"><a href="misc.html#cb9-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B</span>
-<span id="cb9-3"><a href="misc.html#cb9-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb203-1"><a href="misc.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> B = X1[2..4,1..5]</span>
+<span id="cb203-2"><a href="misc.html#cb203-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B</span>
+<span id="cb203-3"><a href="misc.html#cb203-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>B[3,5]
      c1   c2   c3   c4   c5
 r2    6    7    8    9   10
@@ -405,9 +412,9 @@ r2    6    7    8    9   10
 r3    0   -1   -2   -3   -5
 r4   -6   -7   -8   -9  -10</code></pre>
 <p>Um alle Zeilen nach der zweiten Zeile zu übernehmen, verwenden wir drei Punkte:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="misc.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> C = X1[2...,1..5]</span>
-<span id="cb11-2"><a href="misc.html#cb11-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C</span>
-<span id="cb11-3"><a href="misc.html#cb11-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb205-1"><a href="misc.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span> C = X1[2...,1..5]</span>
+<span id="cb205-2"><a href="misc.html#cb205-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> C</span>
+<span id="cb205-3"><a href="misc.html#cb205-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>C[3,5]
      c1   c2   c3   c4   c5
 r2    6    7    8    9   10
@@ -425,9 +432,9 @@ r4   -6   -7   -8   -9  -10</code></pre>
 <div id="spaltenzeilen-auswählen" class="section level3" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> Spalten/Zeilen auswählen</h3>
 <p>B1 enthält Spalte 1 und 3 aus <code>X1</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="misc.html#cb13-1" aria-hidden="true" tabindex="-1"></a>mat B1 = X1[1...,1],X1[1...,3]</span>
-<span id="cb13-2"><a href="misc.html#cb13-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B1</span>
-<span id="cb13-3"><a href="misc.html#cb13-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb207-1"><a href="misc.html#cb207-1" aria-hidden="true" tabindex="-1"></a>mat B1 = X1[1...,1],X1[1...,3]</span>
+<span id="cb207-2"><a href="misc.html#cb207-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B1</span>
+<span id="cb207-3"><a href="misc.html#cb207-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>B1[4,2]
     c1  c3
 r1   1   3
@@ -443,9 +450,9 @@ r2    6    7    8    9   10
 r3    0   -1   -2   -3   -5
 r4   -6   -7   -8   -9  -10</code></pre>
 <p>B2 enthält Zeile 1 und 3 aus <code>X1</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="misc.html#cb15-1" aria-hidden="true" tabindex="-1"></a>mat B2 = X1[1,1...] \ X1[4,1...]</span>
-<span id="cb15-2"><a href="misc.html#cb15-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B2</span>
-<span id="cb15-3"><a href="misc.html#cb15-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb209-1"><a href="misc.html#cb209-1" aria-hidden="true" tabindex="-1"></a>mat B2 = X1[1,1...] \ X1[4,1...]</span>
+<span id="cb209-2"><a href="misc.html#cb209-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> B2</span>
+<span id="cb209-3"><a href="misc.html#cb209-3" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X1</span></code></pre></div>
 <pre><code>B2[2,5]
      c1   c2   c3   c4   c5
 r1    1    2    3    4    5
@@ -463,17 +470,17 @@ r4   -6   -7   -8   -9  -10</code></pre>
 <div id="crnumb" class="section level3" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span> Namensbasierte Auswahl</h3>
 <p>Hier helfen <code>rownumb</code> und <code>colnumb</code></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="misc.html#cb17-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3 \ 8,9,10 )</span>
-<span id="cb17-2"><a href="misc.html#cb17-2" aria-hidden="true" tabindex="-1"></a>mat colname X1 = var1 var2 var3</span>
-<span id="cb17-3"><a href="misc.html#cb17-3" aria-hidden="true" tabindex="-1"></a>mat rowname X1 = set1 set2</span>
-<span id="cb17-4"><a href="misc.html#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="misc.html#cb17-5" aria-hidden="true" tabindex="-1"></a>mat X2 = X1[<span class="fu">rownumb</span>(X1,<span class="st">&quot;set1&quot;</span>),1...]</span>
-<span id="cb17-6"><a href="misc.html#cb17-6" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X2</span></code></pre></div>
-<pre><code>X2[1,3]
-      var1  var2  var3
-set1     1     2     3</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="misc.html#cb19-1" aria-hidden="true" tabindex="-1"></a>mat X3 = X1[1...,<span class="fu">colnumb</span>(X1,<span class="st">&quot;var2&quot;</span>)]</span>
-<span id="cb19-2"><a href="misc.html#cb19-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X3</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb211-1"><a href="misc.html#cb211-1" aria-hidden="true" tabindex="-1"></a>mat X1 = (1,2,3 \ 8,9,10 )</span>
+<span id="cb211-2"><a href="misc.html#cb211-2" aria-hidden="true" tabindex="-1"></a>mat colname X1 = var1 var2 var3</span>
+<span id="cb211-3"><a href="misc.html#cb211-3" aria-hidden="true" tabindex="-1"></a>mat rowname X1 = set1 set2</span>
+<span id="cb211-4"><a href="misc.html#cb211-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb211-5"><a href="misc.html#cb211-5" aria-hidden="true" tabindex="-1"></a>mat X2 = X1[<span class="fu">rownumb</span>(X1,<span class="st">&quot;set1&quot;</span>),1...]</span>
+<span id="cb211-6"><a href="misc.html#cb211-6" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X2</span>
+<span id="cb211-7"><a href="misc.html#cb211-7" aria-hidden="true" tabindex="-1"></a>X2[1,3]</span>
+<span id="cb211-8"><a href="misc.html#cb211-8" aria-hidden="true" tabindex="-1"></a>      var1  var2  var3</span>
+<span id="cb211-9"><a href="misc.html#cb211-9" aria-hidden="true" tabindex="-1"></a>set1     1     2     3</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb212-1"><a href="misc.html#cb212-1" aria-hidden="true" tabindex="-1"></a>mat X3 = X1[1...,<span class="fu">colnumb</span>(X1,<span class="st">&quot;var2&quot;</span>)]</span>
+<span id="cb212-2"><a href="misc.html#cb212-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">l</span> X3</span></code></pre></div>
 <pre><code>X3[2,1]
       var2
 set1     2
@@ -542,6 +549,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

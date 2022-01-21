@@ -27,25 +27,22 @@ mac l dtalist
 	}
 	
 	
-	import delimited ".... baua3.csv", delimiter(";") encoding(ISO-8859-2) clear 
 	
-	if ustrregexm("`usefile'","dta") use "${pfad}/`usefile'", clear // wenn dta -> laden
-	if ustrregexm(`usefile',"csv") import delimited "${pfad}/`usefile'", clear // wenn csv -> import
-	dis "`usefile' opened"
+
 	
 * csv files einlesen:
 global csvlist: dir "${pfad}" files "data*.csv" // Liste aller .dta-Dateien
 mac l csvlist
 	
-	loc n_datasets : list sizeof global(dtalist)		// anzahl weiterer listen
-	foreach i of numlist 1(1)`n_datasets' {
-	loc usefile `: word `i' of ${dtalist}' 				// erster Eintrag aus der Liste
+	loc n_csvs : list sizeof global(csvlist)		// anzahl weiterer listen
+	foreach i of numlist 1(1)`n_csvs' {
+	loc usefile `: word `i' of ${csvlist}' 				// erster Eintrag aus der Liste
 	import delimited "${pfad}/`usefile'", delimiter(";") encoding(ISO-8859-2) clear
 	
-	loc savef = ustrregexra(`usefile',"csv","dta")
-	save "${pfad}/`savef'"
+	loc savef = ustrregexra("`usefile'","csv","dta")
+	save "${pfad}/`savef'", replace
 	
-	dis "`appendfile' appended"						// show it worked
+	dis "`savef' saved"						// show it worked
 	}
 	
 * ---------------------------------- *
