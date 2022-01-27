@@ -577,7 +577,11 @@ forvalues n = 1/10 {
 ### nested loop
 
 ```{stata nloop1}
-
+forvalues n1 = 1/3 {
+  forvalues n2 = 1/3 {
+    dis "n1 ist `n1' und n2 ist `n2' "
+  }
+}
 ```
 
 

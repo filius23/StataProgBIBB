@@ -18,7 +18,7 @@ estimates clear
 
 * ------------------------------ *
 * Pfade setzen
-if ("`c(username)'" == "Filser") {
+if ("`c(username)'" == "filse") {
 	glo pfad 		"D:\oCloud\Home-Cloud\Lehre\BIBB\StataProgBIBB"		// Projekt/Kursordner
 }
 * hier statt meinem den eigenen Projektordner angeben
